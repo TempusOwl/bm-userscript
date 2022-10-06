@@ -31,4 +31,7 @@ Note: These only apply to the game Squad, and may not work at all in other games
 * Create a new script, this will open new tab. Replace EVERYTHING within it with the userscript-default.js found above, then press CTRL+S.
 * Go the BM website and it should show as a red +1 next to TamperMonkey icon, if the script is working. 
 * If you see no +1 in Red, you may need to toggle the script on, head back to the browser icon for TamperMonkey and check that your script is enabled.
+
+## Contributions
+* Time w/ Seconds - Avengerian 
   
