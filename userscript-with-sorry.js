@@ -124,14 +124,15 @@ setInterval(function jobTwo() {
         "srry",
         "SRRY",
         "for tk",
+        "for TK",
         "FOR TK",
         "for teamkill",
+        "For teamkill",
         "My Bad",
         "My bad",
         "My bad",
         "my bad",
     ]
-
     //====================================== Do not edit the code below - it may break things!  ======================================
 
     // Message Coloring Activity Moderation
@@ -242,3 +243,21 @@ setInterval(function runAdmin() {
         span.replaceWith(a)
     })
 }, 800)
+
+// Add seconds to time
+setInterval(function runTimeSeconds() {
+    const timeStamp = document.querySelectorAll('.css-z1s6qn');
+    // Makes better timestamps
+    timeStamp.forEach(element => {
+        // Get the Coordinated Universal Time
+        const utcTime = element.getAttribute('datetime')
+        // Create a date variable
+        const date = new Date(utcTime)
+        // Convert to users local timezone
+        var time = date.toLocaleString().split(' ')
+        // Replace Original Text
+            // time[1] = HH:MM:MS
+            // time[2] = AM/PM
+        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' + time[2]).toString())
+    })
+}, 50)
