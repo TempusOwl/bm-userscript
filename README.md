@@ -2,6 +2,9 @@
 This is simple userscript that takes advantage of custom triggers you may have created in BM, as well as parse important text. I made this help color code important details like Squad Leaders, among other things. Having 100 users on a table with varying info can make parsing rather hard, this makes it easy.
 Note this code is intended for the BattleMetrics RCON product, used by server admins. Not to be confused with the standard BattleMetrics server list. 
 
+## Latest Changes
+10/19/22 (v2.3) Added Kibz, fixed CSS not applying to the BM tags sometimes, added optional toggles to disable parts of the code. 
+
 ## Features Of This Userscript
 * Highly customizable!
 * Grays out unimportant events like joins/leaves (customizable)
