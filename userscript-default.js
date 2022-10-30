@@ -1,25 +1,27 @@
 // ==UserScript==
 // @name         Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace    http://tampermonkey.net/
-// @version      2.3
+// @version      2.4
 // @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author       TempusOwl
-// @match        https://www.battlemetrics.com/rcon*
+// @match        https://www.battlemetrics.com/*
+// @exclude      https://www.battlemetrics.com/account/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant        GM_addStyle
+// @run-at document-start
 // ==/UserScript==
 var b, c, i = false
 // =========== Edit The Code Below =========================================================
 
 // Enable / Disable Parts Of The Code (use false to disable)
-var applyCBLsteamID = true
-var colorSquadCreations = true
-var colorAdminActivity = true
-var colorAdminBM = true
-var colorGrayedOutPhrases = true
-var colorSorryMessages = true
-var colorModerationActions = true
-var timeHasSeconds = true
+var applyCBLsteamID = false
+var colorSquadCreations = false
+var colorAdminActivity = false
+var colorAdminBM = false
+var colorGrayedOutPhrases = false
+var colorSorryMessages = false
+var colorModerationActions = false
+var timeHasSeconds = false
 
 // Colors starting with # are known as "HEX" colors. https://htmlcolorcodes.com/color-picker/
 var colorMissingKit = "#C1766E"
@@ -32,6 +34,7 @@ var colorModerationAction = "#ff3333"
 var colorTeamkillAction = "#FF97FC"
 
 // Highlights tagged messages, and makes them colored (IE: Purple TKs)
+var barHeightFix = ".css-ecfywz {height: fit-width;}"
 var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
 var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
 var coloredMsgBar3 = ""
@@ -40,6 +43,13 @@ var coloredMsgBar5 = ""
 
 // Changes the teamkill color tag background
 setInterval(function jobTwo() {
+    // These apply the full width highlighted bars to the text (ie purple teamkills).
+    //GM_addStyle(barHeightFix);
+    GM_addStyle(coloredMsgBar1);
+    GM_addStyle(coloredMsgBar2);
+    GM_addStyle(coloredMsgBar3);
+    GM_addStyle(coloredMsgBar4);
+    GM_addStyle(coloredMsgBar5);
     const namePlayers = document.querySelectorAll('.css-mjpog7')
     const nameActivity = document.querySelectorAll('.css-zwebxb')
     const messageActivity = document.querySelectorAll('.css-ym7lu8')
@@ -57,7 +67,7 @@ setInterval(function jobTwo() {
         "budge",
         "got2bhockey",
         /*Advisors*/
-        "Basa (Doc)",
+        "Basa_Doc",
         "CeeJay",
         "Kibz",
         "Shaka",
@@ -66,9 +76,11 @@ setInterval(function jobTwo() {
         "Captain Crossbones",
         "E10",
         "Tiberius",
+        "Wolf Fang",
         "Nostradumbass",
         "Θscar Mike",
         "TexasForever22",
+        "Too Many Cooks",
         /*Server Admins*/
         "Avengerian",
         "Basey",
@@ -83,6 +95,7 @@ setInterval(function jobTwo() {
         "RedClaws",
         "Redneck",
         "Sticker",
+        "TempusOwl",
         "Terminator",
         "Outlast",
     ]
@@ -100,7 +113,6 @@ setInterval(function jobTwo() {
         "QTheEngineer",
         "StickWiggler",
         "Steel Bear",
-        "TempusOwl",
         "Valkyrie",
         "Zangell",
     ]
@@ -136,6 +148,8 @@ setInterval(function jobTwo() {
         "SORRIES",
         "srry",
         "SRRY",
+        "sry",
+        "SRY",
         "for tk",
         "for TK",
         "FOR TK",
@@ -151,73 +165,73 @@ setInterval(function jobTwo() {
 
 
     // Message Coloring Activity Moderation
-    if (colorAdminActivity = true) {
-        b = messageActivity
-        c = nameActivity
-        for (i = 0; i < b.length; i++) {
-            if ((b[i].textContent.includes(sl_kit))) {
-                b[i].style.color = colorMissingKit
-                b[i].style.fontSize = "9pt"
-            } else if ((b[i].textContent.includes("admin"))) {
-                b[i].style.color = colorBattlemetricsAdmin
-            } else if ((b[i].textContent.includes("Admin"))) {
-                b[i].style.color = colorBattlemetricsAdmin
-            }
+
+    b = messageActivity
+    c = nameActivity
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes(sl_kit))) {
+            b[i].style.color = colorMissingKit
+            b[i].style.fontSize = "9pt"
+        } else if ((b[i].textContent.includes("admin"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        } else if ((b[i].textContent.includes("Admin"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        } else if ((b[i].textContent.includes("ADMIN"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        } else if ((b[i].textContent.includes("aDMIN"))) {
+            b[i].style.color = colorBattlemetricsAdmin
         }
     }
+
 
     // Highlights the Player Is Admin to neon in the players bar.
-    if (colorAdminBM = true) {
-        b = battlemetricsAdmin
-        for (i = 0; i < b.length; i++) {
-            if ((b[i].textContent.includes("Admin"))) {
-                b[i].style.color = colorBattlemetricsAdmin
-            }
+    b = battlemetricsAdmin
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Admin"))) {
+            b[i].style.color = colorBattlemetricsAdmin
         }
     }
 
-    if (colorSorryMessages = true) {
-        // For TKs Sorry Messages
-        messageActivity.forEach(element => {
-            if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
-                element.style.color = colorTeamkillAction
-            }
-        })
-    }
+
+    // For TKs Sorry Messages
+    messageActivity.forEach(element => {
+        if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamkillAction
+        }
+    })
+
 
     // Action List Red Highlight (ban, warn, kick)
-    if (colorModerationActions = true) {
-        messageActivity.forEach(element => {
-            if (actionList.some(phrase => element.textContent.includes(phrase))) {
-                element.style.color = colorModerationAction
-            }
-        })
-    }
+    messageActivity.forEach(element => {
+        if (actionList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorModerationAction
+        }
+    })
+
 
     // Grayed Out Phrases
-    if (colorGrayedOutPhrases = true) {
-        messageActivity.forEach(element => {
-            if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
-                element.style.color = colorGrayedOut
-            }
-        })
-    }
+    messageActivity.forEach(element => {
+        if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorGrayedOut
+            element.style.fontSize = "8pt"
+        }
+    })
+
 
     // Highlighs Squad Names Creations
-    if (colorSquadCreations = true) {
-        messageActivity.forEach(element => {
-            if (teamBluefor.some(phrase => element.textContent.includes(phrase))) {
-                element.style.color = colorTeamBluefor
-            }
-        })
+    messageActivity.forEach(element => {
+        if (teamBluefor.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamBluefor
+        }
+    })
 
 
-        messageActivity.forEach(element => {
-            if (teamOpfor.some(phrase => element.textContent.includes(phrase))) {
-                element.style.color = colorTeamOpfor
-            }
-        })
-    }
+    messageActivity.forEach(element => {
+        if (teamOpfor.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamOpfor
+        }
+    })
+
 
     // Searches and highlight the names of admins for players and activity sections.
     // ================ Admin / Mod List ========================
@@ -253,51 +267,42 @@ setInterval(function jobTwo() {
             b[i].style.color = "#ffba23"
         }
     }
-}, 25)
+}, 200)
 
 
 // Adds a clickable URL to steamIDs that bring you to communty ban list.
-if (applyCBLsteamID = true) {
-    setInterval(function runAdmin() {
-        const spans = document.querySelectorAll('.css-q39y9k')
-        spans.forEach(span => {
-            const steamID = span.title /* or span.textContent */
+setInterval(function runAdmin() {
+    const spans = document.querySelectorAll('.css-q39y9k')
+    spans.forEach(span => {
+        const steamID = span.title /* or span.textContent */
 
-            const a = document.createElement('a')
+        const a = document.createElement('a')
 
-            ;
-            [...span.attributes].forEach(attr => a.attributes.setNamedItem(attr.cloneNode()))
+        ;
+        [...span.attributes].forEach(attr => a.attributes.setNamedItem(attr.cloneNode()))
 
-            a.href = `https://communitybanlist.com/search/${steamID}`
-            a.innerHTML = steamID
+        a.href = `https://communitybanlist.com/search/${steamID}`
+        a.innerHTML = steamID
 
-            span.replaceWith(a)
-        })
-    }, 800)
-}
+        span.replaceWith(a)
+    })
+}, 1000)
+
 
 // Add seconds to time
-if (timeHasSeconds = true) {
-    setInterval(function runTimeSeconds() {
-        const timeStamp = document.querySelectorAll('.css-z1s6qn')
-        // Makes better timestamps
-        timeStamp.forEach(element => {
-            // Get the Coordinated Universal Time
-            const utcTime = element.getAttribute('datetime')
-            // Create a date variable
-            const date = new Date(utcTime)
-            // Convert to users local timezone
-            var time = date.toLocaleString().split(' ')
-            // Replace Original Text
-            // time[1] = HH:MM:MS
-            // time[2] = AM/PM
-            element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' + time[2]).toString())
-        })
-        // These apply the full width highlighted bars to the text (ie purple teamkills).
-        GM_addStyle(coloredMsgBar1);
-        GM_addStyle(coloredMsgBar2);
-        GM_addStyle(coloredMsgBar3);
-        GM_addStyle(coloredMsgBar4);
-        GM_addStyle(coloredMsgBar5);
-    }, 50)
-}
+setInterval(function runTimeSeconds() {
+    const timeStamp = document.querySelectorAll('.css-z1s6qn')
+    // Makes better timestamps
+    timeStamp.forEach(element => {
+        // Get the Coordinated Universal Time
+        const utcTime = element.getAttribute('datetime')
+        // Create a date variable
+        const date = new Date(utcTime)
+        // Convert to users local timezone
+        var time = date.toLocaleString().split(' ')
+        // Replace Original Text
+        // time[1] = HH:MM:MS
+        // time[2] = AM/PM
+        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' + time[2]).toString())
+    })
+}, 25)
