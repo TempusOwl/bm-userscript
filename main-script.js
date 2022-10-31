@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      2.5
 // @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author       TempusOwl
 // @match        https://www.battlemetrics.com/*
-// @exclude      https://www.battlemetrics.com/account/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant        GM_addStyle
 // @run-at document-start
+// @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b, c, i = false
 // =========== Edit The Code Below =========================================================
@@ -54,6 +54,8 @@ setInterval(function jobTwo() {
     const nameActivity = document.querySelectorAll('.css-zwebxb')
     const messageActivity = document.querySelectorAll('.css-ym7lu8')
     const battlemetricsAdmin = document.querySelectorAll('.css-18s4qom')
+    const changeMapWarning = document.querySelectorAll('.modal-title')
+    const changeMapWarning2 = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
     const sl_kit = "[SL Kit]"
     const actionList = [
         "was warned",
@@ -192,6 +194,50 @@ setInterval(function jobTwo() {
         }
     }
 
+    // Highlights the Player Is Admin to neon in the players bar.
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+        }
+    }
+
+    // Highlights the Player Is Admin to neon in the players bar.
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Set Next Map"))) {
+            b[i].style.color = "lime"
+            b[i].style.fontStyle = "bold"
+        }
+    }
+
+    // Highlights the Player Is Admin to neon in the players bar.
+    b = changeMapWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "800pt"
+        }
+    }
+
+    // Highlights the Player Is Admin to neon in the players bar.
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Set Next Map"))) {
+            b[i].style.color = "lime"
+        }
+    }
+
+    // Highlights the Player Is Admin to neon in the players bar.
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Squad List"))) {
+            b[i].style.color = "gold"
+        }
+    }
 
     // For TKs Sorry Messages
     messageActivity.forEach(element => {
@@ -267,27 +313,7 @@ setInterval(function jobTwo() {
             b[i].style.color = "#ffba23"
         }
     }
-}, 200)
-
-
-// Adds a clickable URL to steamIDs that bring you to communty ban list.
-setInterval(function runAdmin() {
-    const spans = document.querySelectorAll('.css-q39y9k')
-    spans.forEach(span => {
-        const steamID = span.title /* or span.textContent */
-
-        const a = document.createElement('a')
-
-        ;
-        [...span.attributes].forEach(attr => a.attributes.setNamedItem(attr.cloneNode()))
-
-        a.href = `https://communitybanlist.com/search/${steamID}`
-        a.innerHTML = steamID
-
-        span.replaceWith(a)
-    })
-}, 1000)
-
+}, 50)
 
 // Add seconds to time
 setInterval(function runTimeSeconds() {
