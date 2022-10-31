@@ -19,7 +19,7 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Highlights BM admins in RCON player side panel.
 * Highlights mamed admins in activity/rcon panel (messages, join/leave, squad creations etc..) 
 * Highlights important trigger warnings in red. 
-* Highlights sorry For TK (optional userscript).
+* Highlights sorry for TK (optional userscript).
 * Highlights users who say sorry in chat (not perfect). 
 
 (Below requires the seperate CBL script in this repo)
