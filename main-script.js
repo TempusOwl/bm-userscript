@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.7
 // @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author       TempusOwl
 // @match        https://www.battlemetrics.com/*
@@ -182,9 +182,22 @@ setInterval(function jobTwo() {
             b[i].style.color = colorBattlemetricsAdmin
         } else if ((b[i].textContent.includes("aDMIN"))) {
             b[i].style.color = colorBattlemetricsAdmin
+        } else if ((b[i].textContent.includes(") was disbanded b"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        } else if ((b[i].textContent.includes("requested a list of squads."))) {
+            b[i].style.color = colorBattlemetricsAdmin
         }
-    }
+        else if ((b[i].textContent.includes("set the next map to"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        }
+        else if ((b[i].textContent.includes("changed the map to"))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        }
+        else if ((b[i].textContent.includes("requested the next map."))) {
+            b[i].style.color = colorBattlemetricsAdmin
+        }
 
+    }
 
     // Highlights the Player Is Admin to neon in the players bar.
     b = battlemetricsAdmin
