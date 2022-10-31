@@ -16,6 +16,7 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Adds time in seconds to timestamp (Thanks Avengerian)
 * Highlights users with clan tags (if BM decides to displays it)
 * Highlights squad leaders in RCON side panel.
+* Highlights admin chat.
 * Highlights BM admins in RCON player side panel.
 * Highlights mamed admins in activity/rcon panel (messages, join/leave, squad creations etc..) 
 * Highlights important trigger warnings in red. 
