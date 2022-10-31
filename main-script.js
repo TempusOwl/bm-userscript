@@ -25,9 +25,9 @@ var timeHasSeconds = false
 
 // Colors starting with # are known as "HEX" colors. https://htmlcolorcodes.com/color-picker/
 var colorMissingKit = "#C1766E"
-var colorTeamBluefor = "#55f1ff"
+var colorTeamBluefor = "#FFF200"
 var colorTeamOpfor = "#FF9F32"
-var colorAdminName = "#FFF200"
+var colorAdminName = "#55f1ff"
 var colorGrayedOut = "gray"
 var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
