@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace    http://tampermonkey.net/
-// @version      2.6
+// @version      2.5
 // @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author       TempusOwl
 // @match        https://www.battlemetrics.com/*
@@ -25,9 +25,9 @@ var timeHasSeconds = false
 
 // Colors starting with # are known as "HEX" colors. https://htmlcolorcodes.com/color-picker/
 var colorMissingKit = "#C1766E"
-var colorTeamBluefor = "#FFF200"
+var colorTeamBluefor = "#55f1ff"
 var colorTeamOpfor = "#FF9F32"
-var colorAdminName = "#55f1ff"
+var colorAdminName = "#FFF200"
 var colorGrayedOut = "gray"
 var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
@@ -167,6 +167,7 @@ setInterval(function jobTwo() {
 
 
     // Message Coloring Activity Moderation
+
     b = messageActivity
     c = nameActivity
     for (i = 0; i < b.length; i++) {
