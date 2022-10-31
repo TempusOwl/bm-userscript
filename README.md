@@ -17,6 +17,8 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Highlights users with clan tags (if BM decides to displays it)
 * Highlights squad leaders in RCON side panel.
 * Highlights admin chat.
+* Highlights if map is changed, next map or if map is requested.
+* Highlights if squad list is requested. 
 * Highlights BM admins in RCON player side panel.
 * Highlights mamed admins in activity/rcon panel (messages, join/leave, squad creations etc..) 
 * Highlights important trigger warnings in red. 
