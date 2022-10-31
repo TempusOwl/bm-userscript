@@ -7,17 +7,22 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 
 10/31/22 (v2.5) Added Wolf Fang, color coded change map, squad list, next map. Added massive text causing you to have to scroll when changing map. Moved the CBL linker to its own script until I can find better way to program it. 
 
-## Features Of This Userscript
+## Features Of This main-script.js
 * Highly customizable!
 * Grays out unimportant events like joins/leaves (customizable)
 * Adds full width colored bars for teamkills (w/ help from a BM trigger tag)
-* Adds a clickable link for SteamID that goes to the communitybanlist.com/<theSteamid>
 * Highlights users with clan tags (if BM decides to displays it)
-* Highlights Squad Leaders in RCON side panel.
-* Highlights BM Admins in RCON player side panel.
-* Highlights Admins in activity side panel.
-* Highlights Sorry For TK (optional userscript).
-* Highlights moderation events in red.
+* Highlights squad leaders in RCON side panel.
+* Highlights BM admins in RCON player side panel.
+* Highlights mamed admins in activity/rcon panel (messages, join/leave, squad creations etc..) 
+* Highlights important trigger warnings in red. 
+* Highlights sorry For TK (optional userscript).
+* Highlights users who say sorry in chat (not perfect). 
+* Color codes change map, next map and squad list.
+* Adds big red text, forcing you to commit and scroll down to change map. 
+
+(Below requires the seperate CBL script in this repo)
+* Adds a clickable link for SteamID that goes to the communitybanlist.com/<theSteamid>
 
 ![how the results look](https://github.com/TempusOwl/bm-userscript/blob/main/result.png?raw=true)
 ## What Is TamperMonkey
