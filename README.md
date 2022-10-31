@@ -14,6 +14,7 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Color codes change map, next map and squad list.
 * Adds big red text, forcing you to commit and scroll down to change map. 
 * Adds time in seconds to timestamp (Thanks Avengerian)
+* Color codes squad creation by faction for easier time finding who is first. 
 * Highlights users with clan tags (if BM decides to displays it)
 * Highlights squad leaders in RCON side panel.
 * Highlights admin chat.
