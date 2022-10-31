@@ -11,6 +11,9 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Highly customizable!
 * Grays out unimportant events like joins/leaves (customizable)
 * Adds full width colored bars for teamkills (w/ help from a BM trigger tag)
+* Color codes change map, next map and squad list.
+* Adds big red text, forcing you to commit and scroll down to change map. 
+* Adds time in seconds to timestamp (Thanks Avengerian)
 * Highlights users with clan tags (if BM decides to displays it)
 * Highlights squad leaders in RCON side panel.
 * Highlights BM admins in RCON player side panel.
@@ -18,8 +21,6 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Highlights important trigger warnings in red. 
 * Highlights sorry For TK (optional userscript).
 * Highlights users who say sorry in chat (not perfect). 
-* Color codes change map, next map and squad list.
-* Adds big red text, forcing you to commit and scroll down to change map. 
 
 (Below requires the seperate CBL script in this repo)
 * Adds a clickable link for SteamID that goes to the communitybanlist.com/<theSteamid>
