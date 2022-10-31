@@ -193,26 +193,8 @@ setInterval(function jobTwo() {
             b[i].style.color = colorBattlemetricsAdmin
         }
     }
-
-    // Highlights the Player Is Admin to neon in the players bar.
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Change Map"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-        }
-    }
-
-    // Highlights the Player Is Admin to neon in the players bar.
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Set Next Map"))) {
-            b[i].style.color = "lime"
-            b[i].style.fontStyle = "bold"
-        }
-    }
-
-    // Highlights the Player Is Admin to neon in the players bar.
+    
+    // Change Map Warning (Dialog)
     b = changeMapWarning
     for (i = 0; i < b.length; i++) {
         if ((b[i].textContent.includes("Change Map"))) {
@@ -223,7 +205,16 @@ setInterval(function jobTwo() {
         }
     }
 
-    // Highlights the Player Is Admin to neon in the players bar.
+    // Change Map Warning (Nav Bar)
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+        }
+    }
+    
+    // Change Map Warning (Nav Bar)
     b = changeMapWarning2
     for (i = 0; i < b.length; i++) {
         if ((b[i].textContent.includes("Set Next Map"))) {
@@ -231,7 +222,7 @@ setInterval(function jobTwo() {
         }
     }
 
-    // Highlights the Player Is Admin to neon in the players bar.
+    // Squad List Menu Bar (Nav Bar)
     b = changeMapWarning2
     for (i = 0; i < b.length; i++) {
         if ((b[i].textContent.includes("Squad List"))) {
