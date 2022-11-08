@@ -5,7 +5,10 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 ## Latest Changes
 10/19/22 (v2.3) Added Kibz, fixed CSS not applying to the BM tags sometimes, added optional toggles to disable parts of the code. 
 
-10/31/22 (v2.5) Added Wolf Fang, color coded change map, squad list, next map. Added massive text causing you to have to scroll when changing map. Moved the CBL linker to its own script until I can find better way to program it. Added additional highlights to when squads are requested, map is changed, next map and map is requested. 
+10/31/22 (v2.5) Added Wolf Fang, color coded change map, squad list, next map. Added massive text causing you to have to scroll when changing map. Moved the CBL linker to its own script until I can find better way to program it. Added additional highlights to when squads are requested, map is changed, next map and map is requested.
+
+## Known Issues
+The script may not load when clicking around pages in some rare cases. Lastly, sometimes it causes the player list/activity list to act weird. For both of these cases just refresh the page and everything will be fixed.
 
 ## Features Of This main-script.js
 * Highly customizable!
