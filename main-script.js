@@ -7,7 +7,7 @@
 // @match        https://www.battlemetrics.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant        GM_addStyle
-// @run-at document-start
+// @run-at document-body
 // @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b, c, i = false
@@ -56,6 +56,7 @@ setInterval(function jobTwo() {
     const battlemetricsAdmin = document.querySelectorAll('.css-18s4qom')
     const changeMapWarning = document.querySelectorAll('.modal-title')
     const changeMapWarning2 = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
+    const changeMapWarning3 = document.querySelectorAll('.css-f5o5h6 a, .css-f5o5h6 button')
     const sl_kit = "[SL Kit]"
     const actionList = [
         "was warned",
@@ -86,7 +87,6 @@ setInterval(function jobTwo() {
         /*Server Admins*/
         "Avengerian",
         "Basey",
-        "Bigham907",
         "DontFaket",
         "El 24 throttle4u",
         "gnome saiya",
@@ -101,8 +101,6 @@ setInterval(function jobTwo() {
         "TempusOwl",
         "Terminator",
         "Outlast",
-    ]
-    const modList = [
         /*List Of Server Mods*/
         "Aomm2025",
         "Crodawesome01",
@@ -164,41 +162,28 @@ setInterval(function jobTwo() {
         "my bad",
     ]
 
+    const adminTerms = [
+        "admin",
+        "Admin",
+        "ADMIN",
+        "aDMIN",
+        ") was disbanded b",
+        "requested a list of squads.",
+        "requested a list of squads.",
+        "set the next map to",
+        "changed the map to",
+        "requested the next map.",
+    ]
+
     //====================================== Do not edit the code below - it may break things!  ============================================================================================================================================================================================================================================================================================================================================================================================
 
 
-    // Message Coloring Activity Moderation
-
-    b = messageActivity
-    c = nameActivity
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes(sl_kit))) {
-            b[i].style.color = colorMissingKit
-            b[i].style.fontSize = "9pt"
-        } else if ((b[i].textContent.includes("admin"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        } else if ((b[i].textContent.includes("Admin"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        } else if ((b[i].textContent.includes("ADMIN"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        } else if ((b[i].textContent.includes("aDMIN"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        } else if ((b[i].textContent.includes(") was disbanded b"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        } else if ((b[i].textContent.includes("requested a list of squads."))) {
-            b[i].style.color = colorBattlemetricsAdmin
+    // Highlighs admin terms along with admin some admin actions.
+    messageActivity.forEach(element => {
+        if (adminTerms.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = "lime"
         }
-        else if ((b[i].textContent.includes("set the next map to"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        }
-        else if ((b[i].textContent.includes("changed the map to"))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        }
-        else if ((b[i].textContent.includes("requested the next map."))) {
-            b[i].style.color = colorBattlemetricsAdmin
-        }
-
-    }
+    })
 
     // Highlights the Player Is Admin to neon in the players bar.
     b = battlemetricsAdmin
@@ -216,6 +201,25 @@ setInterval(function jobTwo() {
             b[i].style.fontStyle = "bold"
             b[i].style.textAlign = "center"
             b[i].style.fontSize = "800pt"
+        }
+    }
+
+    // Kick Warning (Dialog)
+    b = changeMapWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Kick"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "48pt"
+        }
+    }
+
+    // Warn Warning (Dialog)
+    b = changeMapWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Warn"))) {
+            b[i].style.color = "lime"
         }
     }
 
@@ -244,6 +248,22 @@ setInterval(function jobTwo() {
         }
     }
 
+    // Warn Menu Bar (Nav Bar)
+    b = changeMapWarning3
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Warn"))) {
+            b[i].style.color = "lime"
+        }
+    }
+
+    // Admin Word Highlight / Action Highlights
+    messageActivity.forEach(element => {
+        if (adminTerms.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = "lime"
+        }
+    })
+
+
     // For TKs Sorry Messages
     messageActivity.forEach(element => {
         if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
@@ -259,16 +279,6 @@ setInterval(function jobTwo() {
         }
     })
 
-
-    // Grayed Out Phrases
-    messageActivity.forEach(element => {
-        if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorGrayedOut
-            element.style.fontSize = "8pt"
-        }
-    })
-
-
     // Highlighs Squad Names Creations
     messageActivity.forEach(element => {
         if (teamBluefor.some(phrase => element.textContent.includes(phrase))) {
@@ -282,7 +292,6 @@ setInterval(function jobTwo() {
             element.style.color = colorTeamOpfor
         }
     })
-
 
     // Searches and highlight the names of admins for players and activity sections.
     // ================ Admin / Mod List ========================
@@ -298,30 +307,22 @@ setInterval(function jobTwo() {
         }
     })
 
-    namePlayers.forEach(element => {
-        if (modList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorAdminName
-        }
-    })
-
-    nameActivity.forEach(element => {
-        if (modList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorAdminName
-        }
-    })
-
     // Added Squad Lead Highlight
     b = document.getElementsByClassName('small text-muted');
-    console.log(b)
     for (i = 0; i < b.length; i++) {
         if ((b[i].innerText == "Squad Leader")) {
             b[i].style.color = "#ffba23"
         }
     }
-}, 50)
 
-// Add seconds to time
-setInterval(function runTimeSeconds() {
+    // Grayed Out Phrases
+    messageActivity.forEach(element => {
+        if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorGrayedOut
+            element.style.fontSize = "8pt"
+        }
+    })
+
     const timeStamp = document.querySelectorAll('.css-z1s6qn')
     // Makes better timestamps
     timeStamp.forEach(element => {
