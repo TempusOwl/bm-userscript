@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace    http://tampermonkey.net/
-// @version      2.8
+// @version      2.9
 // @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author       TempusOwl
 // @match        https://www.battlemetrics.com/*
@@ -62,6 +62,8 @@ setInterval(function jobTwo() {
         "was warned",
         "was kicked",
         "was banned",
+        "edited BattleMetrics Ban",
+        "added BattleMetrics Ban",
     ]
     const adminList = [
         /*Red Admins*/
@@ -72,13 +74,16 @@ setInterval(function jobTwo() {
         "got2bhockey",
         /*Advisors*/
         "Basa_Doc",
-        "CeeJay",
+        "Jonboy",
         "Kibz",
         "Shaka",
-        /*Directors / Assists*/
+        /*Directors / Assists / Staff */
         "Brennan",
+        "CeeJay",
         "Captain Crossbones",
         "E10",
+        "Gilly",
+        "Nightshade",
         "Tiberius",
         "Wolf Fang",
         "Nostradumbass",
@@ -88,34 +93,37 @@ setInterval(function jobTwo() {
         /*Server Admins*/
         "Avengerian",
         "Basey",
+        "Bigham907",
         "DontFaket",
         "El 24 throttle4u",
         "gnome saiya",
-        "Gilly",
+        "Habeeb",
         "Mike.H",
-        "Nightshade",
+        "Mexican Jesus",
+        "QTheEngineer",
         "Radio",
         "Reaper",
         "RedClaws",
         "Redneck",
         "Sticker",
+        "Valkyrie",
         "TempusOwl",
         "Terminator",
         "Outlast",
         /*List Of Server Mods*/
         "Aomm2025",
         "Crodawesome01",
+        "Exploits",
         "FloridaMan",
         "Gallahad",
-        "Habeeb",
+        "Hispxanic",
         "JAMESTERRARIA",
+        "JerkinJimmy", // Aka Skipper?
+        "JoyfulConfusion",
         "Mav",
         "MURICA",
-        "Mexican Jesus",
-        "QTheEngineer",
         "StickWiggler",
         "Steel Bear",
-        "Valkyrie",
         "Zangell",
     ]
 
@@ -139,6 +147,7 @@ setInterval(function jobTwo() {
         "Middle Eastern Alliance",
         "Insurgent Forces",
         "Irregular Militia Forces",
+        "People's Liberation Army",
     ]
 
     const wordSorry = [
@@ -174,6 +183,7 @@ setInterval(function jobTwo() {
         "set the next map to",
         "changed the map to",
         "requested the next map.",
+        ") forced",
     ]
 
     //====================================== Do not edit the code below - it may break things!  ============================================================================================================================================================================================================================================================================================================================================================================================
@@ -183,6 +193,18 @@ setInterval(function jobTwo() {
     messageActivity.forEach(element => {
         if (adminTerms.some(phrase => element.textContent.includes(phrase))) {
             element.style.color = "lime"
+        } else if (adminTerms.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = "lime"
+        } else if (actionList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorModerationAction
+        } else if (actionList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorModerationAction
+        } else if (teamBluefor.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamBluefor
+        } else if (teamOpfor.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamOpfor
+        } else if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorGrayedOut
         }
     })
 
@@ -193,6 +215,31 @@ setInterval(function jobTwo() {
             b[i].style.color = colorBattlemetricsAdmin
         }
     }
+
+    // Searches and highlight the names of admins for players and activity sections.
+    // ================ Admin / Mod List ========================
+    namePlayers.forEach(element => {
+        if (adminList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorAdminName
+        }
+    })
+
+    nameActivity.forEach(element => {
+        if (adminList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorAdminName
+        }
+    })
+
+    // ================ Disabled Items Test ========================
+
+
+    // Warn Menu Bar (Nav Bar)
+        b = changeMapWarning3
+        for (i = 0; i < b.length; i++) {
+            if ((b[i].textContent.includes("Warn"))) {
+                b[i].style.color = "lime"
+            }
+        }
 
     // Change Map Warning (Dialog)
     b = changeMapWarning
@@ -241,70 +288,10 @@ setInterval(function jobTwo() {
         }
     }
 
-    // Squad List Menu Bar (Nav Bar)
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Squad List"))) {
-            b[i].style.color = "gold"
-        }
-    }
-
-    // Warn Menu Bar (Nav Bar)
-    b = changeMapWarning3
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Warn"))) {
-            b[i].style.color = "lime"
-        }
-    }
-
-    // Admin Word Highlight / Action Highlights
-    messageActivity.forEach(element => {
-        if (adminTerms.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = "lime"
-        }
-    })
-
-
     // For TKs Sorry Messages
     messageActivity.forEach(element => {
         if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
             element.style.color = colorTeamkillAction
-        }
-    })
-
-
-    // Action List Red Highlight (ban, warn, kick)
-    messageActivity.forEach(element => {
-        if (actionList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorModerationAction
-        }
-    })
-
-    // Highlighs Squad Names Creations
-    messageActivity.forEach(element => {
-        if (teamBluefor.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorTeamBluefor
-        }
-    })
-
-
-    messageActivity.forEach(element => {
-        if (teamOpfor.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorTeamOpfor
-        }
-    })
-
-    // Searches and highlight the names of admins for players and activity sections.
-    // ================ Admin / Mod List ========================
-    namePlayers.forEach(element => {
-        if (adminList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorAdminName
-        }
-    })
-
-    nameActivity.forEach(element => {
-        if (adminList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorAdminName
         }
     })
 
@@ -338,4 +325,4 @@ setInterval(function jobTwo() {
         // time[2] = AM/PM
         element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' + time[2]).toString())
     })
-}, 25)
+}, 250)
