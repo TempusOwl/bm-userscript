@@ -1,17 +1,23 @@
 // ==UserScript==
-// @name         Battlemetrics Color Coded - For joinSquad.com Servers
-// @namespace    http://tampermonkey.net/
-// @version      2.9
-// @description  Modifies the rcon panel for battlemetrics to help color code important events and details about players.
-// @author       TempusOwl
-// @match        https://www.battlemetrics.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
-// @grant        GM_addStyle
+// @name Battlemetrics Color Coded - For joinSquad.com Servers
+// @namespace http://tampermonkey.net/
+// @version 3.0
+// @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
+// @author TempusOwl
+// @match https://www.battlemetrics.com/*
+// @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
+// @grant GM_addStyle
 // @run-at document-body
 // @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b, c, i = false
 // =========== Edit The Code Below =========================================================
+const oldMutationObserver = window.MutationObserver;
+window.MutationObserver = function () {
+    return new Proxy({}, {
+        get: () => () => null
+    })
+};
 
 // Enable / Disable Parts Of The Code (use false to disable)
 var applyCBLsteamID = false
@@ -41,7 +47,30 @@ var coloredMsgBar3 = ""
 var coloredMsgBar4 = ""
 var coloredMsgBar5 = ""
 
-// Changes the teamkill color tag background
+// Copy & Paste Button
+String.prototype.startsWith = function (str) {
+    return (this.match("^" + str) == str)
+}
+if (document.location.pathname.startsWith("/rcon/players/")) {
+    var button = document.createElement("Button");
+    button.innerHTML = "Copy User Info";
+    button.id = "copy-button"
+    button.style = "top:100px;left:0;background:black;position:absolute;z-index:99999;padding:10px;";
+    document.body.appendChild(button);
+
+}
+
+document.getElementById('copy-button').onclick = function () {
+    let values = [];
+    document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
+    let text = document.createElement('textarea');
+    document.body.appendChild(text);
+    text.value = values.join(' |<->| ');
+    text.select();
+    document.execCommand('copy');
+    text.parentNode.removeChild(text);
+}
+// Main Code
 setInterval(function jobTwo() {
     // These apply the full width highlighted bars to the text (ie purple teamkills).
     //GM_addStyle(barHeightFix);
@@ -113,6 +142,7 @@ setInterval(function jobTwo() {
         /*List Of Server Mods*/
         "Aomm2025",
         "Crodawesome01",
+        "Charges",
         "Exploits",
         "FloridaMan",
         "Gallahad",
@@ -186,7 +216,9 @@ setInterval(function jobTwo() {
         ") forced",
     ]
 
-    //====================================== Do not edit the code below - it may break things!  ============================================================================================================================================================================================================================================================================================================================================================================================
+    //====================================== Do not edit the code below - it may break things!
+    // Copy & Paste Button
+    // Adds Copy & Paste Button On Players Profile
 
 
     // Highlighs admin terms along with admin some admin actions.
@@ -208,6 +240,10 @@ setInterval(function jobTwo() {
         }
     })
 
+
+    // ============================= Player Bars =============================
+
+
     // Highlights the Player Is Admin to neon in the players bar.
     b = battlemetricsAdmin
     for (i = 0; i < b.length; i++) {
@@ -215,83 +251,9 @@ setInterval(function jobTwo() {
             b[i].style.color = colorBattlemetricsAdmin
         }
     }
-
-    // Searches and highlight the names of admins for players and activity sections.
-    // ================ Admin / Mod List ========================
     namePlayers.forEach(element => {
         if (adminList.some(phrase => element.textContent.includes(phrase))) {
             element.style.color = colorAdminName
-        }
-    })
-
-    nameActivity.forEach(element => {
-        if (adminList.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorAdminName
-        }
-    })
-
-    // ================ Disabled Items Test ========================
-
-
-    // Warn Menu Bar (Nav Bar)
-        b = changeMapWarning3
-        for (i = 0; i < b.length; i++) {
-            if ((b[i].textContent.includes("Warn"))) {
-                b[i].style.color = "lime"
-            }
-        }
-
-    // Change Map Warning (Dialog)
-    b = changeMapWarning
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Change Map"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-            b[i].style.textAlign = "center"
-            b[i].style.fontSize = "800pt"
-        }
-    }
-
-    // Kick Warning (Dialog)
-    b = changeMapWarning
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Kick"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-            b[i].style.textAlign = "center"
-            b[i].style.fontSize = "48pt"
-        }
-    }
-
-    // Warn Warning (Dialog)
-    b = changeMapWarning
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Warn"))) {
-            b[i].style.color = "lime"
-        }
-    }
-
-    // Change Map Warning (Nav Bar)
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Change Map"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-        }
-    }
-
-    // Change Map Warning (Nav Bar)
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Set Next Map"))) {
-            b[i].style.color = "lime"
-        }
-    }
-
-    // For TKs Sorry Messages
-    messageActivity.forEach(element => {
-        if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorTeamkillAction
         }
     })
 
@@ -302,14 +264,20 @@ setInterval(function jobTwo() {
             b[i].style.color = "#ffba23"
         }
     }
-
-    // Grayed Out Phrases
-    messageActivity.forEach(element => {
-        if (grayedOutPhrases.some(phrase => element.textContent.includes(phrase))) {
-            element.style.color = colorGrayedOut
-            element.style.fontSize = "8pt"
+    //================Log Chat Highlighting======================== // Highlights admin names.
+    nameActivity.forEach(element => {
+        if (adminList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorAdminName
         }
     })
+
+    // For TKs Sorry Messages
+    messageActivity.forEach(element => {
+        if (wordSorry.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamkillAction
+        }
+    })
+
 
     const timeStamp = document.querySelectorAll('.css-z1s6qn')
     // Makes better timestamps
@@ -323,6 +291,56 @@ setInterval(function jobTwo() {
         // Replace Original Text
         // time[1] = HH:MM:MS
         // time[2] = AM/PM
-        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' + time[2]).toString())
+        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' +
+                                                                                           time[2]).toString())
     })
-}, 250)
+
+    // ================= Dialog Color Changes =================
+
+    // Change Map Warning (Dialog)
+    b = changeMapWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "800pt"
+        }
+    }
+    // Warn Menu
+    b = changeMapWarning3
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Warn"))) {
+            b[i].style.color = "lime"
+        }
+    }
+    // Kick Warning (Dialog)
+    b = changeMapWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Kick"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "48pt"
+        }
+    }
+    // Warn Warning (Dialog) b=changeMapWarning for (i=0; i < b.length; i++)
+    if ((b[i].textContent.includes("Warn"))) {
+            b[i].style.color = "lime"
+    }
+    // Change Map Warning (Nav Bar)
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+        }
+    }
+    // Change Map Warning (Nav Bar)
+    b = changeMapWarning2
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Set Next Map"))) {
+            b[i].style.color = "lime"
+        }
+    }
+}, 50)
