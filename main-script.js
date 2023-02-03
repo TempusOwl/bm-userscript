@@ -1,23 +1,17 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.2
+// @version 3.2.1
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
 // @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant GM_addStyle
-// @run-at document-body
+// @run-at document-start
 // @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b, c, i = false
 // =========== Edit The Code Below =========================================================
-const oldMutationObserver = window.MutationObserver;
-window.MutationObserver = function () {
-    return new Proxy({}, {
-        get: () => () => null
-    })
-};
 
 // Enable / Disable Parts Of The Code (use false to disable)
 var applyCBLsteamID = false
@@ -47,26 +41,23 @@ var coloredMsgBar3 = ""
 var coloredMsgBar4 = ""
 var coloredMsgBar5 = ""
 
-
 // Full Copy & Paste Button
 String.prototype.startsWith = function (str) {
     return (this.match("^" + str) == str)
 }
-if (document.location.pathname.startsWith("/rcon/players/")) {
-    var button = document.createElement("Button");
-    button.innerHTML = "Full Copy";
-    button.id = "copy-button"
-    button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:8px;font-weight:bold;";
-    document.body.appendChild(button);
 
-}
+var button = document.createElement("Button");
+button.innerHTML = "Full Copy";
+button.id = "copy-button"
+button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:8px;font-weight:bold;";
+document.body.appendChild(button);
 
 document.getElementById('copy-button').onclick = function () {
     let values = [];
     document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
     let text = document.createElement('textarea');
     document.body.appendChild(text);
-    text.value = "**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**CBL/History: **\n**Evidence: **\n**Context: **\n```**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + "```\n*``Click As Channel Deletes``* <#815730567706443807>";
+    text.value = "**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**CBL/History: **\n**Evidence: **\n**Context: **\n```**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + ">```\n*``Click As Channel Deletes``* <#815730567706443807>";
     text.select();
     document.execCommand('copy');
     text.parentNode.removeChild(text);
@@ -76,14 +67,14 @@ document.getElementById('copy-button').onclick = function () {
 String.prototype.startsWith = function (str) {
     return (this.match("^" + str) == str)
 }
-if (document.location.pathname.startsWith("/rcon/players/")) {
-    var button1 = document.createElement("Button");
-    button1.innerHTML = "Short";
-    button1.id = "copy-button1"
-    button1.style = "top:130px;left:0;background:#383838;position:absolute;z-index:99999;padding:6px;font-weight:bold;";
-    document.body.appendChild(button1);
 
-}
+var button1 = document.createElement("Button");
+button1.innerHTML = "Short";
+button1.id = "copy-button1"
+button1.style = "top:130px;left:0;background:#383838;position:absolute;z-index:99999;padding:6px;font-weight:bold;";
+document.body.appendChild(button1);
+
+
 
 document.getElementById('copy-button1').onclick = function () {
     let values = [];
@@ -352,7 +343,7 @@ setInterval(function jobTwo() {
     }
     // Warn Warning (Dialog) b=changeMapWarning for (i=0; i < b.length; i++)
     if ((b[i].textContent.includes("Warn"))) {
-            b[i].style.color = "lime"
+        b[i].style.color = "lime"
     }
     // Change Map Warning (Nav Bar)
     b = changeMapWarning2
