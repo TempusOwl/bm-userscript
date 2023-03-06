@@ -1,16 +1,16 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.4
+// @version 3.6
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
 // @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant GM_addStyle
 // @run-at document-start
-// @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b, c, i = false
+let counter = 0;
 // =========== Edit The Code Below =========================================================
 
 // Enable / Disable Parts Of The Code (use false to disable)
@@ -32,25 +32,25 @@ var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
 var colorTeamkillAction = "#FF97FC"
 var colorAdminAction = "lime"
-var colorModName = "Green"
+var colorModName = "Fuchsia"
 
 // Highlights tagged messages, and makes them colored (IE: Purple TKs)
-var barHeightFix = ".css-ecfywz {height: fit-width;}"
+var barHeightFix = ".css-ecfywz {height: 38px}"
 var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
 var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
 var coloredMsgBar3 = ""
 var coloredMsgBar4 = ""
 var coloredMsgBar5 = ""
 
-// Main Code
 setInterval(function Job_BM_Tamper() {
     // These apply the full width highlighted bars to the text (ie purple teamkills).
-    //GM_addStyle(barHeightFix);
+    GM_addStyle(barHeightFix);
     GM_addStyle(coloredMsgBar1);
     GM_addStyle(coloredMsgBar2);
     GM_addStyle(coloredMsgBar3);
     GM_addStyle(coloredMsgBar4);
     GM_addStyle(coloredMsgBar5);
+    // Select the pages css elements that contain the data.
     const namePlayers = document.querySelectorAll('.css-mjpog7')
     const nameActivity = document.querySelectorAll('.css-zwebxb')
     const messageActivity = document.querySelectorAll('.css-ym7lu8')
@@ -202,6 +202,9 @@ setInterval(function Job_BM_Tamper() {
         if (adminList.some(phrase => element.textContent.includes(phrase))) {
             element.style.color = colorAdminName
         }
+        else if (modList.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorModName
+        }
     })
 
     // Added Squad Lead Highlight
@@ -260,8 +263,9 @@ setInterval(function Job_BM_Tamper() {
             b[i].style.color = "lime"
         }
     }
-}, 350)
+}, 250)
 
+/* This works, but may cause formatting issues I believe. Testing with it off currently.
 setInterval(function jobTimeStamps() {
     // Add timestamps in seconds
     const timeStamp = document.querySelectorAll('.css-z1s6qn')
@@ -279,71 +283,40 @@ setInterval(function jobTimeStamps() {
                                                                                            time[2]).toString())
     })
 }, 25)
+*/
 
-// Adds a clickable URL to steamIDs that bring you to communty ban list.
-// Note if you hold your click, or click it during an update it eats the input. Not sure if there is an easy way to fix this.
-setInterval(function steamCBL() {
-    const spans = document.querySelectorAll('.css-q39y9k')
-    spans.forEach(span => {
-        const steamID = span.title /* or span.textContent */
-
-        const a = document.createElement('a')
-
-        ;
-        [...span.attributes].forEach(attr => a.attributes.setNamedItem(attr.cloneNode()))
-
-        a.href = `https://communitybanlist.com/search/${steamID}`
-        a.innerHTML = steamID
-
-        span.replaceWith(a)
-    })
-}, 650)
-
-
-// Full Copy & Paste Button (Must looking at a player's profile)
+// Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
+// Recommended to click it few times to ensure the click gets through...
+setInterval(function Job_BM_Tamper() {
 String.prototype.startsWith = function (str) {
      return (this.match("^" + str) == str)
- }
+}
 
 var button = document.createElement("Button");
-     button.innerHTML = "F";
+     var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText
+     var pName = document.querySelectorAll('#RCONPlayerPage > h1')[0].innerText
+     button.innerHTML = "Copy";
      button.id = "copy-button"
-     button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;font-weight:bold;";
+     button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
      document.body.appendChild(button);
 
-
 document.getElementById('copy-button').onclick = function () {
+     var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText
+     var pName = document.querySelectorAll('#RCONPlayerPage > h1')[0].innerText
      let values = [];
-     document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
+     //document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
      let text = document.createElement('textarea');
-    document.body.appendChild(text);
-     text.value = "**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**CBL/History: **\n**Evidence: **\n**Context: **\n```**Offending User: **" + values.join(' **|X|** ') + "\n**BM: **<" + window.location.href + ">```\n*``Click As Channel Deletes``* <#815730567706443807>";
+     document.body.appendChild(text);
+     text.value = "**Offending User: **" + pName + "** // **" + pSteamID + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below: ``Ticket Channel Shortcut->`` <#815730567706443807>\n";
      text.select();
      document.execCommand('copy');
      text.parentNode.removeChild(text);
- }
-
-// Short Copy & Paste Button
-String.prototype.startsWith = function (str) {
-    return (this.match("^" + str) == str)
 }
-
-    var button1 = document.createElement("Button");
-    button1.innerHTML = "S";
-    button1.id = "copy-button1"
-    button1.style = "top:130px;left:0;background:#383838;position:absolute;z-index:99999;padding:6px;font-weight:bold;";
-    document.body.appendChild(button1);
-
-
-
-document.getElementById('copy-button1').onclick = function () {
-    let values = [];
-    document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
-    let text = document.createElement('textarea');
-    document.body.appendChild(text);
-    text.value = "**Player: **" + values.join(' **//** ') + "\n**BM: **<" + window.location.href + ">";
-    text.select();
-    document.execCommand('copy');
-    text.parentNode.removeChild(text);
-}
+// This function deletes the old button so it does not remain on the page and causes issues, you may notice the button link as its replaced.
+setTimeout(function Job_Button_Deleter() {
+    const element = document.getElementById("copy-button");
+        element.remove();
+            console.log("button deleted")
+    }, 995)
+}, 1000)
 
