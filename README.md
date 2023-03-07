@@ -30,7 +30,7 @@ It’s a browser addon that loads “userscripts” that can modify how a websit
 https://www.tampermonkey.net/ (I recommend Stable)
 
 ## Add The Script
-See the image within the repo for a image based guide... Otherwise read below..
+Step By Step - Guide: https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/install-guide.png
 * Once you downloaded the TamperMonkey extension to your browser via Chrome/Firefox Webstore, locate it at the upper right of your browser and right click it. 
 * Create a new script, this will open a new tab. Replace EVERYTHING within it with the main-script.js found above (open as raw). Then save the script with CTLR+S
 * Go the BM website, and it should show as a red +1 next to TamperMonkey icon, if the script is working. Otherwise you may need to enable it. Try refreshing the page if you do not see anything.
