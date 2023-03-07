@@ -2,13 +2,6 @@
 This is simple userscript that takes advantage of custom triggers you may have created in BM, as well as parse important text. I made this help color code important details like Squad Leaders, among other things. Having 100 users on a table with varying info can make parsing rather hard, this makes it easy.
 Note this code is intended for the BattleMetrics RCON product, used by server admins. Not to be confused with the standard BattleMetrics server list. 
 
-## Latest Changes
-10/19/22 (v2.3) Added Kibz, fixed CSS not applying to the BM tags sometimes, added optional toggles to disable parts of the code. 
-
-10/31/22 (v2.5) Added Wolf Fang, color coded change map, squad list, next map. Added massive text causing you to have to scroll when changing map. Moved the CBL linker to its own script until I can find better way to program it. Added additional highlights to when squads are requested, map is changed, next map and map is requested.
-
-2/2/23 (3.2.1) Added copy/paste button that is useful for tickets, may require refreshing a player's profile in RCON. Added several new mods/admins.
-
 ## Known Issues
 - The page may slow down, potentionally related to number of CSS elements it has to affect. Using Dashboard causes increased load, in almost all cases refreshing the page fixes any slow downs or issues with the script. 
 - Copy/Paste button persist on the screen once activated. I believe AJAX is causing several issues with the code and may be related to the issue above too. Ideally the domain path would allow me to limit which scripts run. I will have to research AJAX more when I can get around to it. 
