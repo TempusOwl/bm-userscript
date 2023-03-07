@@ -288,7 +288,7 @@ setInterval(function jobTimeStamps() {
     })
 }, 25)
 
-setTimeout(function Job_Button_Deleter() {
+setTimeout(function Job_Button_Colorer() {
     const actionWarning = document.querySelectorAll('.modal-title')
     const serverDialogSelects = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
     const playerDialogSelects = document.querySelectorAll('.css-f5o5h6 a, .css-f5o5h6 button')
