@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.8
+// @version 3.8.1
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -35,22 +35,8 @@ var colorAdminAction = "lime"
 var colorModName = "Fuchsia"
 var colorTeamKilled = "Yellow"
 
-// Highlights tagged messages, and makes them colored (IE: Purple TKs)
-//var barHeightFix = ".css-ecfywz {height: 38px}"
-//var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
-//var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
-var coloredMsgBar3 = ""
-var coloredMsgBar4 = ""
-var coloredMsgBar5 = ""
-
 setInterval(function Job_BM_Tamper() {
     // These apply the full width highlighted bars to the text (ie purple teamkills).
-    // GM_addStyle(barHeightFix);
-    // GM_addStyle(coloredMsgBar1);
-    // GM_addStyle(coloredMsgBar2);
-    // GM_addStyle(coloredMsgBar3);
-    // GM_addStyle(coloredMsgBar4);
-    // GM_addStyle(coloredMsgBar5);
     // Select the pages css elements that contain the data.
     const namePlayers = document.querySelectorAll('.css-mjpog7')
     const nameActivity = document.querySelectorAll('.css-zwebxb')
@@ -289,25 +275,6 @@ setInterval(function Job_BM_Tamper() {
     }
 }, 125)
 
-/* This works, but may cause formatting issues I believe. Testing with it off currently.
-setInterval(function jobTimeStamps() {
-    // Add timestamps in seconds
-    const timeStamp = document.querySelectorAll('.css-z1s6qn')
-    timeStamp.forEach(element => {
-        // Get the Coordinated Universal Time
-        const utcTime = element.getAttribute('datetime')
-        // Create a date variable
-        const date = new Date(utcTime)
-        // Convert to users local timezone
-        var time = date.toLocaleString().split(' ')
-        // Replace Original Text
-        // time[1] = HH:MM:MS
-        // time[2] = AM/PM
-        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' +
-                                                                                           time[2]).toString())
-    })
-}, 25)
-*/
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
 // Recommended to click it few times to ensure the click gets through...
 setInterval(function Job_BM_Tamper() {
