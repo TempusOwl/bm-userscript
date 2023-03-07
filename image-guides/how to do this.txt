@@ -1,1 +1,0 @@
-You need to open inspect element by right clicking on the site, all desktop browsers have it. If you head to the upper left of the expanded window you can click the pointer icon, with this you can use to click elements like I do in these images to track down class names to highlight parts of the website's code.
