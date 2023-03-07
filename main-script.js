@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.8.1
+// @version 3.9
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -13,7 +13,7 @@ var b, c, i = false
 let counter = 0;
 // =========== Edit The Code Below =========================================================
 
-// Enable / Disable Parts Of The Code (use false to disable)
+// Enable / Disable Parts Of The Code (use false to disable)d
 var applyCBLsteamID = false
 var colorSquadCreations = false
 var colorAdminActivity = false
@@ -32,7 +32,7 @@ var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
 var colorTeamkillAction = "#FF97FC"
 var colorAdminAction = "lime"
-var colorModName = "Fuchsia"
+var colorModName = "#44ffa9"
 var colorTeamKilled = "Yellow"
 
 setInterval(function Job_BM_Tamper() {
@@ -52,6 +52,7 @@ setInterval(function Job_BM_Tamper() {
         "was banned",
         "edited BattleMetrics Ban",
         "added BattleMetrics Ban",
+        "deleted BattleMetrics Ban",
     ]
     const adminList = [
         /*Red Admins*/
@@ -327,3 +328,21 @@ setInterval(function steamCBL() {
         span.replaceWith(a)
     })
 }, 1250)
+
+setInterval(function jobTimeStamps() {
+    // Add timestamps in seconds
+    const timeStamp = document.querySelectorAll('.css-z1s6qn')
+    timeStamp.forEach(element => {
+        // Get the Coordinated Universal Time
+        const utcTime = element.getAttribute('datetime')
+        // Create a date variable
+        const date = new Date(utcTime)
+        // Convert to users local timezone
+        var time = date.toLocaleString().split(' ')
+        // Replace Original Text
+        // time[1] = HH:MM:MS
+        // time[2] = AM/PM
+        element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + ' ' +
+                                                                                           time[2]).toString())
+    })
+}, 25)
