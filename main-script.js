@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.9
+// @version 3.8.2
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -42,9 +42,6 @@ setInterval(function Job_BM_Tamper() {
     const nameActivity = document.querySelectorAll('.css-zwebxb')
     const messageActivity = document.querySelectorAll('.css-ym7lu8')
     const battlemetricsAdmin = document.querySelectorAll('.css-18s4qom')
-    const changeMapWarning = document.querySelectorAll('.modal-title')
-    const changeMapWarning2 = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
-    const changeMapWarning3 = document.querySelectorAll('.css-f5o5h6 a, .css-f5o5h6 button')
     const sl_kit = "[SL Kit]"
     const actionList = [
         "was warned",
@@ -219,61 +216,6 @@ setInterval(function Job_BM_Tamper() {
         }
     }
 
-   // ================= Dialog Color Changes =================
-
-    // Change Map Warning (Dialog)
-    b = changeMapWarning
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Change Map"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-            b[i].style.textAlign = "center"
-            b[i].style.fontSize = "800pt"
-        }
-    }
-    // Warn Menu
-    b = changeMapWarning3
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Warn"))) {
-            b[i].style.color = "lime"
-        } else if ((b[i].textContent.includes("Ban"))) {
-            b[i].style.color = "red"
-        } else if ((b[i].textContent.includes("Force"))) {
-            b[i].style.color = "white"
-        } else if ((b[i].textContent.includes("Kick"))) {
-            b[i].style.color = "red"
-        }
-    }
-    // Kick Warning (Dialog)
-    b = changeMapWarning
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Kick"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-            b[i].style.textAlign = "center"
-            b[i].style.fontSize = "48pt"
-        }
-    }
-    // Warn Warning (Dialog) b=changeMapWarning for (i=0; i < b.length; i++)
-    if ((b[i].textContent.includes("Warn"))) {
-        b[i].style.color = "lime"
-    }
-
-    // Change Map Warning (Nav Bar)
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Change Map"))) {
-            b[i].style.color = "red"
-            b[i].style.fontStyle = "bold"
-        }
-    }
-    // Change Map Warning (Nav Bar)
-    b = changeMapWarning2
-    for (i = 0; i < b.length; i++) {
-        if ((b[i].textContent.includes("Set Next Map"))) {
-            b[i].style.color = "lime"
-        }
-    }
 }, 125)
 
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
@@ -346,3 +288,54 @@ setInterval(function jobTimeStamps() {
                                                                                            time[2]).toString())
     })
 }, 25)
+
+setTimeout(function Job_Button_Deleter() {
+    const actionWarning = document.querySelectorAll('.modal-title')
+    const serverDialogSelects = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
+    const playerDialogSelects = document.querySelectorAll('.css-f5o5h6 a, .css-f5o5h6 button')
+
+   // ================= Dialog Color Changes =================
+
+    // Change Map Warning (Dialog)
+    b = actionWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Change Map"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "800pt"
+        }
+    }
+
+   // Kick Warning (Dialog)
+    b = actionWarning
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Kick"))) {
+            b[i].style.color = "red"
+            b[i].style.fontStyle = "bold"
+            b[i].style.textAlign = "center"
+            b[i].style.fontSize = "48pt"
+        }
+    }
+
+    // Warn Menu
+    b = playerDialogSelects
+    for (i = 0; i < b.length; i++) {
+        if ((b[i].textContent.includes("Warn"))) {
+            b[i].style.color = "lime"
+        } else if ((b[i].textContent.includes("Ban"))) {
+            b[i].style.color = "red"
+        } else if ((b[i].textContent.includes("Force"))) {
+            b[i].style.color = "LightSkyBlue"
+        } else if ((b[i].textContent.includes("Squad"))) {
+            b[i].style.color = "yellow"
+        } else if ((b[i].textContent.includes("Kick"))) {
+            b[i].style.color = "red"
+        } else if ((b[i].textContent.includes("Flags"))) {
+            b[i].style.color = "gray"
+        } else if ((b[i].textContent.includes("inform"))) {
+            b[i].style.color = "gray"
+        }
+    }
+
+}, 200)
