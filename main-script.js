@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.6
+// @version 3.8
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -25,31 +25,32 @@ var timeHasSeconds = false
 
 // Colors starting with # are known as "HEX" colors. https://htmlcolorcodes.com/color-picker/
 var colorMissingKit = "#C1766E"
-var colorTeamBluefor = "#FFF200"
-var colorTeamOpfor = "#FF9F32"
+var colorTeamBluefor = "LightSkyBlue"
+var colorTeamOpfor = "Tomato"
 var colorAdminName = "#55f1ff"
 var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
 var colorTeamkillAction = "#FF97FC"
 var colorAdminAction = "lime"
 var colorModName = "Fuchsia"
+var colorTeamKilled = "Yellow"
 
 // Highlights tagged messages, and makes them colored (IE: Purple TKs)
-var barHeightFix = ".css-ecfywz {height: 38px}"
-var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
-var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
+//var barHeightFix = ".css-ecfywz {height: 38px}"
+//var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
+//var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
 var coloredMsgBar3 = ""
 var coloredMsgBar4 = ""
 var coloredMsgBar5 = ""
 
 setInterval(function Job_BM_Tamper() {
     // These apply the full width highlighted bars to the text (ie purple teamkills).
-    GM_addStyle(barHeightFix);
-    GM_addStyle(coloredMsgBar1);
-    GM_addStyle(coloredMsgBar2);
-    GM_addStyle(coloredMsgBar3);
-    GM_addStyle(coloredMsgBar4);
-    GM_addStyle(coloredMsgBar5);
+    // GM_addStyle(barHeightFix);
+    // GM_addStyle(coloredMsgBar1);
+    // GM_addStyle(coloredMsgBar2);
+    // GM_addStyle(coloredMsgBar3);
+    // GM_addStyle(coloredMsgBar4);
+    // GM_addStyle(coloredMsgBar5);
     // Select the pages css elements that contain the data.
     const namePlayers = document.querySelectorAll('.css-mjpog7')
     const nameActivity = document.querySelectorAll('.css-zwebxb')
@@ -162,6 +163,16 @@ setInterval(function Job_BM_Tamper() {
         ") forced",
     ]
 
+    const teamKilled = [
+        "team killed",
+    ]
+
+    const grayedOut = [
+        "joined the server",
+        "left the server",
+        "[SL Kit]"
+    ]
+
     //====================================== Do not edit the code below - it may break things!
     // Copy & Paste Button
     // Adds Copy & Paste Button On Players Profile
@@ -177,6 +188,12 @@ setInterval(function Job_BM_Tamper() {
             element.style.color = colorTeamBluefor
         } else if (teamOpfor.some(phrase => element.textContent.includes(phrase))) {
             element.style.color = colorTeamOpfor
+        } else if (teamKilled.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = colorTeamKilled
+            element.style.fontSize = "medium";
+        } else if (grayedOut.some(phrase => element.textContent.includes(phrase))) {
+            element.style.color = "gray"
+            element.style.fontSize = "8pt";
         }
     })
 
@@ -215,7 +232,7 @@ setInterval(function Job_BM_Tamper() {
         }
     }
 
-    // ================= Dialog Color Changes =================
+   // ================= Dialog Color Changes =================
 
     // Change Map Warning (Dialog)
     b = changeMapWarning
@@ -232,6 +249,12 @@ setInterval(function Job_BM_Tamper() {
     for (i = 0; i < b.length; i++) {
         if ((b[i].textContent.includes("Warn"))) {
             b[i].style.color = "lime"
+        } else if ((b[i].textContent.includes("Ban"))) {
+            b[i].style.color = "red"
+        } else if ((b[i].textContent.includes("Force"))) {
+            b[i].style.color = "white"
+        } else if ((b[i].textContent.includes("Kick"))) {
+            b[i].style.color = "red"
         }
     }
     // Kick Warning (Dialog)
@@ -246,8 +269,9 @@ setInterval(function Job_BM_Tamper() {
     }
     // Warn Warning (Dialog) b=changeMapWarning for (i=0; i < b.length; i++)
     if ((b[i].textContent.includes("Warn"))) {
-            b[i].style.color = "lime"
+        b[i].style.color = "lime"
     }
+
     // Change Map Warning (Nav Bar)
     b = changeMapWarning2
     for (i = 0; i < b.length; i++) {
@@ -263,7 +287,7 @@ setInterval(function Job_BM_Tamper() {
             b[i].style.color = "lime"
         }
     }
-}, 250)
+}, 125)
 
 /* This works, but may cause formatting issues I believe. Testing with it off currently.
 setInterval(function jobTimeStamps() {
@@ -284,7 +308,6 @@ setInterval(function jobTimeStamps() {
     })
 }, 25)
 */
-
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
 // Recommended to click it few times to ensure the click gets through...
 setInterval(function Job_BM_Tamper() {
@@ -307,7 +330,7 @@ document.getElementById('copy-button').onclick = function () {
      //document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
      let text = document.createElement('textarea');
      document.body.appendChild(text);
-     text.value = "**Offending User: **" + pName + "** // **" + pSteamID + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below: ``Ticket Channel Shortcut->`` <#815730567706443807>\n";
+     text.value = "**Offending User: **" + pName + "** // **" + pSteamID + "\n**BM: **<" + window.location.href + ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below:**``Ticket Channel Shortcut->`` <#815730567706443807>\n";
      text.select();
      document.execCommand('copy');
      text.parentNode.removeChild(text);
@@ -320,3 +343,20 @@ setTimeout(function Job_Button_Deleter() {
     }, 995)
 }, 1000)
 
+// Adds a clickable URL to steamIDs that bring you to communty ban list.
+setInterval(function steamCBL() {
+    const spans = document.querySelectorAll('.css-q39y9k')
+    spans.forEach(span => {
+        const steamID = span.title /* or span.textContent */
+
+        const a = document.createElement('a')
+
+        ;
+        [...span.attributes].forEach(attr => a.attributes.setNamedItem(attr.cloneNode()))
+
+        a.href = `https://communitybanlist.com/search/${steamID}`
+        a.innerHTML = steamID
+
+        span.replaceWith(a)
+    })
+}, 1250)
