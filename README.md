@@ -7,6 +7,7 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 
 ## Features Of This main-script.js
 * Highly customizable!
+* Adds clickable link that brings you to the CommunityBanList profile of a user.
 * Copy and paste user info button for tickets via a button on the player's profile.
 * Grays out unimportant events like joins/leaves,
 * Color codes change map, next map and squad list.
@@ -22,10 +23,6 @@ Note this code is intended for the BattleMetrics RCON product, used by server ad
 * Highlights Admins/mods within the activity log.
 * Highlights important trigger warnings in red. 
 
-(Below requires the seperate CBL script in this repo)
-* Adds a clickable link for SteamID that goes to the communitybanlist.com/<theSteamid>
-
-![how the results look](https://github.com/TempusOwl/bm-userscript/blob/main/result.png?raw=true)
 ## What Is TamperMonkey
 It’s a browser addon that loads “userscripts” that can modify how a website display’s itself to you. User scripts are powerful tools that can totally modify websites. Remember, tampermonkey can pose significant security issues for your device if you install scripts from unknown sources. Only use scripts if you know what they are doing!
 
