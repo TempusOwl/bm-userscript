@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.8.2
+// @version 3.8.3
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -10,7 +10,6 @@
 // @run-at document-start
 // ==/UserScript==
 var b, c, i = false
-let counter = 0;
 // =========== Edit The Code Below =========================================================
 
 // Enable / Disable Parts Of The Code (use false to disable)d
