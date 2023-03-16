@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace http://tampermonkey.net/
-// @version 3.8.3
+// @version 4.0
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -24,8 +24,8 @@ var timeHasSeconds = false
 
 // Colors starting with # are known as "HEX" colors. https://htmlcolorcodes.com/color-picker/
 var colorMissingKit = "#C1766E"
-var colorTeamBluefor = "LightSkyBlue"
-var colorTeamOpfor = "Tomato"
+var colorTeamBluefor = "#99b3ff"
+var colorTeamOpfor = "#ff8c1a"
 var colorAdminName = "#55f1ff"
 var colorBattlemetricsAdmin = "lime"
 var colorModerationAction = "#ff3333"
@@ -34,6 +34,20 @@ var colorAdminAction = "lime"
 var colorModName = "#44ffa9"
 var colorTeamKilled = "Yellow"
 
+// Tag Bar Width Increase - Creates width colored bars for teamkills or other tagged messages in BM. These may not work by default if your class names differ.
+// I will try to create a guide how to find the proper class names if these don't work... 
+setTimeout(function Modify_Tag_Bars() {
+var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
+var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
+var coloredMsgBar3 = ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}"
+var coloredMsgBar4 = ".css-zwebxb {z-index: 2;}"
+GM_addStyle(coloredMsgBar1);
+GM_addStyle(coloredMsgBar2);
+GM_addStyle(coloredMsgBar3);
+GM_addStyle(coloredMsgBar4);
+}, 200)
+
+// Main function that applies CSS styling to elements
 setInterval(function Job_BM_Tamper() {
     // These apply the full width highlighted bars to the text (ie purple teamkills).
     // Select the pages css elements that contain the data.
@@ -66,7 +80,6 @@ setInterval(function Job_BM_Tamper() {
         "Brennan",
         "CeeJay",
         "Captain Crossbones",
-        "E10",
         "Gilly",
         "Nightshade",
         "Tiberius",
@@ -81,6 +94,7 @@ setInterval(function Job_BM_Tamper() {
         "Bigham907",
         "Crodawesome01",
         "DontFaket",
+        "E10",
         "El 24 throttle4u",
         "FloridaMan",
         "gnome saiya",
@@ -109,13 +123,15 @@ setInterval(function Job_BM_Tamper() {
         "Gallahad",
         "Hispxanic",
         "JAMESTERRARIA",
-        "JerkinJimmy", // Aka Skipper?
+        "JerkinJimmy", // aka Skipper?
+        "Skipper", // aka JerkinJimmy?
         "JoyfulConfusion",
+        "Loganator",
         "MURICA",
         "StickWiggler",
         "Smeltz",
         "WadeLovesWhiteWomen",
-        "Zimmy-75",
+        "Zimmy - 75",
     ]
     const teamBluefor = [
         "Australian Defence Force",
@@ -144,6 +160,7 @@ setInterval(function Job_BM_Tamper() {
         "changed the map to",
         "requested the next map.",
         ") forced",
+        "(Global)",
     ]
 
     const teamKilled = [
@@ -248,9 +265,9 @@ document.getElementById('copy-button').onclick = function () {
 setTimeout(function Job_Button_Deleter() {
     const element = document.getElementById("copy-button");
         element.remove();
-            console.log("button deleted")
-    }, 995)
+    }, 950)
 }, 1000)
+
 
 // Adds a clickable URL to steamIDs that bring you to communty ban list.
 setInterval(function steamCBL() {
@@ -288,7 +305,7 @@ setInterval(function jobTimeStamps() {
     })
 }, 25)
 
-setTimeout(function Job_Button_Colorer() {
+setTimeout(function Job_Button_Deleter() {
     const actionWarning = document.querySelectorAll('.modal-title')
     const serverDialogSelects = document.querySelectorAll('.css-yun63y a, .css-yun63y button')
     const playerDialogSelects = document.querySelectorAll('.css-f5o5h6 a, .css-f5o5h6 button')
@@ -336,5 +353,46 @@ setTimeout(function Job_Button_Colorer() {
             b[i].style.color = "gray"
         }
     }
-
 }, 200)
+
+setTimeout(function ButtonLinks() {
+var mapsbutton = document.createElement("input");
+     mapsbutton.setAttribute("type", "button");
+     mapsbutton.id = "mapsbutton";
+     mapsbutton.setAttribute("value", "Maps");
+     mapsbutton.setAttribute("onclick", "window.open('https://squadmaps.com/', '_blank')");
+     mapsbutton.style = "top:10px;right:25%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+     mapsbutton.setAttribute("target", "_blank");
+     mapsbutton.setAttribute("id", "mapsbutton");
+     document.body.appendChild(mapsbutton);
+
+var lanesbutton = document.createElement("input");
+     lanesbutton.setAttribute("type", "button");
+     lanesbutton.id = "lanesbutton";
+     lanesbutton.setAttribute("value", "Lanes");
+     lanesbutton.setAttribute("onclick", "window.open('https://squadlanes.com/', '_blank')");
+     lanesbutton.style = "top:10px;right:20%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+     lanesbutton.setAttribute("target", "_blank");
+     lanesbutton.setAttribute("id", "lanesbutton");
+     document.body.appendChild(lanesbutton);
+
+var cblbutton = document.createElement("input");
+     cblbutton.setAttribute("type", "button");
+     cblbutton.id = "cblbutton";
+     cblbutton.setAttribute("value", "CBL");
+     cblbutton.setAttribute("onclick", "window.open('https://communitybanlist.com/', '_blank')");
+     cblbutton.style = "top:10px;right:15%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+     cblbutton.setAttribute("target", "_blank");
+     cblbutton.setAttribute("id", "cblbutton");
+     document.body.appendChild(cblbutton);
+
+var rotationbutton = document.createElement("input");
+    rotationbutton.setAttribute("type", "button");
+    rotationbutton.id = "rotationbutton";
+    rotationbutton.setAttribute("value", "Rotation");
+    rotationbutton.setAttribute("onclick", "window.open('https://docs.google.com/spreadsheets/d/156pnIhJb3zmoEcwFSx8Kv1AQ0HRzYmI4t0kDfQNmrVE/edit#gid=0', '_blank')");
+    rotationbutton.style = "top:10px;right:10%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+    rotationbutton.setAttribute("target", "_blank");
+    rotationbutton.setAttribute("id", "rotationbutton");
+    document.body.appendChild(rotationbutton);
+}, 500)
