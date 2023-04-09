@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
-// @namespace http://tampermonkey.net/
-// @version 4.0
+// @namespace https://www.battlemetrics.com/*
+// @version 4.1
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -35,7 +35,7 @@ var colorModName = "#44ffa9"
 var colorTeamKilled = "Yellow"
 
 // Tag Bar Width Increase - Creates width colored bars for teamkills or other tagged messages in BM. These may not work by default if your class names differ.
-// I will try to create a guide how to find the proper class names if these don't work... 
+// I will try to create a guide how to find the proper class names if these don't work...
 setTimeout(function Modify_Tag_Bars() {
 var coloredMsgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}"
 var coloredMsgBar2 = ".css-ym7lu8 {z-index: 2;}"
@@ -63,6 +63,7 @@ setInterval(function Job_BM_Tamper() {
         "edited BattleMetrics Ban",
         "added BattleMetrics Ban",
         "deleted BattleMetrics Ban",
+        "Trigger added flag Previously banned",
     ]
     const adminList = [
         /*Red Admins*/
@@ -92,7 +93,6 @@ setInterval(function Job_BM_Tamper() {
         "Avengerian",
         "Basey",
         "Bigham907",
-        "Crodawesome01",
         "DontFaket",
         "E10",
         "El 24 throttle4u",
@@ -100,10 +100,8 @@ setInterval(function Job_BM_Tamper() {
         "gnome saiya",
         "Habeeb",
         "Mike.H",
-        "Mexican Jesus",
         "QTheEngineer",
         "Radio",
-        "Reaper",
         "RedClaws",
         "Redneck",
         "Sticker",
@@ -117,7 +115,6 @@ setInterval(function Job_BM_Tamper() {
     const modList = [
         /*List Of Server Mods*/
         "Aomm2025",
-        "Charges",
         "Cossack_440",
         "Exploits",
         "Gallahad",
@@ -128,15 +125,15 @@ setInterval(function Job_BM_Tamper() {
         "JoyfulConfusion",
         "Loganator",
         "MURICA",
-        "StickWiggler",
-        "Smeltz",
         "WadeLovesWhiteWomen",
         "Zimmy - 75",
     ]
     const teamBluefor = [
         "Australian Defence Force",
         "British Army",
+        "British Armed Forces",
         "Canadian Army",
+        "Canadian Armed Forces",
         "United States Army",
         "United States Marine Corps",
     ]
@@ -361,7 +358,7 @@ var mapsbutton = document.createElement("input");
      mapsbutton.id = "mapsbutton";
      mapsbutton.setAttribute("value", "Maps");
      mapsbutton.setAttribute("onclick", "window.open('https://squadmaps.com/', '_blank')");
-     mapsbutton.style = "top:10px;right:25%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+     mapsbutton.style = "top:10px;right:17%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
      mapsbutton.setAttribute("target", "_blank");
      mapsbutton.setAttribute("id", "mapsbutton");
      document.body.appendChild(mapsbutton);
@@ -371,28 +368,18 @@ var lanesbutton = document.createElement("input");
      lanesbutton.id = "lanesbutton";
      lanesbutton.setAttribute("value", "Lanes");
      lanesbutton.setAttribute("onclick", "window.open('https://squadlanes.com/', '_blank')");
-     lanesbutton.style = "top:10px;right:20%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+     lanesbutton.style = "top:10px;right:12%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
      lanesbutton.setAttribute("target", "_blank");
      lanesbutton.setAttribute("id", "lanesbutton");
      document.body.appendChild(lanesbutton);
-
-var cblbutton = document.createElement("input");
-     cblbutton.setAttribute("type", "button");
-     cblbutton.id = "cblbutton";
-     cblbutton.setAttribute("value", "CBL");
-     cblbutton.setAttribute("onclick", "window.open('https://communitybanlist.com/', '_blank')");
-     cblbutton.style = "top:10px;right:15%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
-     cblbutton.setAttribute("target", "_blank");
-     cblbutton.setAttribute("id", "cblbutton");
-     document.body.appendChild(cblbutton);
 
 var rotationbutton = document.createElement("input");
     rotationbutton.setAttribute("type", "button");
     rotationbutton.id = "rotationbutton";
     rotationbutton.setAttribute("value", "Rotation");
     rotationbutton.setAttribute("onclick", "window.open('https://docs.google.com/spreadsheets/d/156pnIhJb3zmoEcwFSx8Kv1AQ0HRzYmI4t0kDfQNmrVE/edit#gid=0', '_blank')");
-    rotationbutton.style = "top:10px;right:10%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;";
+    rotationbutton.style = "top:10px;right:7%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
     rotationbutton.setAttribute("target", "_blank");
     rotationbutton.setAttribute("id", "rotationbutton");
     document.body.appendChild(rotationbutton);
-}, 500)
+}, 150)
