@@ -285,9 +285,10 @@ setInterval(function steamCBL() {
     [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
     a.href = `https://communitybanlist.com/search/${steamID}`;
     a.innerHTML = steamID;
+    a.target = "_blank";
     span.replaceWith(a);
   });
-}, 1250);
+}, 500);
 
 // This conflict with mobile devices.
 setTimeout(function ButtonLinks() {
@@ -375,5 +376,5 @@ setInterval(function Job_BM_Tamper() {
   setTimeout(function Job_Button_Deleter() {
     const element = document.getElementById("copy-button");
     element.remove();
-  }, 950);
+  }, 975);
 }, 1000);
