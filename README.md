@@ -2,7 +2,7 @@
 Userscript that takes advantage of custom triggers you may have created in BM, as well as parse important text. I made this help color code important details like Squad Leaders, among other things. Having 100 users on a table with varying info can make parsing rather hard, this makes it easy.
 
 ## Known Issues
-- Some elements like Copy Button or Community Ban List may eat clicks when it's being updated, if it does not work click again.
+- Some elements like Copy Button or Community Ban List may eat clicks when it's being updated, if it does not work click again. Refreshing the page resolve most issues if you encounter any.
 
 ## Features Of This main-script.js
 * Highly customizable!
