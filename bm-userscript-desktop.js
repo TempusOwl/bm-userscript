@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace https://www.battlemetrics.com/
-// @version 5.1
+// @version 5.2
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
 // @match https://www.battlemetrics.com/*
@@ -9,7 +9,6 @@
 // @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
 // @grant GM_addStyle
 // @run-at document-start
-// @require https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.2/waitForKeyElements.js
 // ==/UserScript==
 var b,
   c,
@@ -70,20 +69,16 @@ setInterval(function Main_Script() {
     "Nightshade",
     "Tiberius",
     "Wolf Fang",
-    "Nostradumbass",
     "Θscar Mike",
-    "TexasForever22",
     "Too Many Cooks",
     /*Server Admins*/
     "Avengerian",
     "ANGEL_42",
     "Basey",
-    "Bigham907",
     "DontFaket",
     "E10",
     "El 24 throttle4u",
     "FloridaMan",
-    "gnome saiya",
     "Habeeb",
     "Mike.H",
     "QTheEngineer",
@@ -115,6 +110,7 @@ setInterval(function Main_Script() {
     "MURICA",
     "WadeLovesWhiteWomen",
     "Zimmy - 75",
+    "Nostradumbass",
   ];
   var teamBluefor = [
     "Australian Defence Force",
@@ -298,7 +294,7 @@ setInterval(function steamCBL() {
     [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
     a.href = `https://communitybanlist.com/search/${steamID}`;
     a.innerHTML = steamID;
-    a.target = "_blank"
+    a.target = "_blank";
     span.replaceWith(a);
   });
 }, 500);
@@ -308,33 +304,33 @@ setTimeout(function ButtonLinks() {
   var map = document.createElement("input");
   map.setAttribute("type", "button");
   map.id = "map";
-  map.setAttribute("value", "Maps");
+  map.setAttribute("value", "M");
   map.setAttribute("onclick", "window.open('https://squadmaps.com/', '_blank')");
   map.style =
-    "top:10px;right:17%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
+    "top:10px;right:14%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
   map.setAttribute("target", "_blank");
   map.setAttribute("id", "map");
   document.body.appendChild(map);
   var lanes = document.createElement("input");
   lanes.setAttribute("type", "button");
   lanes.id = "lanes";
-  lanes.setAttribute("value", "Lanes");
+  lanes.setAttribute("value", "L");
   lanes.setAttribute("onclick", "window.open('https://squadlanes.com/', '_blank')");
   lanes.style =
-    "top:10px;right:12%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
+    "top:10px;right:12%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
   lanes.setAttribute("target", "_blank");
   lanes.setAttribute("id", "lanes");
   document.body.appendChild(lanes);
   var rotation = document.createElement("input");
   rotation.setAttribute("type", "button");
   rotation.id = "rotation";
-  rotation.setAttribute("value", "Rotation");
+  rotation.setAttribute("value", "R");
   rotation.setAttribute(
     "onclick",
     "window.open('https://docs.google.com/spreadsheets/d/156pnIhJb3zmoEcwFSx8Kv1AQ0HRzYmI4t0kDfQNmrVE/edit#gid=0', '_blank')"
   );
   rotation.style =
-    "top:10px;right:7%;width:65px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
+    "top:10px;right:10%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
   rotation.setAttribute("target", "_blank");
   rotation.setAttribute("id", "rotation");
   document.body.appendChild(rotation);
@@ -345,10 +341,12 @@ setTimeout(function Bar_Coloring() {
   var msgBar2 = ".css-ym7lu8 {z-index: 2;}";
   var msgBar3 = ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
   var msgBar4 = ".css-zwebxb {z-index: 2;}";
+  var msgBar5 = ".css-1fy5con {background-color: #31e3ff21;width: 1920px;}";
   GM_addStyle(msgBar1);
   GM_addStyle(msgBar2);
   GM_addStyle(msgBar3);
   GM_addStyle(msgBar4);
+  GM_addStyle(msgBar5);
 }, 1000);
 
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
