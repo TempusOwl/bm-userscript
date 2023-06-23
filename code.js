@@ -87,6 +87,7 @@ setInterval(function Main_Script() {
     "Angel_42",
     "Cossack_440",
     "Exploits",
+    "eatcho",
     "Gallahad",
     "Hispxanic",
     "JAMESTERRARIA",
@@ -115,6 +116,8 @@ setInterval(function Main_Script() {
     "Insurgent Forces",
     "Irregular Militia Forces",
     "People's Liberation Army",
+    "Russian Airborne Forces",
+    "PLA Navy Marine Corps",
   ];
   var adminTerms = [
     "admin",
@@ -134,12 +137,14 @@ setInterval(function Main_Script() {
     "restarted the match.",
     "was removed from their squad by Trigger.",
     "requested layer list.",
+    "was removed from their squad by",
   ];
   // Selectors, these are selecting the elements to modify.
   var namePlayers = document.querySelectorAll(".css-mjpog7");
   var nameActivity = document.querySelectorAll(".css-zwebxb");
   var messageLog = document.querySelectorAll(".css-ym7lu8");
   var bmAdmin = document.querySelectorAll(".css-18s4qom");
+  var orgGroup = document.querySelectorAll(".css-4ey69y");
   var changeMapWarning = document.querySelectorAll(".modal-title");
   var changeMapWarning2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
   var playerMenuDialog = document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button");
@@ -163,7 +168,29 @@ setInterval(function Main_Script() {
       b[i].style.fontStyle = "bold";
       b[i].style.textAlign = "center";
       b[i].style.fontSize = "24pt";
-      ``;
+    }
+  }
+  b = orgGroup;
+  for (i = 0; i < b.length; i++) {
+    if (b[i].textContent.includes("Arma")) {
+      b[i].style.background = "#333300";
+    } else if (b[i].textContent.includes("Squad Mod")) {
+      b[i].style.background = "#2b9937";
+    } else if (b[i].textContent.includes("Comp")) {
+      b[i].style.background = "lime";
+    } else if (b[i].textContent.includes("Squad Admin")) {
+      b[i].style.background = "#119ab7";
+    } else if (b[i].textContent.includes("Rust Admin")) {
+      b[i].style.background = "#672c00";
+    } else if (b[i].textContent.includes("Admin")) {
+      b[i].style.background = "yellow";
+      b[i].style.color = "black";
+    } else if (b[i].textContent.includes("Org")) {
+      b[i].style.background = "black";
+    } else if (b[i].textContent.includes("Recruiter")) {
+      b[i].style.background = "#cc6600";
+    } else if (b[i].textContent.includes("Squad Event")) {
+      b[i].style.background = "#660033";
     }
   }
   // NaV Bar Change Menu
@@ -295,7 +322,7 @@ setTimeout(function ButtonLinks() {
   map.setAttribute("value", "M");
   map.setAttribute("onclick", "window.open('https://squadmaps.com/', '_blank')");
   map.style =
-    "top:10px;right:14%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
+    "top:10px;right:16%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
   map.setAttribute("target", "_blank");
   map.setAttribute("id", "map");
   document.body.appendChild(map);
@@ -305,7 +332,7 @@ setTimeout(function ButtonLinks() {
   lanes.setAttribute("value", "L");
   lanes.setAttribute("onclick", "window.open('https://squadlanes.com/', '_blank')");
   lanes.style =
-    "top:10px;right:12%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
+    "top:10px;right:14%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
   lanes.setAttribute("target", "_blank");
   lanes.setAttribute("id", "lanes");
   document.body.appendChild(lanes);
@@ -318,7 +345,7 @@ setTimeout(function ButtonLinks() {
     "window.open('https://docs.google.com/spreadsheets/d/156pnIhJb3zmoEcwFSx8Kv1AQ0HRzYmI4t0kDfQNmrVE/edit#gid=0', '_blank')"
   );
   rotation.style =
-    "top:10px;right:10%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
+    "top:10px;right:12%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
   rotation.setAttribute("target", "_blank");
   rotation.setAttribute("id", "rotation");
   document.body.appendChild(rotation);
