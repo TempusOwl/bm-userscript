@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace https://www.battlemetrics.com/
-// @version 5.3
+// @version 5.7
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
+// @match https://www.battlemetrics.com/rcon/players/1002054262
 // @match https://www.battlemetrics.com/*
 // @match https://www.battlemetrics.com
 // @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
@@ -22,7 +23,7 @@ setInterval(function Main_Script() {
   var cAdminAction = "lime";
   var cModName = "#44ffa9";
   var cTeamKilled = "Yellow";
-  var cLeftServer = "#974545";
+  var cLeftServer = "#ff33cc";
   var cJoined = "gray";
   var cGrayed = "gray";
   var cTracked = "#FF931A";
@@ -36,6 +37,7 @@ setInterval(function Main_Script() {
     "You will be kicked in 2 minutes if you are still not in a squad",
     "To switch teams, please run the",
     "Check your seeding reward status via",
+    "Trigger added flag LiQ Seeder",
   ];
   var trackedTriggers = ["[SL Kit]"];
   var leftServer = ["left the server"];
@@ -62,24 +64,26 @@ setInterval(function Main_Script() {
     "Kibz",
     "Shaka",
     /*Directors / Assists / Staff */
-    "Sticker",
+    "Brennan",
     "CeeJay",
     "Captain Crossbones",
     "Gilly",
     "Nightshade",
-    "TempusOwl",
     "Tiberius",
     "Wolf Fang",
     "Θscar Mike",
     "Too Many Cooks",
     /*Server Admins*/
+    "Aomm2025",
     "Avengerian",
     "ANGEL_42",
     "Basey",
-    "Brennan",
+    "Cossack_440",
     "DontFaket",
     "E10",
     "El 24 throttle4u",
+    "eatcho",
+    "Exploits",
     "FloridaMan",
     "Habeeb",
     "Mike.H",
@@ -87,31 +91,33 @@ setInterval(function Main_Script() {
     "Radio",
     "RedClaws",
     "Redneck",
+    "Sticker",
+    "Skipper", // aka JerkinJimmy?
     "Steel Bear",
     "Valkyrie",
+    "TempusOwl",
     "Terminator",
     "Mav",
     "Outlast",
+    "Zimmy - 75",
   ];
   var modList = [
     /*List Of Server Mods*/
-    "Aomm2025",
     "Angel_42",
-    "Cossack_440",
-    "Exploits",
-    "eatcho",
+    "Blackout",
     "Gallahad",
     "Hispxanic",
+    "iCampHard",
     "JAMESTERRARIA",
-    "JerkinJimmy", // aka Skipper?
     "keko",
-    "Skipper", // aka JerkinJimmy?
     "JoyfulConfusion",
     "Loganator",
     "MURICA",
     "WadeLovesWhiteWomen",
-    "Zimmy - 75",
+    "OL' SLIPPERY",
     "Nostradumbass",
+    "Whip me more, Grandma",
+    "xplay0321",
   ];
   var teamBluefor = [
     "Australian Defence Force",
@@ -254,10 +260,8 @@ setInterval(function Main_Script() {
       elm.style.color = cGrayed;
     } else if (joinedServer.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cJoined;
-      elm.style.fontSize = "8pt";
     } else if (leftServer.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cLeftServer;
-      elm.style.fontSize = "8pt";
     } else if (actionList.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cModAction;
     } else if (teamBluefor.some((phrase) => elm.textContent.includes(phrase))) {
@@ -269,7 +273,6 @@ setInterval(function Main_Script() {
       elm.style.fontSize = "medium";
     } else if (trackedTriggers.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cTracked;
-      elm.style.fontSize = "8pt";
     }
   });
   // Color's Admin/Mod Name Within Player List
@@ -311,23 +314,16 @@ setInterval(function Main_Script() {
   });
 }, 35);
 
-// Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
-// Recommended to click it few times to ensure the click gets through...
-setInterval(function steamCBL() {
-  var spans = document.querySelectorAll(".css-q39y9k");
-  spans.forEach((span) => {
-    var steamID = span.title; /* or span.textContent */
-    var a = document.createElement("a");
-    [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
-    a.href = `https://communitybanlist.com/search/${steamID}`;
-    a.innerHTML = steamID;
-    a.target = "_blank";
-    span.replaceWith(a);
-  });
-}, 500);
+setTimeout(function Bar_Coloring() {
+  var zShift = ".css-ym7lu8 {z-index: 2;}";
+  var teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
+  var moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px}";
+  var adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
+  GM_addStyle(teamkillBar);
+  GM_addStyle(moderationBar);
+  GM_addStyle(adminCam);
+  GM_addStyle(zShift);
 
-// This conflict with mobile devices.
-setTimeout(function ButtonLinks() {
   var map = document.createElement("input");
   map.setAttribute("type", "button");
   map.id = "map";
@@ -361,20 +357,7 @@ setTimeout(function ButtonLinks() {
   rotation.setAttribute("target", "_blank");
   rotation.setAttribute("id", "rotation");
   document.body.appendChild(rotation);
-}, 150);
-
-setTimeout(function Bar_Coloring() {
-  var msgBar1 = ".css-1qmad0a {background-color: rgb(159 0 255 / 11%);width: 1920px;}";
-  var msgBar2 = ".css-ym7lu8 {z-index: 2;}";
-  var msgBar3 = ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
-  var msgBar4 = ".css-zwebxb {z-index: 2;}";
-  var msgBar5 = ".css-1fy5con {background-color: #31e3ff21;width: 1920px;}";
-  GM_addStyle(msgBar1);
-  GM_addStyle(msgBar2);
-  GM_addStyle(msgBar3);
-  GM_addStyle(msgBar4);
-  GM_addStyle(msgBar5);
-}, 1000);
+}, 250);
 
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
 // Recommended to click it few times to ensure the click gets through...
@@ -414,5 +397,34 @@ setInterval(function Job_BM_Tamper() {
   setTimeout(function Job_Button_Deleter() {
     const element = document.getElementById("copy-button");
     element.remove();
+
+    // SteamID Added
+    var spans = document.querySelectorAll(".css-q39y9k");
+    spans.forEach((span) => {
+      var steamID = span.title; /* or span.textContent */
+      var a = document.createElement("a");
+      [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
+      a.href = `https://communitybanlist.com/search/${steamID}`;
+      a.innerHTML = steamID;
+      a.target = "_blank";
+      span.replaceWith(a);
+    });
   }, 975);
 }, 1000);
+
+// Steam ID CBL
+setInterval(function Job_SteamID() {
+  setTimeout(function Job_SteamIDDelayer() {
+    // SteamID Added
+    var spans = document.querySelectorAll(".css-q39y9k");
+    spans.forEach((span) => {
+      var steamID = span.title; /* or span.textContent */
+      var a = document.createElement("a");
+      [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
+      a.href = `https://communitybanlist.com/search/${steamID}`;
+      a.innerHTML = steamID;
+      a.target = "_blank";
+      span.replaceWith(a);
+    });
+  }, 275);
+}, 300);
