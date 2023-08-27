@@ -40,8 +40,6 @@ setInterval(function Main_Script() {
   ];
   var adminList = [
     /*Red Admins*/
-    "Apache1",
-    "Binx",
     "budge",
     "Chaot3ch",
     "got2bhockey",
@@ -52,7 +50,6 @@ setInterval(function Main_Script() {
     "Shaka",
     /*Directors / Assists / Staff */
     "Brennan",
-    "CeeJay",
     "Captain Crossbones",
     "Gilly",
     "Nightshade",
@@ -91,17 +88,15 @@ setInterval(function Main_Script() {
   var modList = [
     /*List Of Server Mods*/
     "Angel_42",
-    "Blackout",
-    "Gallahad",
+    "Blackout", // aka Blackout
+    "Nova", // aka Blackout
     "Hispxanic",
     "iCampHard",
     "JAMESTERRARIA",
-    "keko",
     "JoyfulConfusion",
     "Loganator",
     "MURICA",
     "WadeLovesWhiteWomen",
-    "OL' SLIPPERY",
     "Nostradumbass",
     "Whip me more, Grandma",
     "xplay0321",

@@ -3,9 +3,13 @@ Userscript that takes advantage of custom triggers you may have created in BM, a
 
 ## Known Issues
 - Some elements like Copy Button or Community Ban List may eat clicks when it's being updated, if it does not work click again. Refreshing the page resolve most issues if you encounter any.
+- Tampermonkey may not apply the scripting to CSS to BM (and the log will have no coloring) This tends to occur due to rather complicated issue. If it happens just reload the page and the script will apply it. 
+- In general reloading the page fixes most minor issues. The script should work fine in 95% of cases without much fuss. If you have constant issues let me know.
 
-## Features Of This main-script.js
+## Features Of bm-desktop-auto.min.js
 * Highly customizable!
+* Auto updating. 
+* Add button to Squad Lanes, Squad Maps & NF Rotation
 * Adds clickable link that brings you to the CommunityBanList profile of a user.
 * Copy and paste user info button for tickets via a button on the player's profile.
 * Grays out unimportant events like joins/leaves,

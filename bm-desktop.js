@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name Battlemetrics Color Coded - For joinSquad.com Servers
 // @namespace https://www.battlemetrics.com/
-// @version 5.7
+// @version 5.9
 // @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
 // @author TempusOwl
-// @match https://www.battlemetrics.com/rcon/players/1002054262
 // @match https://www.battlemetrics.com/*
 // @match https://www.battlemetrics.com
 // @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
@@ -53,8 +52,6 @@ setInterval(function Main_Script() {
   ];
   var adminList = [
     /*Red Admins*/
-    "Apache1",
-    "Binx",
     "budge",
     "Chaot3ch",
     "got2bhockey",
@@ -65,7 +62,6 @@ setInterval(function Main_Script() {
     "Shaka",
     /*Directors / Assists / Staff */
     "Brennan",
-    "CeeJay",
     "Captain Crossbones",
     "Gilly",
     "Nightshade",
@@ -104,17 +100,15 @@ setInterval(function Main_Script() {
   var modList = [
     /*List Of Server Mods*/
     "Angel_42",
-    "Blackout",
-    "Gallahad",
+    "Blackout", // aka Blackout
+    "Nova", // aka Blackout
     "Hispxanic",
     "iCampHard",
     "JAMESTERRARIA",
-    "keko",
     "JoyfulConfusion",
     "Loganator",
     "MURICA",
     "WadeLovesWhiteWomen",
-    "OL' SLIPPERY",
     "Nostradumbass",
     "Whip me more, Grandma",
     "xplay0321",
