@@ -26,6 +26,11 @@ Userscript that takes advantage of custom triggers you may have created in BM, a
 * Highlights Admins/mods within the activity log.
 * Highlights important trigger warnings in red. 
 
+## Mobile Version
+Its possible use userscripts on mobile (at least for iOS https://apps.apple.com/us/app/userscripts/id1463298887). This requires the file to be a .js file which can be tough to aquire. There is no obvious way to change filetypes in within iOS so saving it as text or html is not possible and will cause it not to see it as a userscript.js. Consider emailing the file as proper .js file via your desktop and downloading it as an attachment. 
+
+There are some minor changes with mobile version, like removing buttons that may get in the way. The script was slowed down a bit as well to account for older devices and models. 
+
 ## What Is TamperMonkey
 It’s a browser addon that loads “userscripts” that can modify how a website display’s itself to you. User scripts are powerful tools that can totally modify websites. Remember, tampermonkey can pose significant security issues for your device if you install scripts from unknown sources. Only use scripts if you know what they are doing!
 

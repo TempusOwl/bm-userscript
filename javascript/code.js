@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name Battlemetrics Toolkit - Desktop
-// @namespace https://www.battlemetrics.com/
-// @version 6.1
-// @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
-// @author TempusOwl
-// @match https://www.battlemetrics.com/*
-// @match https://www.battlemetrics.com
-// @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
-// @grant GM_addStyle
-// @run-at document-end
-// ==/UserScript==
 var b,
   c,
   i = false;
@@ -361,8 +349,8 @@ setInterval(function Job_BM_Tamper() {
   };
 
   var button = document.createElement("Button");
-  var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-  var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
+  //var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
+  //var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
   button.innerHTML = "Copy";
   button.id = "copy-button";
   button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";

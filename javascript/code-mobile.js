@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name Battlemetrics Toolkit - Desktop
-// @namespace https://www.battlemetrics.com/
-// @version 6.1
-// @description Modifies the rcon panel for battlemetrics to help color code important events and details about players.
-// @author TempusOwl
-// @match https://www.battlemetrics.com/*
-// @match https://www.battlemetrics.com
-// @icon https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
-// @grant GM_addStyle
-// @run-at document-end
-// ==/UserScript==
 var b,
   c,
   i = false;
@@ -306,7 +294,7 @@ setInterval(function Main_Script() {
     var time = date.toLocaleString().split(" ");
     element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + " " + time[2]).toString());
   });
-}, 35);
+}, 100);
 
 setTimeout(function Bar_Coloring() {
   var zShift = ".css-ym7lu8 {z-index: 2;}";
@@ -317,41 +305,7 @@ setTimeout(function Bar_Coloring() {
   GM_addStyle(moderationBar);
   GM_addStyle(adminCam);
   GM_addStyle(zShift);
-
-  var map = document.createElement("input");
-  map.setAttribute("type", "button");
-  map.id = "map";
-  map.setAttribute("value", "M");
-  map.setAttribute("onclick", "window.open('https://squadmaps.com/', '_blank')");
-  map.style =
-    "top:10px;right:16%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(47 50 66);";
-  map.setAttribute("target", "_blank");
-  map.setAttribute("id", "map");
-  document.body.appendChild(map);
-  var lanes = document.createElement("input");
-  lanes.setAttribute("type", "button");
-  lanes.id = "lanes";
-  lanes.setAttribute("value", "L");
-  lanes.setAttribute("onclick", "window.open('https://squadlanes.com/', '_blank')");
-  lanes.style =
-    "top:10px;right:14%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(161 104 0);";
-  lanes.setAttribute("target", "_blank");
-  lanes.setAttribute("id", "lanes");
-  document.body.appendChild(lanes);
-  var rotation = document.createElement("input");
-  rotation.setAttribute("type", "button");
-  rotation.id = "rotation";
-  rotation.setAttribute("value", "R");
-  rotation.setAttribute(
-    "onclick",
-    "window.open('https://docs.google.com/spreadsheets/d/156pnIhJb3zmoEcwFSx8Kv1AQ0HRzYmI4t0kDfQNmrVE/edit#gid=0', '_blank')"
-  );
-  rotation.style =
-    "top:10px;right:12%;width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: rgb(1 78 0);";
-  rotation.setAttribute("target", "_blank");
-  rotation.setAttribute("id", "rotation");
-  document.body.appendChild(rotation);
-}, 250);
+}, 500);
 
 // Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
 // Recommended to click it few times to ensure the click gets through...
@@ -361,8 +315,8 @@ setInterval(function Job_BM_Tamper() {
   };
 
   var button = document.createElement("Button");
-  var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-  var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
+  //var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
+  //var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
   button.innerHTML = "Copy";
   button.id = "copy-button";
   button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
@@ -420,5 +374,5 @@ setInterval(function Job_SteamID() {
       a.target = "_blank";
       span.replaceWith(a);
     });
-  }, 275);
-}, 300);
+  }, 500);
+}, 500);
