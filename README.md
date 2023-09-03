@@ -27,7 +27,7 @@ Userscript that takes advantage of custom triggers you may have created in BM, a
 * Highlights important trigger warnings in red. 
 
 ## Mobile Version
-Its possible use userscripts on mobile (at least for iOS https://apps.apple.com/us/app/userscripts/id1463298887). This requires the file to be a .js file which can be tough to aquire. There is no obvious way to change filetypes in within iOS so saving it as text or html is not possible and will cause it not to see it as a userscript.js. Consider emailing the file as proper .js file via your desktop and downloading it as an attachment. 
+It's possible to use userscripts on mobile (at least for iOS https://apps.apple.com/us/app/userscripts/id1463298887). This requires the file to be a .js file which can be tough to aquire in practice. There is no obvious way to change filetypes within iOS, so saving it as text or html is not useful and will apps to not see it. Consider emailing the file as proper .js file attachment via your desktop and downloading it to your "Files" app. 
 
 There are some minor changes with mobile version, like removing buttons that may get in the way. The script was slowed down a bit as well to account for older devices and models. 
 
