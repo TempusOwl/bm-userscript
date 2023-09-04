@@ -286,14 +286,6 @@ setInterval(function Main_Script() {
       b[i].style.color = "#ffba23";
     }
   }
-  // Add timestamps in seconds
-  var timeStamp = document.querySelectorAll(".css-z1s6qn");
-  timeStamp.forEach((element) => {
-    var utcTime = element.getAttribute("datetime");
-    var date = new Date(utcTime);
-    var time = date.toLocaleString().split(" ");
-    element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + " " + time[2]).toString());
-  });
 }, 100);
 
 setTimeout(function Bar_Coloring() {
