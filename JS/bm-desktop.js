@@ -1,22 +1,19 @@
-var b,
-  c,
-  i = false;
+let b, i = false;
 setInterval(function Main_Script() {
-  var cTeamBluefor = "#ffbf75";
-  var cTeamOpfor = "#ff7142";
-  var cAdminName = "#55f1ff";
-  var cbmAdmin = "lime";
-  var cModAction = "#ff3333";
-  var cAdminAction = "lime";
-  var cModName = "#44ffa9";
-  var cTeamKilled = "Yellow";
-  var cLeftServer = "#ff33cc";
-  var cJoined = "gray";
-  var cGrayed = "gray";
-  var cTracked = "#FF931A";
-  // Term Bank - Ensure each phrase is enclosed in "" and has a , between each.
-  var teamKilled = ["team killed"];
-  var grayedOut = [
+  const cTeamBluefor = "#e7a600";
+  const cTeamOpfor = "rgb(217,86,39)";
+  const cAdminName = "#00fff7";
+  const cbmAdmin = "#00fff7";
+  const cModAction = "#ff3333";
+  const cAdminAction = "#37ff00";
+  const cModName = "#4cffac";
+  const cTeamKilled = "#ffcc00";
+  const cLeftServer = "#ff33cc";
+  const cJoined = "#919191";
+  const cGrayed = "#919191";
+  const cTracked = "#FF931A";
+  const teamKilled = ["team killed"];
+  const grayedOut = [
     "AFK - Thanks for playing!",
     "Please get a Squad Leader kit within 8 mins",
     "Final warning: Get Squad Leader kit within 5m",
@@ -26,10 +23,10 @@ setInterval(function Main_Script() {
     "Check your seeding reward status via",
     "Trigger added flag LiQ Seeder",
   ];
-  var trackedTriggers = ["[SL Kit]"];
-  var leftServer = ["left the server"];
-  var joinedServer = ["joined the server"];
-  var actionList = [
+  const trackedTriggers = ["[SL Kit]"];
+  const leftServer = ["left the server"];
+  const joinedServer = ["joined the server"];
+  const actionList = [
     "was warned",
     "was kicked",
     "was banned",
@@ -38,17 +35,14 @@ setInterval(function Main_Script() {
     "deleted BattleMetrics Ban",
     "Trigger added flag Previously banned",
   ];
-  var adminList = [
-    /*Red Admins*/
+  const adminList = [
     "budge",
     "Chaot3ch",
     "got2bhockey",
-    /*Advisors*/
     "Basa_Doc",
     "Jonboy",
     "Kibz",
     "Shaka",
-    /*Directors / Assists / Staff */
     "Brennan",
     "Captain Crossbones",
     "Gilly",
@@ -57,7 +51,6 @@ setInterval(function Main_Script() {
     "Wolf Fang",
     "Θscar Mike",
     "Too Many Cooks",
-    /*Server Admins*/
     "Aomm2025",
     "Avengerian",
     "ANGEL_42",
@@ -76,7 +69,7 @@ setInterval(function Main_Script() {
     "RedClaws",
     "Redneck",
     "Sticker",
-    "Skipper", // aka JerkinJimmy?
+    "Skipper",
     "Steel Bear",
     "Valkyrie",
     "TempusOwl",
@@ -85,8 +78,7 @@ setInterval(function Main_Script() {
     "Outlast",
     "Zimmy - 75",
   ];
-  var modList = [
-    /*List Of Server Mods*/
+  const modList = [
     "Angel_42",
     "Blackout", // aka Blackout
     "Nova", // aka Blackout
@@ -101,7 +93,7 @@ setInterval(function Main_Script() {
     "Whip me more, Grandma",
     "xplay0321",
   ];
-  var teamBluefor = [
+  const teamBluefor = [
     "Australian Defence Force",
     "British Army",
     "British Armed Forces",
@@ -110,7 +102,7 @@ setInterval(function Main_Script() {
     "United States Army",
     "United States Marine Corps",
   ];
-  var teamOpfor = [
+  const teamOpfor = [
     "Russian Ground Forces",
     "Middle Eastern Alliance",
     "Insurgent Forces",
@@ -119,7 +111,7 @@ setInterval(function Main_Script() {
     "Russian Airborne Forces",
     "PLA Navy Marine Corps",
   ];
-  var adminTerms = [
+  const adminTerms = [
     "admin",
     "Admin",
     "ADMIN",
@@ -140,17 +132,15 @@ setInterval(function Main_Script() {
     "was removed from their squad by",
   ];
   // Selectors, these are selecting the elements to modify.
-  var namePlayers = document.querySelectorAll(".css-mjpog7");
-  var nameActivity = document.querySelectorAll(".css-zwebxb");
-  var messageLog = document.querySelectorAll(".css-ym7lu8");
-  var bmAdmin = document.querySelectorAll(".css-18s4qom");
-  var orgGroup = document.querySelectorAll(".css-4ey69y");
-  var changeMapWarning = document.querySelectorAll(".modal-title");
-  var changeMapWarning2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
-  var playerMenuDialog = document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button");
-  var playerMenuDialog2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
-  // Editng the code below will break things unless you understand it. To modify colors, terms etc..
-  // Use the above section
+  let namePlayers = document.querySelectorAll(".css-mjpog7");
+  let nameActivity = document.querySelectorAll(".css-zwebxb");
+  let messageLog = document.querySelectorAll(".css-ym7lu8");
+  let bmAdmin = document.querySelectorAll(".css-18s4qom");
+  let orgGroup = document.querySelectorAll(".css-4ey69y");
+  let changeMapWarning = document.querySelectorAll(".modal-title");
+  let changeMapWarning2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
+  let playerMenuDialog = document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button");
+  let playerMenuDialog2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
   b = changeMapWarning;
   for (i = 0; i < b.length; i++) {
     if (b[i].textContent.includes("Change Layer")) {
@@ -170,6 +160,7 @@ setInterval(function Main_Script() {
       b[i].style.fontSize = "24pt";
     }
   }
+  // Org Panel
   b = orgGroup;
   for (i = 0; i < b.length; i++) {
     if (b[i].textContent.includes("Arma")) {
@@ -234,7 +225,7 @@ setInterval(function Main_Script() {
       b[i].style.color = "red";
     }
   }
-  // Highlighs message content within the right panel for various reasons.
+  // Highlights message content within the right panel for various reasons.
   messageLog.forEach((elm) => {
     if (adminTerms.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cAdminAction;
@@ -287,26 +278,26 @@ setInterval(function Main_Script() {
     }
   }
   // Add timestamps in seconds
-  var timeStamp = document.querySelectorAll(".css-z1s6qn");
+  let timeStamp = document.querySelectorAll(".css-z1s6qn");
   timeStamp.forEach((element) => {
-    var utcTime = element.getAttribute("datetime");
-    var date = new Date(utcTime);
-    var time = date.toLocaleString().split(" ");
+    let utcTime = element.getAttribute("datetime");
+    let date = new Date(utcTime);
+    let time = date.toLocaleString().split(" ");
     element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + " " + time[2]).toString());
   });
 }, 35);
 
-setTimeout(function Bar_Coloring() {
-  var zShift = ".css-ym7lu8 {z-index: 2;}";
-  var teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
-  var moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px}";
-  var adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
+setTimeout(function ModifyDoc() {
+  let zShift = ".css-ym7lu8 {z-index: 2;}";
+  let teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
+  let moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px}";
+  let adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
   GM_addStyle(teamkillBar);
   GM_addStyle(moderationBar);
   GM_addStyle(adminCam);
   GM_addStyle(zShift);
 
-  var map = document.createElement("input");
+  let map = document.createElement("input");
   map.setAttribute("type", "button");
   map.id = "map";
   map.setAttribute("value", "M");
@@ -316,7 +307,7 @@ setTimeout(function Bar_Coloring() {
   map.setAttribute("target", "_blank");
   map.setAttribute("id", "map");
   document.body.appendChild(map);
-  var lanes = document.createElement("input");
+  let lanes = document.createElement("input");
   lanes.setAttribute("type", "button");
   lanes.id = "lanes";
   lanes.setAttribute("value", "L");
@@ -326,7 +317,7 @@ setTimeout(function Bar_Coloring() {
   lanes.setAttribute("target", "_blank");
   lanes.setAttribute("id", "lanes");
   document.body.appendChild(lanes);
-  var rotation = document.createElement("input");
+  let rotation = document.createElement("input");
   rotation.setAttribute("type", "button");
   rotation.id = "rotation";
   rotation.setAttribute("value", "R");
@@ -341,26 +332,21 @@ setTimeout(function Bar_Coloring() {
   document.body.appendChild(rotation);
 }, 250);
 
-// Creates a button to copy data from BM profile, it deletes the button on set invernal to update it.
-// Recommended to click it few times to ensure the click gets through...
+// Copy Button
 setInterval(function Job_BM_Tamper() {
   String.prototype.startsWith = function (str) {
     return this.match("^" + str) == str;
   };
 
-  var button = document.createElement("Button");
-  //var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-  //var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
+  let button = document.createElement("Button");
+  let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
+  let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
   button.innerHTML = "Copy";
   button.id = "copy-button";
   button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
   document.body.appendChild(button);
 
   document.getElementById("copy-button").onclick = function () {
-    var pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-    var pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
-    let values = [];
-    //document.querySelectorAll('.css-q39y9k').forEach((p) => values.push(p.innerHTML));
     let text = document.createElement("textarea");
     document.body.appendChild(text);
     text.value =
@@ -381,10 +367,10 @@ setInterval(function Job_BM_Tamper() {
     element.remove();
 
     // SteamID Added
-    var spans = document.querySelectorAll(".css-q39y9k");
+    let spans = document.querySelectorAll(".css-q39y9k");
     spans.forEach((span) => {
-      var steamID = span.title; /* or span.textContent */
-      var a = document.createElement("a");
+      let steamID = span.title; /* or span.textContent */
+      let a = document.createElement("a");
       [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
       a.href = `https://communitybanlist.com/search/${steamID}`;
       a.innerHTML = steamID;
@@ -398,10 +384,10 @@ setInterval(function Job_BM_Tamper() {
 setInterval(function Job_SteamID() {
   setTimeout(function Job_SteamIDDelayer() {
     // SteamID Added
-    var spans = document.querySelectorAll(".css-q39y9k");
+    let spans = document.querySelectorAll(".css-q39y9k");
     spans.forEach((span) => {
-      var steamID = span.title; /* or span.textContent */
-      var a = document.createElement("a");
+      let steamID = span.title; /* or span.textContent */
+      let a = document.createElement("a");
       [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
       a.href = `https://communitybanlist.com/search/${steamID}`;
       a.innerHTML = steamID;
