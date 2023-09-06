@@ -3,7 +3,7 @@ setInterval(function Main_Script() {
   const cTeamBluefor = "#e7a600";
   const cTeamOpfor = "rgb(217,86,39)";
   const cAdminName = "#00fff7";
-  const cbmAdmin = "#00fff7";
+  const cbmAdmin = "#58ff47";
   const cModAction = "#ff3333";
   const cAdminAction = "#37ff00";
   const cModName = "#4cffac";
@@ -36,60 +36,47 @@ setInterval(function Main_Script() {
     "Trigger added flag Previously banned",
   ];
   const adminList = [
+    "ANGEL_42",
+    "Aomm2025",
+    "Basa_Doc",
+    "Brennan",
     "budge",
     "Chaot3ch",
-    "got2bhockey",
-    "Basa_Doc",
-    "Jonboy",
-    "Kibz",
-    "Shaka",
-    "Brennan",
-    "Captain Crossbones",
-    "Gilly",
-    "Nightshade",
-    "Tiberius",
-    "Wolf Fang",
-    "Θscar Mike",
-    "Too Many Cooks",
-    "Aomm2025",
-    "Avengerian",
-    "ANGEL_42",
-    "Basey",
     "Cossack_440",
     "DontFaket",
     "E10",
-    "El 24 throttle4u",
     "eatcho",
+    "El 24 throttle4u",
     "Exploits",
-    "FloridaMan",
-    "Habeeb",
-    "Mike.H",
-    "QTheEngineer",
-    "Radio",
-    "RedClaws",
-    "Redneck",
-    "Sticker",
-    "Skipper",
-    "Steel Bear",
-    "Valkyrie",
-    "TempusOwl",
-    "Terminator",
+    "Gilly",
+    "got2bhockey",
+    "Jonboy",
+    "Kibz",
     "Mav",
+    "Mike.H",
+    "Nightshade",
     "Outlast",
+    "QTheEngineer",
+    "Redneck",
+    "Shaka",
+    "Skipper",
+    "Sticker",
+    "TempusOwl",
+    "Tiberius",
+    "Too Many Cooks",
+    "Valkyrie",
+    "Wolf Fang",
     "Zimmy - 75",
+    "Θscar Mike",
   ];
   const modList = [
     "Angel_42",
     "Blackout", // aka Blackout
-    "Nova", // aka Blackout
-    "Hispxanic",
     "iCampHard",
     "JAMESTERRARIA",
-    "JoyfulConfusion",
-    "Loganator",
     "MURICA",
+    "Nova", // aka Blackout
     "WadeLovesWhiteWomen",
-    "Nostradumbass",
     "Whip me more, Grandma",
     "xplay0321",
   ];
@@ -314,7 +301,7 @@ setInterval(function Job_BM_Tamper() {
         pSteamID +
         "\n**BM: **<" +
         window.location.href +
-        ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below:**``Ticket Channel Shortcut->`` <#815730567706443807>\n";
+        ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below:**\n";
     text.select();
     document.execCommand("copy");
     text.parentNode.removeChild(text);
