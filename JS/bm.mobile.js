@@ -50,6 +50,7 @@ setInterval(function Main_Script() {
         "Exploits",
         "Gilly",
         "got2bhockey",
+        "JAMESTERRARIA",
         "Jonboy",
         "Kibz",
         "Mav",
@@ -70,12 +71,14 @@ setInterval(function Main_Script() {
         "Θscar Mike",
     ];
     const modList = [
-        "Angel_42",
+        "Archangel",
         "Blackout", // aka Blackout
+        "Digikind",
         "iCampHard",
-        "JAMESTERRARIA",
+        "Kyle",
         "MURICA",
         "Nova", // aka Blackout
+        "WatdaHek",
         "WadeLovesWhiteWomen",
         "Whip me more, Grandma",
         "xplay0321",
