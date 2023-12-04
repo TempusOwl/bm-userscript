@@ -287,7 +287,7 @@ setTimeout(function ModifyDoc() {
   let zShift = ".css-ym7lu8 {z-index: 2;}";
   let zShiftTime = ".css-z1s6qn {z-index: 3;}";
   let teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
-  let moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px; z-index: 2;}";
+  let moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
   let adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
   let nobranding =
     "html body div#root div.css-0.e1f2e1y80 div#RCONLayout.css-1qipodg nav.css-19lifo3 ul.css-16xvbhm li.css-1nxi32t a img#poweredbyovh {background-color: #31e3ff21;width: 1920px}";
