@@ -59,6 +59,7 @@ setInterval(function Main_Script() {
     "Nightshade",
     "Outlast",
     "QTheEngineer",
+    "Radio",
     "Redneck",
     "Shaka",
     "Skipper",
