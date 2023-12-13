@@ -92,6 +92,7 @@ setInterval(function Main_Script() {
     "Canadian Armed Forces",
     "United States Army",
     "United States Marine Corps",
+    "Turkish Land Forces",
   ];
   const teamOpfor = [
     "Russian Ground Forces",
@@ -123,7 +124,7 @@ setInterval(function Main_Script() {
     "was removed from their squad by",
   ];
   // Selectors, these are selecting the elements to modify.
-  let namePlayers = document.querySelectorAll(".css-mjpog7");
+  let namePlayers = document.querySelectorAll(".css-1ewh5td");
   let nameActivity = document.querySelectorAll(".css-zwebxb");
   let messageLog = document.querySelectorAll(".css-ym7lu8");
   let bmAdmin = document.querySelectorAll(".css-18s4qom");
