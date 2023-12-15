@@ -131,9 +131,16 @@ setInterval(function Main_Script() {
   let bmAdmin = document.querySelectorAll(".css-18s4qom");
   let orgGroup = document.querySelectorAll(".css-4ey69y");
   let changeMapWarning = document.querySelectorAll(".modal-title");
-  let changeMapWarning2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
-  let playerMenuDialog = document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button");
-  let playerMenuDialog2 = document.querySelectorAll(".css-yun63y a, .css-yun63y button");
+  let playerDialog = document.querySelectorAll(
+    ".css-1ixz43s a, .css-1ixz43s button"
+  );
+  let serverCommands = document.querySelectorAll(
+    ".css-yun63y a, .css-yun63y button"
+  );
+  let playerMenuDialog = document.querySelectorAll(
+    ".css-f5o5h6 a, .css-f5o5h6 button"
+  );
+
   b = changeMapWarning;
   for (i = 0; i < b.length; i++) {
     if (b[i].textContent.includes("Change Layer")) {
@@ -182,21 +189,7 @@ setInterval(function Main_Script() {
       b[i].style.background = "#660033";
     }
   }
-  // NaV Bar Change Menu
-  b = changeMapWarning2;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Next Layer")) {
-      b[i].style.color = "lime";
-      b[i].style.fontSize = "16pt";
-    } else if (b[i].textContent.includes("Change Layer")) {
-      b[i].style.color = "red";
-      b[i].style.fontStyle = "bold";
-      b[i].style.fontSize = "8pt";
-    } else if (b[i].textContent.includes("Squad List")) {
-      b[i].style.color = "gold";
-      b[i].style.fontSize = "16pt";
-    }
-  }
+
   // Player Click Dialog
   b = playerMenuDialog;
   for (i = 0; i < b.length; i++) {
@@ -210,8 +203,9 @@ setInterval(function Main_Script() {
       b[i].style.color = "red";
     }
   }
-  // Player Click Dialog
-  b = playerMenuDialog2;
+
+  // Player Dialog Colors
+  b = playerDialog;
   for (i = 0; i < b.length; i++) {
     if (b[i].textContent.includes("Warn")) {
       b[i].style.color = "lime";
@@ -223,13 +217,40 @@ setInterval(function Main_Script() {
       b[i].style.color = "red";
     }
   }
+
+  // Server Command Prompts
+  b = serverCommands;
+  for (i = 0; i < b.length; i++) {
+    if (b[i].textContent.includes("Next Layer")) {
+      b[i].style.color = "lime";
+      b[i].style.fontSize = "16pt";
+    } else if (b[i].textContent.includes("Change Layer")) {
+      b[i].style.color = "red";
+      b[i].style.fontStyle = "bold";
+      b[i].style.fontSize = "8pt";
+    } else if (b[i].textContent.includes("Squad List")) {
+      b[i].style.color = "gold";
+      b[i].style.fontSize = "16pt";
+    } else if (b[i].textContent.includes("Squad List")) {
+      b[i].style.color = "gold";
+    } else if (b[i].textContent.includes("Kick")) {
+      b[i].style.color = "orange";
+    } else if (b[i].textContent.includes("Ban")) {
+      b[i].style.color = "red";
+    } else if (b[i].textContent.includes("Warn")) {
+      b[i].style.color = "lime";
+    }
+  }
+
   // Highlights message content within the right panel for various reasons.
   messageLog.forEach((elm) => {
     if (adminTerms.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cAdminAction;
     } else if (grayedOut.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cGrayed;
-    } else if (joinedServer.some((phrase) => elm.textContent.includes(phrase))) {
+    } else if (
+      joinedServer.some((phrase) => elm.textContent.includes(phrase))
+    ) {
       elm.style.color = cJoined;
     } else if (leftServer.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cLeftServer;
@@ -242,7 +263,9 @@ setInterval(function Main_Script() {
     } else if (teamKilled.some((phrase) => elm.textContent.includes(phrase))) {
       elm.style.color = cTeamKilled;
       elm.style.fontSize = "medium";
-    } else if (trackedTriggers.some((phrase) => elm.textContent.includes(phrase))) {
+    } else if (
+      trackedTriggers.some((phrase) => elm.textContent.includes(phrase))
+    ) {
       elm.style.color = cTracked;
     }
   });
@@ -281,25 +304,12 @@ setInterval(function Main_Script() {
     let utcTime = element.getAttribute("datetime");
     let date = new Date(utcTime);
     let time = date.toLocaleString().split(" ");
-    element.textContent = element.textContent.replace(element.textContent.toString(), (time[1] + " " + time[2]).toString());
+    element.textContent = element.textContent.replace(
+      element.textContent.toString(),
+      (time[1] + " " + time[2]).toString()
+    );
   });
 }, 35);
-
-setTimeout(function ModifyDoc() {
-  let zShift = ".css-ym7lu8 {z-index: 2;}";
-  let zShiftTime = ".css-z1s6qn {z-index: 3;}";
-  let teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
-  let moderationBar = ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
-  let adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
-  let nobranding =
-    "html body div#root div.css-0.e1f2e1y80 div#RCONLayout.css-1qipodg nav.css-19lifo3 ul.css-16xvbhm li.css-1nxi32t a img#poweredbyovh {background-color: #31e3ff21;width: 1920px}";
-  GM_addStyle(nobranding);
-  GM_addStyle(teamkillBar);
-  GM_addStyle(moderationBar);
-  GM_addStyle(adminCam);
-  GM_addStyle(zShift);
-  GM_addStyle(zShiftTime);
-}, 250);
 
 // Copy Button
 setInterval(function Job_BM_Tamper() {
@@ -309,23 +319,27 @@ setInterval(function Job_BM_Tamper() {
 
   let button = document.createElement("Button");
   let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
+  let pEOSID = document.querySelectorAll('[title*="0002"]')[0].innerText;
   let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
   button.innerHTML = "Copy";
   button.id = "copy-button";
-  button.style = "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
+  button.style =
+    "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
   document.body.appendChild(button);
 
   document.getElementById("copy-button").onclick = function () {
     let text = document.createElement("textarea");
     document.body.appendChild(text);
     text.value =
-      "**Offending User: **" +
+      "**User**: " +
       pName +
-      "** // **" +
-      pSteamID +
-      "\n**BM: **<" +
+      " <" +
       window.location.href +
-      ">\n**Server:** \n**Infraction: **\n**Evidence Linked Below:**\n";
+      ">\n**IDs: **" +
+      pSteamID +
+      "** // **" +
+      pEOSID +
+      "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
     text.select();
     document.execCommand("copy");
     text.parentNode.removeChild(text);
@@ -340,7 +354,9 @@ setInterval(function Job_BM_Tamper() {
     spans.forEach((span) => {
       let steamID = span.title; /* or span.textContent */
       let a = document.createElement("a");
-      [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
+      [...span.attributes].forEach((attr) =>
+        a.attributes.setNamedItem(attr.cloneNode())
+      );
       a.href = `https://communitybanlist.com/search/${steamID}`;
       a.innerHTML = steamID;
       a.target = "_blank";
@@ -357,7 +373,9 @@ setInterval(function Job_SteamID() {
     spans.forEach((span) => {
       let steamID = span.title; /* or span.textContent */
       let a = document.createElement("a");
-      [...span.attributes].forEach((attr) => a.attributes.setNamedItem(attr.cloneNode()));
+      [...span.attributes].forEach((attr) =>
+        a.attributes.setNamedItem(attr.cloneNode())
+      );
       a.href = `https://communitybanlist.com/search/${steamID}`;
       a.innerHTML = steamID;
       a.target = "_blank";
@@ -365,3 +383,20 @@ setInterval(function Job_SteamID() {
     });
   }, 275);
 }, 300);
+
+setTimeout(function ModifyDoc() {
+  let zShift = ".css-ym7lu8 {z-index: 2;}";
+  let zShiftTime = ".css-z1s6qn {z-index: 3;}";
+  let teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
+  let moderationBar =
+    ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
+  let adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
+  let nobranding =
+    "html body div#root div.css-0.e1f2e1y80 div#RCONLayout.css-1qipodg nav.css-19lifo3 ul.css-16xvbhm li.css-1nxi32t a img#poweredbyovh {background-color: #31e3ff21;width: 1920px}";
+  GM_addStyle(nobranding);
+  GM_addStyle(teamkillBar);
+  GM_addStyle(moderationBar);
+  GM_addStyle(adminCam);
+  GM_addStyle(zShift);
+  GM_addStyle(zShiftTime);
+}, 250);
