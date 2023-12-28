@@ -41,6 +41,7 @@ setInterval(function Main_Script() {
     "Aomm2025",
     "Basa_Doc",
     "Brennan",
+    "Blackout",
     "budge",
     "Chaot3ch",
     "Cossack_440",
@@ -51,6 +52,7 @@ setInterval(function Main_Script() {
     "Exploits",
     "Gilly",
     "got2bhockey",
+    "iCampHard",
     "JAMESTERRARIA",
     "Jonboy",
     "Kibz",
@@ -71,19 +73,19 @@ setInterval(function Main_Script() {
     "Wolf Fang",
     "Zimmy - 75",
     "Θscar Mike",
+    "xplay0321",
   ];
   const modList = [
     "Archangel",
-    "Blackout", // aka Blackout
+    "Chillz",
     "Digikind",
-    "iCampHard",
     "Kyle",
     "MURICA",
-    "Nova", // aka Blackout
     "WatdaHek",
+    "Wobblebob29",
     "WadeLovesWhiteWomen",
     "Whip me more, Grandma",
-    "xplay0321",
+    "ZeroTolerance",
   ];
   const teamBluefor = [
     "Australian Defence Force",
