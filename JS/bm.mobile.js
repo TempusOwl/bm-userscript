@@ -1,20 +1,22 @@
-let b,
-  i = false;
-setInterval(function Main_Script() {
-  const cTeamBluefor = "#e7a600";
-  const cTeamOpfor = "rgb(217,86,39)";
-  const cAdminName = "#00fff7";
-  const cbmAdmin = "#58ff47";
-  const cModAction = "#ff3333";
-  const cAdminAction = "#37ff00";
-  const cModName = "#4cffac";
-  const cTeamKilled = "#ffcc00";
-  const cLeftServer = "#ff33cc";
-  const cJoined = "#919191";
-  const cGrayed = "#919191";
-  const cTracked = "#FF931A";
-  const teamKilled = ["team killed"];
-  const grayedOut = [
+const colors = {
+  cTeamBluefor: "#e7a600",
+  cTeamOpfor: "rgb(217,86,39)",
+  cAdminName: "#00fff7",
+  cbmAdmin: "#58ff47",
+  cModAction: "#ff3333",
+  cAdminAction: "#37ff00",
+  cModName: "#4cffac",
+  cTeamKilled: "#ffcc00",
+  cLeftServer: "#ff33cc",
+  cJoined: "#919191",
+  cGrayed: "#919191",
+  cTracked: "#FF931A",
+};
+
+// Lists
+const sets = {
+  teamKilled: new Set(["team killed"]),
+  grayedOut: new Set([
     "AFK - Thanks for playing!",
     "Please get a Squad Leader kit within 8 mins",
     "Final warning: Get Squad Leader kit within 5m",
@@ -23,11 +25,11 @@ setInterval(function Main_Script() {
     "To switch teams, please run the",
     "Check your seeding reward status via",
     "Trigger added flag LiQ Seeder",
-  ];
-  const trackedTriggers = ["[SL Kit]"];
-  const leftServer = ["left the server"];
-  const joinedServer = ["joined the server"];
-  const actionList = [
+  ]),
+  trackedTriggers: new Set(["[SL Kit]"]),
+  leftServer: new Set(["left the server"]),
+  joinedServer: new Set(["joined the server"]),
+  actionList: new Set([
     "was warned",
     "was kicked",
     "was banned",
@@ -35,8 +37,8 @@ setInterval(function Main_Script() {
     "added BattleMetrics Ban",
     "deleted BattleMetrics Ban",
     "Trigger added flag Previously banned",
-  ];
-  const adminList = [
+  ]),
+  adminList: new Set([
     "ANGEL_42",
     "Aomm2025",
     "Basa_Doc",
@@ -74,8 +76,8 @@ setInterval(function Main_Script() {
     "Zimmy - 75",
     "Θscar Mike",
     "xplay0321",
-  ];
-  const modList = [
+  ]),
+  modList: new Set([
     "Archangel",
     "Chillz",
     "Digikind",
@@ -86,8 +88,8 @@ setInterval(function Main_Script() {
     "WadeLovesWhiteWomen",
     "Whip me more, Grandma",
     "ZeroTolerance",
-  ];
-  const teamBluefor = [
+  ]),
+  teamBluefor: new Set([
     "Australian Defence Force",
     "British Army",
     "British Armed Forces",
@@ -96,8 +98,8 @@ setInterval(function Main_Script() {
     "United States Army",
     "United States Marine Corps",
     "Turkish Land Forces",
-  ];
-  const teamOpfor = [
+  ]),
+  teamOpfor: new Set([
     "Russian Ground Forces",
     "Middle Eastern Alliance",
     "Insurgent Forces",
@@ -105,8 +107,8 @@ setInterval(function Main_Script() {
     "People's Liberation Army",
     "Russian Airborne Forces",
     "PLA Navy Marine Corps",
-  ];
-  const adminTerms = [
+  ]),
+  adminTerms: new Set([
     "admin",
     "Admin",
     "ADMIN",
@@ -125,280 +127,274 @@ setInterval(function Main_Script() {
     "was removed from their squad by Trigger.",
     "requested layer list.",
     "was removed from their squad by",
-  ];
-  // Selectors, these are selecting the elements to modify.
-  let namePlayers = document.querySelectorAll(".css-1ewh5td");
-  let nameActivity = document.querySelectorAll(".css-zwebxb");
-  let messageLog = document.querySelectorAll(".css-ym7lu8");
-  let bmAdmin = document.querySelectorAll(".css-18s4qom");
-  let orgGroup = document.querySelectorAll(".css-4ey69y");
-  let changeMapWarning = document.querySelectorAll(".modal-title");
-  let playerDialog = document.querySelectorAll(
-    ".css-1ixz43s a, .css-1ixz43s button"
-  );
-  let serverCommands = document.querySelectorAll(
-    ".css-yun63y a, .css-yun63y button"
-  );
-  let playerMenuDialog = document.querySelectorAll(
-    ".css-f5o5h6 a, .css-f5o5h6 button"
-  );
+  ]),
+};
+setTimeout(() => {
+  setInterval(function Main_Script() {
+    // Selectors
+    let namePlayers = document.querySelectorAll(".css-1ewh5td");
+    let nameActivity = document.querySelectorAll(".css-zwebxb");
+    let messageLog = document.querySelectorAll(".css-ym7lu8");
+    let bmAdmin = document.querySelectorAll(".css-18s4qom");
 
-  b = changeMapWarning;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Change Layer")) {
-      b[i].style.color = "red";
-      b[i].style.fontStyle = "bold";
-      b[i].style.textAlign = "center";
-      b[i].style.fontSize = "200pt";
-    } else if (b[i].textContent.includes("Set Next Layer")) {
-      b[i].style.color = "lime";
-      b[i].style.fontStyle = "bold";
-      b[i].style.textAlign = "center";
-      b[i].style.fontSize = "24pt";
-    } else if (b[i].textContent.includes("Kick")) {
-      b[i].style.color = "orange";
-      b[i].style.fontStyle = "bold";
-      b[i].style.textAlign = "center";
-      b[i].style.fontSize = "48pt";
-    } else if (b[i].textContent.includes("Warn")) {
-      b[i].style.color = "lime";
-      b[i].style.fontStyle = "bold";
-      b[i].style.textAlign = "center";
-      b[i].style.fontSize = "24pt";
+    function applyColor(elements, set, color) {
+      elements.forEach((element) => {
+        for (let phrase of set) {
+          if (element.textContent.includes(phrase)) {
+            element.style.color = color;
+            break;
+          }
+        }
+      });
     }
-  }
-  // Org Panel
-  b = orgGroup;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Arma")) {
-      b[i].style.background = "#333300";
-    } else if (b[i].textContent.includes("Squad Mod")) {
-      b[i].style.background = "#2b9937";
-    } else if (b[i].textContent.includes("Comp")) {
-      b[i].style.background = "lime";
-    } else if (b[i].textContent.includes("Squad Admin")) {
-      b[i].style.background = "#119ab7";
-    } else if (b[i].textContent.includes("Rust Admin")) {
-      b[i].style.background = "#672c00";
-    } else if (b[i].textContent.includes("Admin")) {
-      b[i].style.background = "yellow";
-      b[i].style.color = "black";
-    } else if (b[i].textContent.includes("Org")) {
-      b[i].style.background = "black";
-    } else if (b[i].textContent.includes("Recruiter")) {
-      b[i].style.background = "#cc6600";
-    } else if (b[i].textContent.includes("Squad Event")) {
-      b[i].style.background = "#660033";
-    }
-  }
 
-  // Player Click Dialog
-  b = playerMenuDialog;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Warn")) {
-      b[i].style.color = "lime";
-    } else if (b[i].textContent.includes("Squad List")) {
-      b[i].style.color = "gold";
-    } else if (b[i].textContent.includes("Kick")) {
-      b[i].style.color = "orange";
-    } else if (b[i].textContent.includes("Ban")) {
-      b[i].style.color = "red";
-    }
-  }
+    // Apply colors based on phrases
+    applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
+    applyColor(messageLog, sets.grayedOut, colors.cGrayed);
+    applyColor(messageLog, sets.joinedServer, colors.cJoined);
+    applyColor(messageLog, sets.leftServer, colors.cLeftServer);
+    applyColor(messageLog, sets.actionList, colors.cModAction);
+    applyColor(messageLog, sets.teamBluefor, colors.cTeamBluefor);
+    applyColor(messageLog, sets.teamOpfor, colors.cTeamOpfor);
+    applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
+    applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
 
-  // Player Dialog Colors
-  b = playerDialog;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Warn")) {
-      b[i].style.color = "lime";
-    } else if (b[i].textContent.includes("Squad List")) {
-      b[i].style.color = "gold";
-    } else if (b[i].textContent.includes("Kick")) {
-      b[i].style.color = "orange";
-    } else if (b[i].textContent.includes("Ban")) {
-      b[i].style.color = "red";
-    }
-  }
+    // Colors Admin/Mod Name Within Player List
+    applyColor(nameActivity, sets.adminList, colors.cAdminName);
+    applyColor(nameActivity, sets.modList, colors.cModName);
 
-  // Server Command Prompts
-  b = serverCommands;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Next Layer")) {
-      b[i].style.color = "lime";
-      b[i].style.fontSize = "16pt";
-    } else if (b[i].textContent.includes("Change Layer")) {
-      b[i].style.color = "red";
-      b[i].style.fontStyle = "bold";
-      b[i].style.fontSize = "8pt";
-    } else if (b[i].textContent.includes("Squad List")) {
-      b[i].style.color = "gold";
-      b[i].style.fontSize = "16pt";
-    } else if (b[i].textContent.includes("Squad List")) {
-      b[i].style.color = "gold";
-    } else if (b[i].textContent.includes("Kick")) {
-      b[i].style.color = "orange";
-    } else if (b[i].textContent.includes("Ban")) {
-      b[i].style.color = "red";
-    } else if (b[i].textContent.includes("Warn")) {
-      b[i].style.color = "lime";
-    }
-  }
+    // Highlights the Player Is Admin to neon in the players bar.
+    bmAdmin.forEach((element) => {
+      if (element.textContent.includes("Admin")) {
+        element.style.color = colors.cbmAdmin;
+      }
+    });
 
-  // Highlights message content within the right panel for various reasons.
-  messageLog.forEach((elm) => {
-    if (adminTerms.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cAdminAction;
-    } else if (grayedOut.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cGrayed;
-    } else if (
-      joinedServer.some((phrase) => elm.textContent.includes(phrase))
-    ) {
-      elm.style.color = cJoined;
-    } else if (leftServer.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cLeftServer;
-    } else if (actionList.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cModAction;
-    } else if (teamBluefor.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cTeamBluefor;
-    } else if (teamOpfor.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cTeamOpfor;
-    } else if (teamKilled.some((phrase) => elm.textContent.includes(phrase))) {
-      elm.style.color = cTeamKilled;
-      elm.style.fontSize = "medium";
-    } else if (
-      trackedTriggers.some((phrase) => elm.textContent.includes(phrase))
-    ) {
-      elm.style.color = cTracked;
+    // Apply colors to player names
+    applyColor(namePlayers, sets.adminList, colors.cAdminName);
+    applyColor(namePlayers, sets.modList, colors.cModName);
+
+    let i = false;
+    // Add timestamps in seconds
+    let timeStampElements = document.querySelectorAll(".css-z1s6qn");
+
+    timeStampElements.forEach((element) => {
+      let utcTime = element.getAttribute("datetime");
+      let date = new Date(utcTime);
+      let time = date.toLocaleString().split(" ");
+
+      // Update only the time portion of the timestamp
+      element.innerText = time[1] + " " + time[2];
+    });
+
+    const navTools = {
+      changeMapWarning: [
+        {
+          phrase: "Change Layer",
+          styles: {
+            color: "red",
+            fontStyle: "bold",
+            textAlign: "center",
+            fontSize: "200pt",
+          },
+        },
+        {
+          phrase: "Set Next Layer",
+          styles: {
+            color: "lime",
+            fontStyle: "bold",
+            textAlign: "center",
+            fontSize: "24pt",
+          },
+        },
+        {
+          phrase: "Kick",
+          styles: {
+            color: "orange",
+            fontStyle: "bold",
+            textAlign: "center",
+            fontSize: "48pt",
+          },
+        },
+        {
+          phrase: "Warn",
+          styles: {
+            color: "lime",
+            fontStyle: "bold",
+            textAlign: "center",
+            fontSize: "24pt",
+          },
+        },
+      ],
+      orgGroup: [
+        { phrase: "Arma", styles: { background: "#333300" } },
+        { phrase: "Squad Mod", styles: { background: "#2b9937" } },
+        { phrase: "Comp", styles: { background: "lime" } },
+        { phrase: "Squad Admin", styles: { background: "#119ab7" } },
+        { phrase: "Rust Admin", styles: { background: "#672c00" } },
+        { phrase: "Org", styles: { background: "black" } },
+        { phrase: "Recruiter", styles: { background: "#cc6600" } },
+        { phrase: "Squad Event", styles: { background: "#660033" } },
+      ],
+      playerMenuDialog: [
+        { phrase: "Warn", styles: { color: "lime" } },
+        { phrase: "Squad List", styles: { color: "gold" } },
+        { phrase: "Kick", styles: { color: "orange" } },
+        { phrase: "Ban", styles: { color: "red" } },
+      ],
+      playerDialog: [
+        { phrase: "Warn", styles: { color: "lime" } },
+        { phrase: "Squad List", styles: { color: "gold" } },
+        { phrase: "Kick", styles: { color: "orange" } },
+        { phrase: "Ban", styles: { color: "red" } },
+      ],
+      serverCommands: [
+        { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
+        {
+          phrase: "Change Layer",
+          styles: { color: "red", fontStyle: "bold", fontSize: "8pt" },
+        },
+        { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
+        { phrase: "Kick", styles: { color: "orange" } },
+        { phrase: "Ban", styles: { color: "red" } },
+        { phrase: "Warn", styles: { color: "lime" } },
+      ],
+    };
+
+    function applyStyles(elements, styles) {
+      elements.forEach((el) => {
+        styles.forEach(({ phrase, styles }) => {
+          if (el.textContent.includes(phrase)) {
+            Object.assign(el.style, styles);
+          }
+        });
+      });
     }
-  });
-  // Color's Admin/Mod Name Within Player List
-  nameActivity.forEach((element) => {
-    if (adminList.some((phrase) => element.textContent.includes(phrase))) {
-      element.style.color = cAdminName;
-    } else if (modList.some((phrase) => element.textContent.includes(phrase))) {
-      element.style.color = cModName;
-    }
-  });
-  // Highlights the Player Is Admin to neon in the players bar.
-  b = bmAdmin;
-  for (i = 0; i < b.length; i++) {
-    if (b[i].textContent.includes("Admin")) {
-      b[i].style.color = cbmAdmin;
-    }
-  }
-  namePlayers.forEach((element) => {
-    if (adminList.some((phrase) => element.textContent.includes(phrase))) {
-      element.style.color = cAdminName;
-    } else if (modList.some((phrase) => element.textContent.includes(phrase))) {
-      element.style.color = cModName;
-    }
-  });
-  // Added Squad Lead Highlight
-  b = document.getElementsByClassName("small text-muted");
-  for (i = 0; i < b.length; i++) {
-    if (b[i].innerText == "Squad Leader") {
-      b[i].style.color = "#ffba23";
-    }
-  }
-  // Add timestamps in seconds
-  let timeStamp = document.querySelectorAll(".css-z1s6qn");
-  timeStamp.forEach((element) => {
-    let utcTime = element.getAttribute("datetime");
-    let date = new Date(utcTime);
-    let time = date.toLocaleString().split(" ");
-    element.textContent = element.textContent.replace(
-      element.textContent.toString(),
-      (time[1] + " " + time[2]).toString()
+
+    // Apply styles to specific elements based on content
+    applyStyles(
+      document.querySelectorAll(".modal-title"),
+      navTools.changeMapWarning
     );
-  });
-}, 35);
+    applyStyles(document.querySelectorAll(".css-4ey69y"), navTools.orgGroup);
+    applyStyles(
+      document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button"),
+      navTools.playerMenuDialog
+    );
+    applyStyles(
+      document.querySelectorAll(".css-1ixz43s a, .css-1ixz43s button"),
+      navTools.playerDialog
+    );
+    applyStyles(
+      document.querySelectorAll(".css-yun63y a, .css-yun63y button"),
+      navTools.serverCommands
+    );
+  }, 100); // Update every second for better performance
+}, 150);
 
 // Copy Button
-setInterval(function Job_BM_Tamper() {
-  String.prototype.startsWith = function (str) {
-    return this.match("^" + str) == str;
+setTimeout(function Job_BM_Tamper() {
+  setInterval(function Job_BM_Tamper() {
+    String.prototype.startsWith = function (str) {
+      return this.match("^" + str) == str;
+    };
+
+    let button = document.createElement("Button");
+    let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
+    let pEOSID = document.querySelectorAll('[title*="0002"]')[0].innerText;
+    let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
+    button.innerHTML = "Copy " + pName; // Updated this line
+    button.id = "copy-button";
+    button.style =
+      "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
+    document.body.appendChild(button);
+
+    document.getElementById("copy-button").onclick = function () {
+      let text = document.createElement("textarea");
+      document.body.appendChild(text);
+      text.value =
+        "**User**: " +
+        pName +
+        " <" +
+        window.location.href +
+        ">\n**IDs: **" +
+        pSteamID +
+        "** // **" +
+        pEOSID +
+        "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
+      text.select();
+      document.execCommand("copy");
+      text.parentNode.removeChild(text);
+    };
+    // This function deletes the old button so it does not remain on the page and causes issues, you may notice the button link as its replaced.
+    setTimeout(function Job_Button_Deleter() {
+      const element = document.getElementById("copy-button");
+      element.remove();
+
+      // SteamID Added
+      let spans = document.querySelectorAll(".css-q39y9k");
+      spans.forEach((span) => {
+        let steamID = span.title; /* or span.textContent */
+        let a = document.createElement("a");
+        [...span.attributes].forEach((attr) =>
+          a.attributes.setNamedItem(attr.cloneNode())
+        );
+        a.href = `https://communitybanlist.com/search/${steamID}`;
+        a.innerHTML = steamID;
+        a.target = "_blank";
+        span.replaceWith(a);
+      });
+    }, 975);
+  }, 1000);
+}, 1500);
+
+setTimeout(function ModifyCSS() {
+  // Define styles
+  const styles = {
+    zShift: ".css-ym7lu8 {z-index: 2;}",
+    zShiftTime: ".css-z1s6qn {z-index: 3;}",
+    teamkillBar: ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}",
+    moderationBar: ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}",
+    adminCam: ".css-1fy5con {background-color: #31e3ff21;width: 1920px}",
+    nobranding:
+      "html body div#root div.css-0.e1f2e1y80 div#RCONLayout.css-1qipodg nav.css-19lifo3 ul.css-16xvbhm li.css-1nxi32t a img#poweredbyovh {background-color: #31e3ff21;width: 1920px}",
   };
 
-  let button = document.createElement("Button");
-  let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-  let pEOSID = document.querySelectorAll('[title*="0002"]')[0].innerText;
-  let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
-  button.innerHTML = "Copy";
-  button.id = "copy-button";
-  button.style =
-    "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
-  document.body.appendChild(button);
+  // Apply styles
+  Object.values(styles).forEach((style) => GM_addStyle(style));
 
-  document.getElementById("copy-button").onclick = function () {
-    let text = document.createElement("textarea");
-    document.body.appendChild(text);
-    text.value =
-      "**User**: " +
-      pName +
-      " <" +
-      window.location.href +
-      ">\n**IDs: **" +
-      pSteamID +
-      "** // **" +
-      pEOSID +
-      "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
-    text.select();
-    document.execCommand("copy");
-    text.parentNode.removeChild(text);
-  };
-  // This function deletes the old button so it does not remain on the page and causes issues, you may notice the button link as its replaced.
-  setTimeout(function Job_Button_Deleter() {
-    const element = document.getElementById("copy-button");
-    element.remove();
+  // Define button creation function
+  function createButton(id, label, url, backgroundColor, rightPosition) {
+    const button = document.createElement("input");
+    button.setAttribute("type", "button");
+    button.id = id;
+    button.setAttribute("value", label);
+    button.setAttribute("onclick", `window.open('${url}', '_blank')`);
+    button.style = `top:10px;right:${rightPosition};width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: ${backgroundColor};`;
+    document.body.appendChild(button);
+  }
 
-    // SteamID Added
-    let spans = document.querySelectorAll(".css-q39y9k");
-    spans.forEach((span) => {
-      let steamID = span.title; /* or span.textContent */
-      let a = document.createElement("a");
-      [...span.attributes].forEach((attr) =>
-        a.attributes.setNamedItem(attr.cloneNode())
-      );
-      a.href = `https://communitybanlist.com/search/${steamID}`;
-      a.innerHTML = steamID;
-      a.target = "_blank";
-      span.replaceWith(a);
-    });
-  }, 975);
+  // Create buttons
+  createButton(
+    "twr",
+    "TW",
+    "https://www.battlemetrics.com/rcon/servers/7894269",
+    "#FF9900",
+    "12%"
+  );
+  createButton(
+    "npf",
+    "NP",
+    "https://www.battlemetrics.com/rcon/servers/7871746",
+    "#187E00",
+    "14%"
+  );
+  createButton(
+    "ban",
+    "B",
+    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085",
+    "rgb(47 50 66)",
+    "18%"
+  );
+  createButton("lanes", "L", "https://squadlanes.com/", "#7E6900", "20%");
 }, 1000);
-
-// Steam ID CBL
-setInterval(function Job_SteamID() {
-  setTimeout(function Job_SteamIDDelayer() {
-    // SteamID Added
-    let spans = document.querySelectorAll(".css-q39y9k");
-    spans.forEach((span) => {
-      let steamID = span.title; /* or span.textContent */
-      let a = document.createElement("a");
-      [...span.attributes].forEach((attr) =>
-        a.attributes.setNamedItem(attr.cloneNode())
-      );
-      a.href = `https://communitybanlist.com/search/${steamID}`;
-      a.innerHTML = steamID;
-      a.target = "_blank";
-      span.replaceWith(a);
-    });
-  }, 275);
-}, 300);
-
-setTimeout(function ModifyDoc() {
-  let zShift = ".css-ym7lu8 {z-index: 2;}";
-  let zShiftTime = ".css-z1s6qn {z-index: 3;}";
-  let teamkillBar = ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}";
-  let moderationBar =
-    ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}";
-  let adminCam = ".css-1fy5con {background-color: #31e3ff21;width: 1920px}";
-  let nobranding =
-    "html body div#root div.css-0.e1f2e1y80 div#RCONLayout.css-1qipodg nav.css-19lifo3 ul.css-16xvbhm li.css-1nxi32t a img#poweredbyovh {background-color: #31e3ff21;width: 1920px}";
-  GM_addStyle(nobranding);
-  GM_addStyle(teamkillBar);
-  GM_addStyle(moderationBar);
-  GM_addStyle(adminCam);
-  GM_addStyle(zShift);
-  GM_addStyle(zShiftTime);
-}, 250);
