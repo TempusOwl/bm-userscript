@@ -1,3 +1,4 @@
+const version = "8.1";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -39,11 +40,11 @@ const sets = {
     "Trigger added flag Previously banned",
   ]),
   adminList: new Set([
-    "ANGEL_42",
     "Aomm2025",
+    "Archangel",
     "Basa_Doc",
-    "Brennan",
     "Blackout",
+    "Brennan",
     "budge",
     "Chaot3ch",
     "Cossack_440",
@@ -58,35 +59,33 @@ const sets = {
     "JAMESTERRARIA",
     "Jonboy",
     "Kibz",
-    "Mav",
+    "Kyle",
     "Mike.H",
     "Nightshade",
     "Outlast",
-    "QTheEngineer",
     "Radio",
     "Redneck",
     "Shaka",
     "Skipper",
     "Sticker",
     "TempusOwl",
-    "Tiberius",
     "Too Many Cooks",
     "Valkyrie",
+    "WatdaHek",
     "Wolf Fang",
     "Zimmy - 75",
     "Θscar Mike",
     "xplay0321",
   ]),
   modList: new Set([
-    "Archangel",
     "Chillz",
     "Digikind",
-    "Kyle",
+    "Hellsaber",
+    "KC",
     "MURICA",
-    "WatdaHek",
-    "Wobblebob29",
-    "WadeLovesWhiteWomen",
+    "sleepyguy1",
     "Whip me more, Grandma",
+    "Wobblebob29",
     "ZeroTolerance",
   ]),
   teamBluefor: new Set([
@@ -376,25 +375,10 @@ setTimeout(function ModifyCSS() {
 
   // Create buttons
   createButton(
-    "twr",
-    "TW",
-    "https://www.battlemetrics.com/rcon/servers/7894269",
-    "#FF9900",
-    "12%"
-  );
-  createButton(
-    "npf",
-    "NP",
-    "https://www.battlemetrics.com/rcon/servers/7871746",
+    "m" + version,
+    "m" + version,
+    "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js",
     "#187E00",
     "14%"
   );
-  createButton(
-    "ban",
-    "B",
-    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085",
-    "rgb(47 50 66)",
-    "18%"
-  );
-  createButton("lanes", "L", "https://squadlanes.com/", "#7E6900", "20%");
 }, 1000);
