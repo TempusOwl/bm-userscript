@@ -1,4 +1,4 @@
-const version = "8.1";
+const version = "8.2";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -147,6 +147,21 @@ setTimeout(() => {
       });
     }
 
+    function adminApplyColor(elements, phrases, color) {
+      elements.forEach((el) => {
+        phrases.forEach((phrase) => {
+          // RegExp that matches the phrase as a whole word, or with "『LiQ』" before it
+          const regex = new RegExp(
+            `(\\b${phrase}\\b)|(\\b『LiQ』 ?${phrase}\\b)`,
+            "i"
+          );
+          if (regex.test(el.textContent)) {
+            el.style.color = color;
+          }
+        });
+      });
+    }
+
     // Apply colors based on phrases
     applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
     applyColor(messageLog, sets.grayedOut, colors.cGrayed);
@@ -158,9 +173,11 @@ setTimeout(() => {
     applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
     applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
 
-    // Colors Admin/Mod Name Within Player List
-    applyColor(nameActivity, sets.adminList, colors.cAdminName);
-    applyColor(nameActivity, sets.modList, colors.cModName);
+    // Apply colors to player names
+    adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
+    adminApplyColor(nameActivity, sets.modList, colors.cModName);
+    adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
+    adminApplyColor(namePlayers, sets.modList, colors.cModName);
 
     // Highlights the Player Is Admin to neon in the players bar.
     bmAdmin.forEach((element) => {
@@ -169,12 +186,6 @@ setTimeout(() => {
       }
     });
 
-    // Apply colors to player names
-    applyColor(namePlayers, sets.adminList, colors.cAdminName);
-    applyColor(namePlayers, sets.modList, colors.cModName);
-
-    let i = false;
-    // Add timestamps in seconds
     let timeStampElements = document.querySelectorAll(".css-z1s6qn");
 
     timeStampElements.forEach((element) => {
@@ -182,8 +193,10 @@ setTimeout(() => {
       let date = new Date(utcTime);
       let time = date.toLocaleString().split(" ");
 
-      // Update only the time portion of the timestamp
-      element.innerText = time[1] + " " + time[2];
+      // Update only the time portion of the timestamp in the title attribute
+      let titleDate = new Date(element.getAttribute("title"));
+      titleDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
+      element.setAttribute("title", titleDate.toLocaleString());
     });
 
     const navTools = {
@@ -292,7 +305,7 @@ setTimeout(() => {
 }, 150);
 
 // Copy Button
-setTimeout(function Job_BM_Tamper() {
+setTimeout(function delayLoadCF() {
   setInterval(function Job_BM_Tamper() {
     String.prototype.startsWith = function (str) {
       return this.match("^" + str) == str;
@@ -302,7 +315,7 @@ setTimeout(function Job_BM_Tamper() {
     let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
     let pEOSID = document.querySelectorAll('[title*="0002"]')[0].innerText;
     let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
-    button.innerHTML = "Copy " + pName; // Updated this line
+    button.innerHTML = "Copy " + pName;
     button.id = "copy-button";
     button.style =
       "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
@@ -352,6 +365,7 @@ setTimeout(function ModifyCSS() {
   const styles = {
     zShift: ".css-ym7lu8 {z-index: 2;}",
     zShiftTime: ".css-z1s6qn {z-index: 3;}",
+    zShiftTimeDate: ".css-1jtoyp {z-index: 3;}",
     teamkillBar: ".css-1tuqie1 {background-color: #5600ff1a;width: 1920px}",
     moderationBar: ".css-1rwnm41 {background-color: #ff000008;width: 1920px;}",
     adminCam: ".css-1fy5con {background-color: #31e3ff21;width: 1920px}",
@@ -362,31 +376,47 @@ setTimeout(function ModifyCSS() {
   // Apply styles
   Object.values(styles).forEach((style) => GM_addStyle(style));
 
+  // Create a div to contain the buttons
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style =
+    "position: absolute; top: 10px; right: 5%; z-index: 99999;";
+  document.body.appendChild(buttonContainer);
+
   // Define button creation function
-  function createButton(id, label, url, backgroundColor, rightPosition) {
+  function createButton(id, label, url, backgroundColor) {
     const button = document.createElement("input");
     button.setAttribute("type", "button");
     button.id = id;
     button.setAttribute("value", label);
     button.setAttribute("onclick", `window.open('${url}', '_blank')`);
-    button.style = `top:10px;right:${rightPosition};width:35px;background:#222222;position:absolute;z-index:99999;padding:2px;background: ${backgroundColor};`;
-    document.body.appendChild(button);
+    button.style = `width:30px;background:#222222;margin-right:5px;padding:2px;background: ${backgroundColor};`;
+    buttonContainer.appendChild(button);
   }
 
   // Create buttons
   createButton(
-    "v" + version,
-    "v" + version,
-    "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js",
-    "#187E00",
-    "14%"
+    "NPFbutton",
+    "N",
+    "https://www.battlemetrics.com/rcon/servers/7871746",
+    "#187E00"
+  );
+  createButton(
+    "TRbutton",
+    "T",
+    "https://www.battlemetrics.com/rcon/servers/7894269",
+    "orange"
   );
   createButton(
     "ban",
     "B",
     "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085",
-    "rgb(47 50 66)",
-    "16%"
+    "red"
   );
-  createButton("lanes", "L", "https://squadmaps.com/", "#7E6900", "18%");
+  createButton("lanes", "L", "https://squadmaps.com/", "#7E6900");
+  createButton(
+    "version",
+    version,
+    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085",
+    "black"
+  );
 }, 1000);
