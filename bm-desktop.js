@@ -1,4 +1,4 @@
-const version = "8.2";
+const version = "8.3";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -395,9 +395,28 @@ setTimeout(function ModifyCSS() {
 
   // Create buttons
   createButton(
+    "NPFbutton",
+    "N",
+    "https://www.battlemetrics.com/rcon/servers/7871746",
+    "#187E00"
+  );
+  createButton(
+    "TRbutton",
+    "T",
+    "https://www.battlemetrics.com/rcon/servers/7894269",
+    "orange"
+  );
+  createButton(
+    "ban",
+    "B",
+    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085&filter%5Bexpired%5D=true",
+    "red"
+  );
+  createButton("lanes", "L", "https://squadmaps.com/", "#7E6900");
+  createButton(
     "version",
     version,
-    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085",
+    "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js",
     "black"
   );
 }, 1000);
