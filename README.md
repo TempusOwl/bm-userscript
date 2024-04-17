@@ -1,10 +1,15 @@
 ## About This Repository
-Userscript that takes advantage of custom triggers you may have created in BM, as well as parse important text. I made this help color code important details like Squad Leaders, among other things. Having 100 users on a table with varying info can make parsing rather hard, this makes it easy.
+Userscript that takes advantage of custom triggers you may have created in BM, as well as parse important text. I made this help color code important details like Squad Leaders, among other things for Squad community. 
+
+## Requirements & Install
+- Requirements: Chrome browser with **DEV MODE** enable and the Tampermonkey web extension. Firefox is supported as well.
+- Install Guide: https://docs.google.com/document/d/1swXqOl2guYp3PNhqA1h07U7KVQkDoYjBgVHVtCZkjgI/edit?usp=sharing
+- Backup: There is a PDF file, if the above URL becomes broken. 
 
 ## Known Issues
 - Some elements like Copy Button or Community Ban List may eat clicks when it's being updated, if it does not work click again. Refreshing the page resolve most issues if you encounter any.
-- Tampermonkey may not apply the scripting to CSS to BM (and the log will have no coloring) This tends to occur due to rather complicated issue. If it happens just reload the page and the script will apply it. 
-- In general reloading the page fixes most minor issues. The script should work fine in 95% of cases without much fuss. If you have constant issues let me know.
+- In rare cases the Cloudflare security check may get stuck in a loop when opening a player's RCON Profile. Disable the script via the browser extension, then reload the page to pass the check and enable it. 
+- Userscripts are not perfect science, and in general reloading the page fixes most issues. The script works fine in 98% of cases.
 
 ## Features Of bm-desktop-auto.min.js
 * Highly customizable!
@@ -26,24 +31,11 @@ Userscript that takes advantage of custom triggers you may have created in BM, a
 * Highlights Admins/mods within the activity log.
 * Highlights important trigger warnings in red. 
 
-## Mobile Version
-It's possible to use userscripts on mobile (at least for iOS https://apps.apple.com/us/app/userscripts/id1463298887). This requires the file to be a .js file which can be tough to aquire in practice. There is no obvious way to change filetypes within iOS, so saving it as text or html is not useful and will apps to not see it. Consider emailing the file as proper .js file attachment via your desktop and downloading it to your "Files" app. 
-
-There are some minor changes with mobile version, like removing buttons that may get in the way. The script was slowed down a bit as well to account for older devices and models. 
-
 ## What Is TamperMonkey
 It’s a browser addon that loads “userscripts” that can modify how a website display’s itself to you. User scripts are powerful tools that can totally modify websites. Remember, tampermonkey can pose significant security issues for your device if you install scripts from unknown sources. Only use scripts if you know what they are doing!
 
-## Installing TamperMonkey
-https://www.tampermonkey.net/ (I recommend Stable)
-
-## Add The Script
-Step By Step - Guide: https://github.com/TempusOwl/bm-userscript/blob/main/installing-guide.png?raw=true
-* Once you downloaded the TamperMonkey extension to your browser via Chrome/Firefox Webstore, locate it at the upper right of your browser and right click it. 
-* Create a new script, this will open a new tab. Replace EVERYTHING within it with the main-script.js found above (open as raw). Then save the script with CTLR+S
-* Go the BM website, and it should show as a red +1 next to TamperMonkey icon, if the script is working. Otherwise you may need to enable it. Try refreshing the page if you do not see anything.
-* If you see red +1 when on the BM website, the script should be working. In some niche cases, you may need to reload the page for the script to load.
-
 ## Contributions
 * Time w/ Seconds - Avengerian 
-  
+- Project largely works of using Inspect Element to find name of classes, and then using selectors to capture them and apply effects to them. This project is limited to applying CSS class coloring and QoL updates by reading/modifying the locally delivered web document. Code that automates or preforms API request like bans, kicks and queries will not be merged into this project. 
+- Modifiying mod/admin name changes, new factions or wording changes is as simple as updating the word list.
+

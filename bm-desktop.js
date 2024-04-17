@@ -1,4 +1,4 @@
-const version = "8.3";
+const version = "8.4";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -66,12 +66,13 @@ const sets = {
     "Radio",
     "Redneck",
     "Shaka",
+    "sleepyguy1",
     "Skipper",
-    "Sticker",
     "TempusOwl",
     "Too Many Cooks",
     "Valkyrie",
     "WatdaHek",
+    "Wobblebob29",
     "Wolf Fang",
     "Zimmy - 75",
     "Θscar Mike",
@@ -81,18 +82,13 @@ const sets = {
     "Chillz",
     "Digikind",
     "Hellsaber",
-    "KC",
-    "MURICA",
-    "sleepyguy1",
+    "N1nja",
     "Whip me more, Grandma",
-    "Wobblebob29",
     "ZeroTolerance",
   ]),
   teamBluefor: new Set([
     "Australian Defence Force",
-    "British Army",
     "British Armed Forces",
-    "Canadian Army",
     "Canadian Armed Forces",
     "United States Army",
     "United States Marine Corps",
@@ -106,6 +102,7 @@ const sets = {
     "People's Liberation Army",
     "Russian Airborne Forces",
     "PLA Navy Marine Corps",
+    "PLA Amphibious Ground Forces"
   ]),
   adminTerms: new Set([
     "admin",
