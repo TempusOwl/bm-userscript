@@ -1,4 +1,4 @@
-const version = "8.5";
+const version = "8.7";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -45,19 +45,15 @@ const sets = {
     "Basa_Doc",
     "Blackout",
     "Brennan",
-    "budge",
     "Chaot3ch",
+    "Chillz",
     "Cossack_440",
     "Digikind",
     "DontFaket",
     "E10",
-    "eatcho",
-    "El 24 throttle4u",
     "Exploits",
     "Gilly",
-    "got2bhockey",
     "Hellsaber",
-    "iCampHard",
     "JAMESTERRARIA",
     "Jonboy",
     "Kibz",
@@ -66,10 +62,8 @@ const sets = {
     "Nightshade",
     "Outlast",
     "QTheEngineer",
-    "Radio",
     "Redneck",
     "Shaka",
-    "sleepyguy1",
     "Skipper",
     "TempusOwl",
     "Too Many Cooks",
@@ -77,18 +71,21 @@ const sets = {
     "WatdaHek",
     "Wobblebob29",
     "Wolf Fang",
-    "Θscar Mike",
+    "budge",
+    "got2bhockey",
+    "iCampHard",
+    "sleepyguy1",
     "xplay0321",
+    "Θscar Mike",
   ]),
   modList: new Set([
-    "Chillz",
     "HellHound6396",
-    "N1nja",
-    "IItsAJackal",
-    "omgitsjesse",
     "MODERNMEGA",
+    "MadDawgMorales",
+    "Temper",
     "Whip me more, Grandma",
-    "ZeroTolerance",
+    "Wjli13125",
+    "omgitsjesse",
   ]),
   teamBluefor: new Set([
     "Australian Defence Force",
@@ -116,14 +113,16 @@ const sets = {
     "to the other team.",
     ") was disbanded b",
     "requested a list of squads.",
-    "requested a list of squads.",
     "set the next map to",
     "changed the map to",
     "requested the next map.",
     ") forced",
+    "AdminRenameSquad",
     "(Global)",
+    "executed Player Action Action",
     "requested the current map.",
     "restarted the match.",
+    "Squad disband - SL",
     "was removed from their squad by Trigger.",
     "requested layer list.",
     "was removed from their squad by",
@@ -133,7 +132,7 @@ setTimeout(() => {
   setInterval(function Main_Script() {
     // Selectors
     let namePlayers = document.querySelectorAll(".css-1ewh5td");
-    let nameActivity = document.querySelectorAll(".css-zwebxb");
+    let nameActivity = document.querySelectorAll(".css-fj458c");
     let messageLog = document.querySelectorAll(".css-ym7lu8");
     let bmAdmin = document.querySelectorAll(".css-18s4qom");
 
@@ -254,23 +253,24 @@ setTimeout(() => {
         { phrase: "Squad List", styles: { color: "gold" } },
         { phrase: "Kick", styles: { color: "orange" } },
         { phrase: "Ban", styles: { color: "red" } },
-      ],
-      playerDialog: [
-        { phrase: "Warn", styles: { color: "lime" } },
-        { phrase: "Squad List", styles: { color: "gold" } },
-        { phrase: "Kick", styles: { color: "orange" } },
-        { phrase: "Ban", styles: { color: "red" } },
+        { phrase: "Force Team Change", styles: { color: "#db4dff" } },
+        { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
+        { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
+
       ],
       serverCommands: [
+        { phrase: "Warn", styles: { color: "lime" } },
+        { phrase: "Kick", styles: { color: "orange" } },
+        { phrase: "Ban", styles: { color: "red" } },
+        { phrase: "Force Team Change", styles: { color: "#db4dff" } },
+        { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
+        { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
         { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
         {
           phrase: "Change Layer",
           styles: { color: "red", fontStyle: "bold", fontSize: "8pt" },
         },
         { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
-        { phrase: "Kick", styles: { color: "orange" } },
-        { phrase: "Ban", styles: { color: "red" } },
-        { phrase: "Warn", styles: { color: "lime" } },
       ],
     };
 
@@ -296,14 +296,14 @@ setTimeout(() => {
     );
     applyStyles(
       document.querySelectorAll(".css-1ixz43s a, .css-1ixz43s button"),
-      navTools.playerDialog
+      navTools.playerMenuDialog
     );
     applyStyles(
       document.querySelectorAll(".css-yun63y a, .css-yun63y button"),
       navTools.serverCommands
     );
   }, 100); // Update every second for better performance
-}, 150);
+}, 250);
 
 // Copy Button
 setTimeout(function delayLoadCF() {
@@ -359,7 +359,7 @@ setTimeout(function delayLoadCF() {
       });
     }, 975);
   }, 1000);
-}, 1500);
+}, 2500);
 
 setTimeout(function ModifyCSS() {
   // Define styles
@@ -390,34 +390,19 @@ setTimeout(function ModifyCSS() {
     button.id = id;
     button.setAttribute("value", label);
     button.setAttribute("onclick", `window.open('${url}', '_blank')`);
-    button.style = `width:30px;background:#222222;margin-right:5px;padding:2px;background: ${backgroundColor};`;
+    button.style = `width:30px;margin-right:5px;padding:2px;background: ${backgroundColor};`;
     buttonContainer.appendChild(button);
   }
 
+  // Button details
+  const buttons = [
+    { id: "NPFbutton", label: "N", url: "https://www.battlemetrics.com/rcon/servers/7871746", backgroundColor: "#187E00" },
+    { id: "TRbutton", label: "T", url: "https://www.battlemetrics.com/rcon/servers/7894269", backgroundColor: "orange" },
+    { id: "ban", label: "B", url: "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085&filter%5Bexpired%5D=true", backgroundColor: "red" },
+    { id: "lanes", label: "L", url: "https://squadmaps.com/", backgroundColor: "#7E6900" },
+    { id: "version", label: version, url: "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js", backgroundColor: "black" }
+  ];
+
   // Create buttons
-  createButton(
-    "NPFbutton",
-    "N",
-    "https://www.battlemetrics.com/rcon/servers/7871746",
-    "#187E00"
-  );
-  createButton(
-    "TRbutton",
-    "T",
-    "https://www.battlemetrics.com/rcon/servers/7894269",
-    "orange"
-  );
-  createButton(
-    "ban",
-    "B",
-    "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085&filter%5Bexpired%5D=true",
-    "red"
-  );
-  createButton("lanes", "L", "https://squadmaps.com/", "#7E6900");
-  createButton(
-    "version",
-    version,
-    "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js",
-    "black"
-  );
+  buttons.forEach(button => createButton(button.id, button.label, button.url, button.backgroundColor));
 }, 1000);
