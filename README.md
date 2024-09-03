@@ -39,4 +39,5 @@ It’s a browser addon that loads “userscripts” that can modify how a websit
 - If you fork this project, only modify the (bm-desktop.js). Updating it, will cause github actions to automatically update everything else. The result is the complete script used in Tampermonkey (bm-toolkit-desktop.min.js). Make sure to update the version number in (bm-desktop.js), this allows tampermonkey to version check and update. Understand modifying the script within tapermonkey will disable auto updates (see install guide for info on this). 
 - Project largely works of using Inspect Element to find name of classes, and then using selectors to capture them and apply effects to them. This project is limited to applying CSS class coloring and QoL updates by reading/modifying the locally delivered web document. Code that automates or preforms API request like bans, kicks and queries will not be merged into this project. 
 - Modifiying mod/admin name changes, new factions or wording changes is as simple as updating the word list.
+- Eddie (button fixes) https://greasyfork.org/en/scripts/501133-battlemetrics-toolkit-desktop-auto-update
 
