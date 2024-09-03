@@ -6,7 +6,6 @@ const colors = {
   cbmAdmin: "#58ff47",
   cModAction: "#ff3333",
   cAdminAction: "#37ff00",
-  cModName: "#4cffac",
   cTeamKilled: "#ffcc00",
   cLeftServer: "#ff33cc",
   cJoined: "#919191",
@@ -45,15 +44,19 @@ const sets = {
     "Basa_Doc",
     "Blackout",
     "Brennan",
+    "budge",
     "Chaot3ch",
-    "Chillz",
     "Cossack_440",
     "Digikind",
     "DontFaket",
     "E10",
+    "eatcho",
+    "El 24 throttle4u",
     "Exploits",
     "Gilly",
+    "got2bhockey",
     "Hellsaber",
+    "iCampHard",
     "JAMESTERRARIA",
     "Jonboy",
     "Kibz",
@@ -62,8 +65,10 @@ const sets = {
     "Nightshade",
     "Outlast",
     "QTheEngineer",
+    "Radio",
     "Redneck",
     "Shaka",
+    "sleepyguy1",
     "Skipper",
     "TempusOwl",
     "Too Many Cooks",
@@ -71,21 +76,16 @@ const sets = {
     "WatdaHek",
     "Wobblebob29",
     "Wolf Fang",
-    "budge",
-    "got2bhockey",
-    "iCampHard",
-    "sleepyguy1",
-    "xplay0321",
     "Θscar Mike",
-  ]),
-  modList: new Set([
+    "xplay0321",
+    "Chillz",
     "HellHound6396",
-    "MODERNMEGA",
-    "MadDawgMorales",
-    "Temper",
-    "Whip me more, Grandma",
-    "Wjli13125",
+    "N1nja",
+    "IItsAJackal",
     "omgitsjesse",
+    "MODERNMEGA",
+    "Whip me more, Grandma",
+    "ZeroTolerance",
   ]),
   teamBluefor: new Set([
     "Australian Defence Force",
@@ -112,6 +112,7 @@ const sets = {
     "aDMIN",
     "to the other team.",
     ") was disbanded b",
+    "requested a list of squads.",
     "requested a list of squads.",
     "set the next map to",
     "changed the map to",
@@ -175,9 +176,7 @@ setTimeout(() => {
 
     // Apply colors to player names
     adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
-    adminApplyColor(nameActivity, sets.modList, colors.cModName);
     adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
-    adminApplyColor(namePlayers, sets.modList, colors.cModName);
 
     // Highlights the Player Is Admin to neon in the players bar.
     bmAdmin.forEach((element) => {
@@ -305,27 +304,66 @@ setTimeout(() => {
   }, 100); // Update every second for better performance
 }, 250);
 
-// Copy Button
-setTimeout(function delayLoadCF() {
-  setInterval(function Job_BM_Tamper() {
-    String.prototype.startsWith = function (str) {
-      return this.match("^" + str) == str;
-    };
 
-    let button = document.createElement("Button");
-    let pSteamID = document.querySelectorAll('[title*="765"]')[0].innerText;
-    let pEOSID = document.querySelectorAll('[title*="0002"]')[0].innerText;
-    let pName = document.querySelectorAll("#RCONPlayerPage > h1")[0].innerText;
-    button.innerHTML = "Copy " + pName;
+
+function mainScript() {
+    setInterval(() => {
+        const playerPageExists = document.querySelector("#RCONPlayerPage");
+
+        if (playerPageExists) {
+            ensureElementExists("copy-button", createCopyButton);
+        } else {
+            removeElementById("copy-button");
+        }
+        replaceSteamIDSpans();
+    }, 1000);
+}
+
+function ensureElementExists(elementId, creationFunction) {
+    if (!document.getElementById(elementId)) {
+        creationFunction();
+    }
+}
+
+function removeElementById(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.remove();
+    }
+}
+
+function replaceSteamIDSpans() {
+    const spans = document.querySelectorAll(".css-q39y9k");
+
+    spans.forEach(span => {
+        const steamID = span.title;
+        const anchor = document.createElement("a");
+
+        // Clone span's attributes to the new anchor element
+        Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
+
+        anchor.href = `https://communitybanlist.com/search/${steamID}`;
+        anchor.innerHTML = steamID;
+        anchor.target = "_blank";
+
+        span.replaceWith(anchor);
+    });
+}
+
+function createCopyButton() {
+    const button = document.createElement("button");
     button.id = "copy-button";
-    button.style =
-      "top:90px;left:0;background:#222222;position:absolute;z-index:99999;padding:6px;";
+    button.innerHTML = "Copy Player Info";
+    button.classList.add("copy-button-style");
+
     document.body.appendChild(button);
 
-    document.getElementById("copy-button").onclick = function () {
-      let text = document.createElement("textarea");
-      document.body.appendChild(text);
-      text.value =
+    button.addEventListener("click", () => {
+        const pSteamID = document.querySelector('[title*="765"]')?.innerText || 'SteamID MISSING?';
+        const pEOSID = document.querySelector('[title*="0002"]')?.innerText || '';
+        const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
+
+        const textToCopy =
         "**User**: " +
         pName +
         " <" +
@@ -335,31 +373,54 @@ setTimeout(function delayLoadCF() {
         "** // **" +
         pEOSID +
         "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
-      text.select();
-      document.execCommand("copy");
-      text.parentNode.removeChild(text);
-    };
-    // This function deletes the old button so it does not remain on the page and causes issues, you may notice the button link as its replaced.
-    setTimeout(function Job_Button_Deleter() {
-      const element = document.getElementById("copy-button");
-      element.remove();
 
-      // SteamID Added
-      let spans = document.querySelectorAll(".css-q39y9k");
-      spans.forEach((span) => {
-        let steamID = span.title; /* or span.textContent */
-        let a = document.createElement("a");
-        [...span.attributes].forEach((attr) =>
-          a.attributes.setNamedItem(attr.cloneNode())
-        );
-        a.href = `https://communitybanlist.com/search/${steamID}`;
-        a.innerHTML = steamID;
-        a.target = "_blank";
-        span.replaceWith(a);
-      });
-    }, 975);
-  }, 1000);
-}, 2500);
+
+        copyToClipboard(textToCopy);
+    });
+
+    applyStyles();
+}
+
+function copyToClipboard(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+}
+
+function applyStyles() {
+    const style = document.createElement("style");
+    style.innerHTML = `
+        .copy-button-style {
+            width: 125px;
+            height: 35px;
+            background: #4c82ffab;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 2px;
+            position: absolute;
+            top: 90px;
+            left: 0;
+            z-index: 99999;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .copy-button-style:hover {
+            background: #4c8aff;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+setTimeout(mainScript, 750);
+
 
 setTimeout(function ModifyCSS() {
   // Define styles
