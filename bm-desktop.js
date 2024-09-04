@@ -263,7 +263,7 @@ setTimeout(() => {
         { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
         { phrase: "Change Layer", styles: { color: "red", fontStyle: "bold", fontSize: "8pt" } },
         { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
-      ],
+      ]
     };
 
     function applyStyles(elements, styles) {
