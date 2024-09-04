@@ -252,7 +252,6 @@ setTimeout(() => {
         { phrase: "Force Team Change", styles: { color: "#db4dff" } },
         { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
         { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
-
       ],
       serverCommands: [
         { phrase: "Warn", styles: { color: "lime" } },
@@ -262,10 +261,7 @@ setTimeout(() => {
         { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
         { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
         { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
-        {
-          phrase: "Change Layer",
-          styles: { color: "red", fontStyle: "bold", fontSize: "8pt" },
-        },
+        { phrase: "Change Layer", styles: { color: "red", fontStyle: "bold", fontSize: "8pt" } },
         { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
       ],
     };
@@ -278,7 +274,7 @@ setTimeout(() => {
           }
         });
       });
-    }
+    };
 
     // Apply styles to specific elements based on content
     applyStyles(
@@ -304,92 +300,92 @@ setTimeout(() => {
 
 
 function mainScript() {
-    setInterval(() => {
-        const playerPageExists = document.querySelector("#RCONPlayerPage");
+  setInterval(() => {
+    const playerPageExists = document.querySelector("#RCONPlayerPage");
 
-        if (playerPageExists) {
-            ensureElementExists("copy-button", createCopyButton);
-        } else {
-            removeElementById("copy-button");
-        }
-        replaceSteamIDSpans();
-    }, 1000);
+    if (playerPageExists) {
+      ensureElementExists("copy-button", createCopyButton);
+    } else {
+      removeElementById("copy-button");
+    }
+    replaceSteamIDSpans();
+  }, 1000);
 }
 
 function ensureElementExists(elementId, creationFunction) {
-    if (!document.getElementById(elementId)) {
-        creationFunction();
-    }
+  if (!document.getElementById(elementId)) {
+    creationFunction();
+  }
 }
 
 function removeElementById(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.remove();
-    }
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.remove();
+  }
 }
 
 function replaceSteamIDSpans() {
-    const spans = document.querySelectorAll(".css-q39y9k");
+  const spans = document.querySelectorAll(".css-q39y9k");
 
-    spans.forEach(span => {
-        const steamID = span.title;
-        const anchor = document.createElement("a");
+  spans.forEach(span => {
+    const steamID = span.title;
+    const anchor = document.createElement("a");
 
-        // Clone span's attributes to the new anchor element
-        Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
+    // Clone span's attributes to the new anchor element
+    Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
 
-        anchor.href = `https://communitybanlist.com/search/${steamID}`;
-        anchor.innerHTML = steamID;
-        anchor.target = "_blank";
+    anchor.href = `https://communitybanlist.com/search/${steamID}`;
+    anchor.innerHTML = steamID;
+    anchor.target = "_blank";
 
-        span.replaceWith(anchor);
-    });
+    span.replaceWith(anchor);
+  });
 }
 
 function createCopyButton() {
-    const button = document.createElement("button");
-    button.id = "copy-button";
-    button.innerHTML = "Copy Player Info";
-    button.classList.add("copy-button-style");
+  const button = document.createElement("button");
+  button.id = "copy-button";
+  button.innerHTML = "Copy Player Info";
+  button.classList.add("copy-button-style");
 
-    document.body.appendChild(button);
+  document.body.appendChild(button);
 
-    button.addEventListener("click", () => {
-        const pSteamID = document.querySelector('[title*="765"]')?.innerText || 'SteamID MISSING?';
-        const pEOSID = document.querySelector('[title*="0002"]')?.innerText || '';
-        const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
+  button.addEventListener("click", () => {
+    const pSteamID = document.querySelector('[title*="765"]')?.innerText || 'SteamID MISSING?';
+    const pEOSID = document.querySelector('[title*="0002"]')?.innerText || '';
+    const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-        const textToCopy =
-        "**User**: " +
-        pName +
-        " <" +
-        window.location.href +
-        ">\n**IDs: **" +
-        pSteamID +
-        "** // **" +
-        pEOSID +
-        "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
+    const textToCopy =
+      "**User**: " +
+      pName +
+      " <" +
+      window.location.href +
+      ">\n**IDs: **" +
+      pSteamID +
+      "** // **" +
+      pEOSID +
+      "\n**Server**: \n**Infraction**: \n**Evidence Linked Below**:\n";
 
 
-        copyToClipboard(textToCopy);
-    });
+    copyToClipboard(textToCopy);
+  });
 
-    applyStyles();
+  applyStyles();
 }
 
 function copyToClipboard(text) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
 }
 
 function applyStyles() {
-    const style = document.createElement("style");
-    style.innerHTML = `
+  const style = document.createElement("style");
+  style.innerHTML = `
         .copy-button-style {
             width: 125px;
             height: 35px;
@@ -413,7 +409,7 @@ function applyStyles() {
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
     `;
-    document.head.appendChild(style);
+  document.head.appendChild(style);
 }
 
 setTimeout(mainScript, 750);
