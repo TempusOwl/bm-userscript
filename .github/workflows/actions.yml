@@ -26,9 +26,9 @@ jobs:
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of bm-desktop.min.js
       run: |
-          content=$(sed 's/[\/&]/\\&/g' bm-desktop.min.js | tr '\n' ';')
-          sed -i "15s/.*/$content/" bm-toolkit-desktop.min.js
-    
+        content=$(cat bm-desktop.min.js | tr '\n' ';')
+        awk -v new_content="$content" 'NR==15 {$0=new_content} {print}' bm-toolkit-desktop.min.js > temp.js && mv temp.js bm-toolkit-desktop.min.js 
+        
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
         version=$(grep -oP 'const version = "\K[^"]+' bm-desktop.js)
