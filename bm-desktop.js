@@ -1,4 +1,4 @@
-const version = "9.1";
+const version = "9.2";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
@@ -82,6 +82,9 @@ const sets = {
     "omgitsjesse",
     "MODERNMEGA",
     "Whip me more, Grandma",
+    "Wjli13125",
+    "Temper",
+    "MadDawgMorales"
   ]),
   teamBluefor: new Set([
     "Australian Defence Force",
