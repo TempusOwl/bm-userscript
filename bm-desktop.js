@@ -145,11 +145,11 @@ setTimeout(() => {
     }
 
     function adminApplyColor(elements, phrases, color) {
-      elements.forEach((el) => {
-        phrases.forEach((phrase) => {
+      elements.forEach(function (el) {
+        phrases.forEach(function (phrase) {
           // RegExp that matches the phrase as a whole word, or with "『LiQ』" before it
           const regex = new RegExp(
-            `(\\b${phrase}\\b)|(\\b『LiQ』 ?${phrase}\\b)`,
+            "(\\b" + phrase + "\\b)|(\\b『LiQ』 ?" + phrase + "\\b)",
             "i"
           );
           if (regex.test(el.textContent)) {
@@ -158,6 +158,7 @@ setTimeout(() => {
         });
       });
     }
+
 
     // Apply colors based on phrases
     applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
@@ -335,7 +336,7 @@ function replaceSteamIDSpans() {
     // Clone span's attributes to the new anchor element
     Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
 
-    anchor.href = `https://communitybanlist.com/search/${steamID}`;
+    anchor.href = "https://communitybanlist.com/search/" + steamID;
     anchor.innerHTML = steamID;
     anchor.target = "_blank";
 
@@ -385,30 +386,29 @@ function copyToClipboard(text) {
 
 function applyStyles() {
   const style = document.createElement("style");
-  style.innerHTML = `
-        .copy-button-style {
-            width: 125px;
-            height: 35px;
-            background: #4c82ffab;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 2px;
-            position: absolute;
-            top: 90px;
-            left: 0;
-            z-index: 99999;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-        .copy-button-style:hover {
-            background: #4c8aff;
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-    `;
+  style.innerHTML =
+    ".copy-button-style {" +
+    "width: 125px;" +
+    "height: 35px;" +
+    "background: #4c82ffab;" +
+    "color: white;" +
+    "border: none;" +
+    "border-radius: 3px;" +
+    "box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" +
+    "font-size: 14px;" +
+    "font-weight: bold;" +
+    "cursor: pointer;" +
+    "padding: 2px;" +
+    "position: absolute;" +
+    "top: 90px;" +
+    "left: 0;" +
+    "z-index: 99999;" +
+    "transition: background 0.3s, box-shadow 0.3s;" +
+    "}" +
+    ".copy-button-style:hover {" +
+    "background: #4c8aff;" +
+    "box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);" +
+    "}";
   document.head.appendChild(style);
 }
 
@@ -443,8 +443,11 @@ setTimeout(function ModifyCSS() {
     button.setAttribute("type", "button");
     button.id = id;
     button.setAttribute("value", label);
-    button.setAttribute("onclick", `window.open('${url}', '_blank')`);
-    button.style = `width:30px;margin-right:5px;padding:2px;background: ${backgroundColor};`;
+    button.setAttribute("onclick", "window.open('" + url + "', '_blank')");
+    button.style.width = "30px";
+    button.style.marginRight = "5px";
+    button.style.padding = "2px";
+    button.style.background = backgroundColor;
     buttonContainer.appendChild(button);
   }
 
