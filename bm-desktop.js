@@ -125,180 +125,177 @@ const sets = {
     "was removed from their squad by",
   ]),
 };
-setTimeout(() => {
-  setInterval(function Main_Script() {
-    // Selectors
-    let namePlayers = document.querySelectorAll(".css-1ewh5td");
-    let nameActivity = document.querySelectorAll(".css-fj458c");
-    let messageLog = document.querySelectorAll(".css-ym7lu8");
-    let bmAdmin = document.querySelectorAll(".css-18s4qom");
+setInterval(function Main_Script() {
+  // Selectors
+  let namePlayers = document.querySelectorAll(".css-1ewh5td");
+  let nameActivity = document.querySelectorAll(".css-fj458c");
+  let messageLog = document.querySelectorAll(".css-ym7lu8");
+  let bmAdmin = document.querySelectorAll(".css-18s4qom");
 
-    function applyColor(elements, set, color) {
-      elements.forEach((element) => {
-        for (let phrase of set) {
-          if (element.textContent.includes(phrase)) {
-            element.style.color = color;
-            break;
-          }
+  function applyColor(elements, set, color) {
+    elements.forEach((element) => {
+      for (let phrase of set) {
+        if (element.textContent.includes(phrase)) {
+          element.style.color = color;
+          break;
         }
-      });
-    }
-
-    function adminApplyColor(elements, phrases, color) {
-      elements.forEach(function (el) {
-        phrases.forEach(function (phrase) {
-          // RegExp that matches the phrase as a whole word, or with "『LiQ』" before it
-          const regex = new RegExp(
-            "(\\b" + phrase + "\\b)|(\\b『LiQ』 ?" + phrase + "\\b)",
-            "i"
-          );
-          if (regex.test(el.textContent)) {
-            el.style.color = color;
-          }
-        });
-      });
-    }
-
-
-    // Apply colors based on phrases
-    applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
-    applyColor(messageLog, sets.grayedOut, colors.cGrayed);
-    applyColor(messageLog, sets.joinedServer, colors.cJoined);
-    applyColor(messageLog, sets.leftServer, colors.cLeftServer);
-    applyColor(messageLog, sets.actionList, colors.cModAction);
-    applyColor(messageLog, sets.teamBluefor, colors.cTeamBluefor);
-    applyColor(messageLog, sets.teamOpfor, colors.cTeamOpfor);
-    applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
-    applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
-
-    // Apply colors to player names
-    adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
-    adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
-
-    // Highlights the Player Is Admin to neon in the players bar.
-    bmAdmin.forEach((element) => {
-      if (element.textContent.includes("Admin")) {
-        element.style.color = colors.cbmAdmin;
       }
     });
+  }
 
-    let timeStampElements = document.querySelectorAll(".css-z1s6qn");
-
-    timeStampElements.forEach((element) => {
-      let utcTime = element.getAttribute("datetime");
-      let date = new Date(utcTime);
-      let time = date.toLocaleString().split(" ");
-
-      // Update only the time portion of the timestamp in the title attribute
-      let titleDate = new Date(element.getAttribute("title"));
-      titleDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
-      element.setAttribute("title", titleDate.toLocaleString());
-    });
-
-    const navTools = {
-      changeMapWarning: [
-        {
-          phrase: "Change Layer",
-          styles: {
-            color: "red",
-            fontStyle: "bold",
-            textAlign: "center",
-            fontSize: "200pt",
-          },
-        },
-        {
-          phrase: "Set Next Layer",
-          styles: {
-            color: "lime",
-            fontStyle: "bold",
-            textAlign: "center",
-            fontSize: "24pt",
-          },
-        },
-        {
-          phrase: "Kick",
-          styles: {
-            color: "orange",
-            fontStyle: "bold",
-            textAlign: "center",
-            fontSize: "48pt",
-          },
-        },
-        {
-          phrase: "Warn",
-          styles: {
-            color: "lime",
-            fontStyle: "bold",
-            textAlign: "center",
-            fontSize: "24pt",
-          },
-        },
-      ],
-      orgGroup: [
-        { phrase: "Arma", styles: { background: "#333300" } },
-        { phrase: "Squad Mod", styles: { background: "#2b9937" } },
-        { phrase: "Comp", styles: { background: "lime" } },
-        { phrase: "Squad Admin", styles: { background: "#119ab7" } },
-        { phrase: "Rust Admin", styles: { background: "#672c00" } },
-        { phrase: "Org", styles: { background: "black" } },
-        { phrase: "Recruiter", styles: { background: "#cc6600" } },
-        { phrase: "Minecraft Admin", styles: { background: "#8d0cff" } },
-        { phrase: "Squad Event", styles: { background: "#660033" } },
-      ],
-      playerMenuDialog: [
-        { phrase: "Warn", styles: { color: "lime" } },
-        { phrase: "Squad List", styles: { color: "gold" } },
-        { phrase: "Kick", styles: { color: "orange" } },
-        { phrase: "Ban", styles: { color: "red" } },
-        { phrase: "Force Team Change", styles: { color: "#db4dff" } },
-        { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
-        { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
-      ],
-      serverCommands: [
-        { phrase: "Warn", styles: { color: "lime" } },
-        { phrase: "Kick", styles: { color: "orange" } },
-        { phrase: "Ban", styles: { color: "red" } },
-        { phrase: "Force Team Change", styles: { color: "#db4dff" } },
-        { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
-        { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
-        { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
-        { phrase: "Change Layer", styles: { color: "red", fontStyle: "bold", fontSize: "8pt" } },
-        { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
-      ]
-    };
-
-    function applyStyles(elements, styles) {
-      elements.forEach((el) => {
-        styles.forEach(({ phrase, styles }) => {
-          if (el.textContent.includes(phrase)) {
-            Object.assign(el.style, styles);
-          }
-        });
+  function adminApplyColor(elements, phrases, color) {
+    elements.forEach(function (el) {
+      phrases.forEach(function (phrase) {
+        // RegExp that matches the phrase as a whole word, or with "『LiQ』" before it
+        const regex = new RegExp(
+          "(\\b" + phrase + "\\b)|(\\b『LiQ』 ?" + phrase + "\\b)",
+          "i"
+        );
+        if (regex.test(el.textContent)) {
+          el.style.color = color;
+        }
       });
-    };
-
-    // Apply styles to specific elements based on content
-    applyStyles(
-      document.querySelectorAll(".modal-title"),
-      navTools.changeMapWarning
-    );
-    applyStyles(document.querySelectorAll(".css-4ey69y"), navTools.orgGroup);
-    applyStyles(
-      document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button"),
-      navTools.playerMenuDialog
-    );
-    applyStyles(
-      document.querySelectorAll(".css-1ixz43s a, .css-1ixz43s button"),
-      navTools.playerMenuDialog
-    );
-    applyStyles(
-      document.querySelectorAll(".css-yun63y a, .css-yun63y button"),
-      navTools.serverCommands
-    );
-  }, 100); // Update every second for better performance
-}, 250);
+    });
+  }
 
 
+  // Apply colors based on phrases
+  applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
+  applyColor(messageLog, sets.grayedOut, colors.cGrayed);
+  applyColor(messageLog, sets.joinedServer, colors.cJoined);
+  applyColor(messageLog, sets.leftServer, colors.cLeftServer);
+  applyColor(messageLog, sets.actionList, colors.cModAction);
+  applyColor(messageLog, sets.teamBluefor, colors.cTeamBluefor);
+  applyColor(messageLog, sets.teamOpfor, colors.cTeamOpfor);
+  applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
+  applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
+
+  // Apply colors to player names
+  adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
+  adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
+
+
+  applyStyles(
+    document.querySelectorAll(".modal-title"),
+    navTools.changeMapWarning
+  );
+  applyStyles(document.querySelectorAll(".css-4ey69y"), navTools.orgGroup);
+  applyStyles(
+    document.querySelectorAll(".css-f5o5h6 a, .css-f5o5h6 button"),
+    navTools.playerMenuDialog
+  );
+  applyStyles(
+    document.querySelectorAll(".css-1ixz43s a, .css-1ixz43s button"),
+    navTools.playerMenuDialog
+  );
+  applyStyles(
+    document.querySelectorAll(".css-yun63y a, .css-yun63y button"),
+    navTools.serverCommands
+  );
+
+  // Highlights the Player Is Admin to neon in the players bar.
+  bmAdmin.forEach((element) => {
+    if (element.textContent.includes("Admin")) {
+      element.style.color = colors.cbmAdmin;
+    }
+  });
+
+  let timeStampElements = document.querySelectorAll(".css-z1s6qn");
+
+  timeStampElements.forEach((element) => {
+    let utcTime = element.getAttribute("datetime");
+    let date = new Date(utcTime);
+    let time = date.toLocaleString().split(" ");
+
+    // Update only the time portion of the timestamp in the title attribute
+    let titleDate = new Date(element.getAttribute("title"));
+    titleDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
+    element.setAttribute("title", titleDate.toLocaleString());
+  });
+
+  const navTools = {
+    changeMapWarning: [
+      {
+        phrase: "Change Layer",
+        styles: {
+          color: "red",
+          fontStyle: "bold",
+          textAlign: "center",
+          fontSize: "200pt",
+        },
+      },
+      {
+        phrase: "Set Next Layer",
+        styles: {
+          color: "lime",
+          fontStyle: "bold",
+          textAlign: "center",
+          fontSize: "24pt",
+        },
+      },
+      {
+        phrase: "Kick",
+        styles: {
+          color: "orange",
+          fontStyle: "bold",
+          textAlign: "center",
+          fontSize: "48pt",
+        },
+      },
+      {
+        phrase: "Warn",
+        styles: {
+          color: "lime",
+          fontStyle: "bold",
+          textAlign: "center",
+          fontSize: "24pt",
+        },
+      },
+    ],
+    orgGroup: [
+      { phrase: "Arma", styles: { background: "#333300" } },
+      { phrase: "Squad Mod", styles: { background: "#2b9937" } },
+      { phrase: "Comp", styles: { background: "lime" } },
+      { phrase: "Squad Admin", styles: { background: "#119ab7" } },
+      { phrase: "Rust Admin", styles: { background: "#672c00" } },
+      { phrase: "Org", styles: { background: "black" } },
+      { phrase: "Recruiter", styles: { background: "#cc6600" } },
+      { phrase: "Minecraft Admin", styles: { background: "#8d0cff" } },
+      { phrase: "Squad Event", styles: { background: "#660033" } },
+    ],
+    playerMenuDialog: [
+      { phrase: "Warn", styles: { color: "lime" } },
+      { phrase: "Squad List", styles: { color: "gold" } },
+      { phrase: "Kick", styles: { color: "orange" } },
+      { phrase: "Ban", styles: { color: "red" } },
+      { phrase: "Force Team Change", styles: { color: "#db4dff" } },
+      { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
+      { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
+    ],
+    serverCommands: [
+      { phrase: "Warn", styles: { color: "lime" } },
+      { phrase: "Kick", styles: { color: "orange" } },
+      { phrase: "Ban", styles: { color: "red" } },
+      { phrase: "Force Team Change", styles: { color: "#db4dff" } },
+      { phrase: "Remove Player from Squad", styles: { color: "#804d00" } },
+      { phrase: "Action - Reset Squad Name", styles: { color: "gold" } },
+      { phrase: "Next Layer", styles: { color: "lime", fontSize: "16pt" } },
+      { phrase: "Change Layer", styles: { color: "red", fontStyle: "bold", fontSize: "8pt" } },
+      { phrase: "Squad List", styles: { color: "gold", fontSize: "16pt" } },
+    ]
+  };
+
+  function applyStyles(elements, styles) {
+    elements.forEach((el) => {
+      styles.forEach(({ phrase, styles }) => {
+        if (el.textContent.includes(phrase)) {
+          Object.assign(el.style, styles);
+        }
+      });
+    });
+  };
+
+}, 200);
 
 function mainScript() {
   setInterval(() => {
