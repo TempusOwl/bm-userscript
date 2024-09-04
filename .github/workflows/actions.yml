@@ -28,7 +28,7 @@ jobs:
       run: |
         tmp_file=$(mktemp)
         cp bm-desktop.min.js "$tmp_file"
-        escaped_content=$(sed $(:a;N;$!ba;s/[\/&]/\\&/g) "$tmp_file")
+        escaped_content=$(sed ':a;N;$!ba;s/[\/&]/\\&/g;s/\n/\\n/g' "$tmp_file")
         sed -i "15s~.*~$escaped_content~" bm-toolkit-desktop.min.js
         rm "$tmp_file"
     
