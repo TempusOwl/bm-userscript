@@ -1,4 +1,4 @@
-const version = "8.6";
+const version = "8.8";
 const colors = {
   cTeamBluefor: "#e7a600",
   cTeamOpfor: "rgb(217,86,39)",
