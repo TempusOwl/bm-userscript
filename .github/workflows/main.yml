@@ -24,23 +24,30 @@ jobs:
     - name: Minify JS
       run: npx uglify-js code.js -o code.min.js
 
-    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
+    - name: Clear lines 15 and below, then replace line 15 with contents of code.min.js
       run: |
+        # Create a temp file with minified JS content
         tmp_file=$(mktemp)
         cp code.min.js "$tmp_file"
+
+        # Delete lines 15 and below
+        sed -i '15,$d' bm-toolkit-desktop.min.js
+
+        # Replace line 15 with the content of the minified file
         sed -i '15s~.*~'"$(sed 's/[\/&]/\\&/g' "$tmp_file")"'~' bm-toolkit-desktop.min.js
+
+        # Clean up temp file
         rm "$tmp_file"
-    
+
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
         version=$(grep -oP 'const version = "\K[^"]+' code.js)
         sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
-      
 
     - name: Commit and push changes
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
         git add code.min.js bm-toolkit-desktop.min.js
-        git commit -m "Minify JS and Update Versions"
+        git commit -m "Minify JS, Clear Lines Below 15, and Update Versions"
         git push
