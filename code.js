@@ -11,6 +11,7 @@ const colors = {
     cJoined: "#919191",
     cGrayed: "#919191",
     cTracked: "#FF931A",
+    cNoteIcon: "#FF201A",
 };
 
 // Lists
@@ -133,6 +134,7 @@ setInterval(function Main_Script() {
     let nameActivity = document.querySelectorAll(".css-fj458c");
     let messageLog = document.querySelectorAll(".css-ym7lu8");
     let bmAdmin = document.querySelectorAll(".css-18s4qom");
+    let noteIcon = document.querySelectorAll(".css-he5ni6");
 
     function applyColor(elements, set, color) {
         elements.forEach((element) => {
@@ -160,6 +162,10 @@ setInterval(function Main_Script() {
         });
     }
 
+    // Apply color to the note icon
+    noteIcon.forEach((icon) => {
+        icon.style.color = colors.cNoteIcon; // Apply the icon color
+    });
 
     // Apply colors based on phrases
     applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
