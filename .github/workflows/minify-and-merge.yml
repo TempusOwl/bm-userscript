@@ -1,0 +1,49 @@
+name: Minify and Merge
+
+on:
+  push:
+    branches:
+      - '*'  # Triggers on push to any branch
+  pull_request:
+    branches:
+      - '*'  # Triggers on pull requests for any branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install UglifyJS for minification
+        run: npm install uglify-js -g
+
+      - name: Minify code.js
+        run: |
+          uglifyjs code.js --compress --mangle --output code.min.js --comments false
+
+      - name: Merge minified code with template
+        run: |
+          cat .github/workflows/bm-toolkit-desktop_template.min.js code.min.js > bm-toolkit-desktop.min.js
+
+      - name: Commit and push changes (if not a pull request)
+        if: github.event_name != 'pull_request'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add bm-toolkit-desktop.min.js
+          git commit -m "Auto-generated bm-toolkit-desktop.min.js after minification"
+          git push origin ${{ github.ref }}
+
+      - name: Upload artifact (for pull requests)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: bm-toolkit-desktop.min.js
+          path: bm-toolkit-desktop.min.js
