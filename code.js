@@ -96,7 +96,12 @@ const sets = {
         "Whip me more, Grandma",
         "Wjli13125",
         "Temper",
-        "MadDawgMorales"
+        "MadDawgMorales",
+        "The ROMAN99",
+        "jordonrtelles",
+        "ETXBONES",
+        "Moses",
+        "white knife",
     ]),
 
     teamBluefor: new Set([
