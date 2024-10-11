@@ -26,7 +26,7 @@ jobs:
 
       - name: Minify code.js
         run: |
-          uglifyjs code.js --compress --mangle --output code.min.js --comments false -b max_line_len=1,beautify=false
+          uglifyjs code.js --compress --mangle --output code.min.js --comments false -b max_line_len=Infinity,beautify=false
 
       - name: Merge minified code with template
         run: |
