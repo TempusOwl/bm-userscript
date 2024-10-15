@@ -26,8 +26,11 @@ jobs:
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of core/code.min.js
       run: |
-        content=$(awk 'NR>1{printf "%s", ";"}{printf "%s", $0}' core/code.min.js)
-        sed -i "15s|.*|$content|" bm-toolkit-desktop.min.js
+        sed '15d' bm-toolkit-desktop.min.js > temp.min.js  # Delete line 15 and save to a temporary file
+        head -n 14 bm-toolkit-desktop.min.js > bm-toolkit-desktop.min.js  # Keep the first 14 lines in original file
+        cat core/code.min.js >> bm-toolkit-desktop.min.js  # Append the minified contents from core/code.min.js
+        tail -n +16 temp.min.js >> bm-toolkit-desktop.min.js  # Append the rest of the original file after line 15
+
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
