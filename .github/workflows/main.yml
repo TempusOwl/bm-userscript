@@ -22,26 +22,26 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js code.js -o code.min.js
+      run: npx uglify-js code.js -o core/code.min.js
 
     - name: Clear lines 15 and below, then replace line 15 with contents of code.min.js
       run: |
-        # Create a temp file with minified JS content
+        # Create a new temp file starting with the content of userscript-template.js
         tmp_file=$(mktemp)
-        cp code.min.js "$tmp_file"
+        cp core/userscript-template.js "$tmp_file"
 
-        # Delete lines 15 and below
-        sed -i '15,$d' bm-toolkit-desktop.min.js
+        # Copy the content of the minified code into a variable
+        minified_code=$(<core/code.min.js)
 
-        # Replace line 15 with the content of the minified file
-        sed -i '15s~.*~'"$(sed 's/[\/&]/\\&/g' "$tmp_file")"'~' bm-toolkit-desktop.min.js
+        # Insert the minified code at line 15 of the new temp file
+        sed -i '15s~.*~'"$minified_code"'~' "$tmp_file"
 
-        # Clean up temp file
-        rm "$tmp_file"
+        # Save the final output to your desired minified file
+        mv "$tmp_file" bm-toolkit-desktop.min.js
 
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
-        version=$(grep -oP 'const version = "\K[^"]+' code.js)
+        version=$(grep -oP 'const version = "\K[^"]+' core/code.js)
         sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
 
     - name: Commit and push changes
