@@ -1,54 +1,44 @@
-name: Minify and Update Script
+name: Minify and Update
 
 on:
   push:
     branches:
-      - main
+      - github_actions  # Replace with your default branch name
 
 jobs:
   minify-and-update:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    # Minify the core/code.js
-    - name: Install terser (JS minifier)
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'  # Adjust the Node.js version as needed
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Minify JS
+      run: npx uglify-js core/code.js -o core/code.min.js
+
+    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of core/code.min.js
       run: |
-        npm install terser -g
-
-    - name: Minify code.js
+          content=$(sed 's/[\/&]/\\&/g' core/code.min.js | tr '\n' ';')
+          sed -i "15s/.*/$content/" bm-toolkit-desktop.min.js
+    
+    - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
-        terser core/code.js -o core/code.min.js --compress --mangle
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        git add core/code.min.js
-        git commit -m "Minified core/code.js to core/code.min.js"
-        git push origin main
+        version=$(grep -oP 'const version = "\K[^"]+' core/code.js)
+        sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
+      
 
-    # Create and update the new userscript file
-    - name: Update userscript-template.js
+    - name: Commit and push changes
       run: |
-        # Create a temporary file
-        tmp_file=$(mktemp)
-
-        # Copy userscript-template.js to a temporary file
-        cp core/userscript-template.js "$tmp_file"
-
-        # Replace the version number in the temporary file
-        version=$(grep -oP '(?<=CONST version =")[^"]*' core/code.min.js)
-        sed -i 's|^// @version .*|// @version '"$version"'|' "$tmp_file"
-
-        # Replace line 15 with content of core/code.min.js
-        minified_content=$(< core/code.min.js)
-        sed -i '15s|.*|'"$minified_content"'|' "$tmp_file"
-
-        # Move the temporary file to the final file location
-        mv "$tmp_file" bm-toolkit-desktop.min.js
-
-        # Add, commit, and push the updated bm-toolkit-desktop.min.js
-        git add bm-toolkit-desktop.min.js
-        git commit -m "Updated bm-toolkit-desktop.min.js with minified code and version $version"
-        git push origin main
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add core/code.min.js bm-toolkit-desktop.min.js
+        git commit -m "Minify JS and Update Versions"
+        git push
