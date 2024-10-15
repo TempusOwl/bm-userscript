@@ -3,7 +3,7 @@ name: Minify and Update
 on:
   push:
     branches:
-      - github_actions  # Replace with your default branch name
+      - main  # Replace with your default branch name
 
 jobs:
   minify-and-update:
@@ -22,19 +22,16 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js core/code.js -o core/code.min.js
+      run: npx uglify-js code.js -o code.min.js
 
-    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of core/code.min.js
+    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        sed '15d' bm-toolkit-desktop.min.js > temp.min.js  # Delete line 15 and save to a temporary file
-        head -n 14 bm-toolkit-desktop.min.js > bm-toolkit-desktop.min.js  # Keep the first 14 lines in original file
-        cat core/code.min.js >> bm-toolkit-desktop.min.js  # Append the minified contents from core/code.min.js
-        tail -n +16 temp.min.js >> bm-toolkit-desktop.min.js  # Append the rest of the original file after line 15
-
-    
+        content=$(cat code.min.js | tr '\n' ';')
+        awk -v new_content="$content" 'NR==15 {$0=new_content} {print}' bm-toolkit-desktop.min.js > temp.js && mv temp.js bm-toolkit-desktop.min.js 
+        
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
-        version=$(grep -oP 'const version = "\K[^"]+' core/code.js)
+        version=$(grep -oP 'const version = "\K[^"]+' code.js)
         sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
       
 
@@ -42,6 +39,6 @@ jobs:
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
-        git add core/code.min.js bm-toolkit-desktop.min.js
+        git add code.min.js bm-toolkit-desktop.min.js
         git commit -m "Minify JS and Update Versions"
         git push
