@@ -1,4 +1,4 @@
-const version = "10.16";
+const version = "10.17";
 const loadDelay = "2500" // ms | Overall delay for everything. Gives some time for classes and content to load in.
 const updateRate = "75" //  ms | Overall rate to run the code at. 
 const forceUpdateRate = "500" //  ms | Edge case to force update code (if) it already has run, but detected no change recently by the MutationObserver. Workaround for scrolling too fast and failing to color text sometimes (hacky workaround)
