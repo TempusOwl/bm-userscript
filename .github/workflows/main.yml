@@ -3,7 +3,7 @@ name: Minify and Update
 on:
   push:
     branches:
-      - github_actions  # Replace with your default branch name
+      - main  # Replace with your default branch name
 
 jobs:
   minify-and-update:
@@ -26,9 +26,9 @@ jobs:
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        content=$(cat code.min.js | tr '\n' ';')
-        awk -v new_content="$content" 'NR==15 {$0=new_content} {print}' bm-toolkit-desktop.min.js > temp.js && mv temp.js bm-toolkit-desktop.min.js 
-        
+          content=$(sed 's/[\/&]/\\&/g' code.min.js | tr '\n' ';')
+          sed -i "15s/.*/$content/" bm-toolkit-desktop.min.js
+    
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
         version=$(grep -oP 'const version = "\K[^"]+' code.js)
