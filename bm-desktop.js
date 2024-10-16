@@ -1,7 +1,6 @@
 const version = "10.1";
 const updateRate = "75" //  ms | Overall rate to run the code at.
 const forceUpdateRate = "500" // Delayed force update for edge cases when scrolling.
-const styleDelay = "25" // 15ms delay before running the functions
 const colors = {
     cTeamBluefor: "#e7a600",
     cTeamOpfor: "rgb(217,86,39)",
