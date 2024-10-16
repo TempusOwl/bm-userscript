@@ -167,7 +167,7 @@ function cornerButtons() {
     buttons.forEach(({ id, label, url, backgroundColor }) => {
         const button = Object.assign(document.createElement("input"), {
             type: "button", id, value: label,
-            style: `width: 30px; margin-right: 5px; padding: 2px; font-size: 8pt; background: ${backgroundColor};`,
+            style: `width: 35px; margin-right: 5px; padding: 2px; font-size: 8pt; background: ${backgroundColor};`,
             onclick: () => window.open(url, '_blank')
         });
         buttonContainer.appendChild(button);
