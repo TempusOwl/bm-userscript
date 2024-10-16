@@ -22,18 +22,18 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js bm-desktop.js -o bm-desktop.min.js
+      run: npx uglify-js code.js -o code.min.js
 
-    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of bm-desktop.min.js
+    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
         tmp_file=$(mktemp)
-        cp bm-desktop.min.js "$tmp_file"
+        cp code.min.js "$tmp_file"
         sed -i '15s~.*~'"$(sed 's/[\/&]/\\&/g' "$tmp_file")"'~' bm-toolkit-desktop.min.js
         rm "$tmp_file"
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
-        version=$(grep -oP 'const version = "\K[^"]+' bm-desktop.js)
+        version=$(grep -oP 'const version = "\K[^"]+' code.js)
         sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
       
 
@@ -41,6 +41,6 @@ jobs:
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
-        git add bm-desktop.min.js bm-toolkit-desktop.min.js
+        git add code.min.js bm-toolkit-desktop.min.js
         git commit -m "Minify JS and Update Versions"
         git push
