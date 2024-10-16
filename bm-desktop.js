@@ -1,7 +1,7 @@
-const version = "10.24";
-const loadDelay = "2500" // ms | Overall delay for everything. Gives some time for classes and content to load in.
-const updateRate = "75" //  ms | Overall rate to run the code at. 
-const forceUpdateRate = "500" //  ms | Edge case to force update code (if) it already has run, but detected no change recently by the MutationObserver. Workaround for scrolling too fast and failing to color text sometimes (hacky workaround)
+const version = "10.1";
+const updateRate = "75" //  ms | Overall rate to run the code at.
+const forceUpdateRate = "500" // Delayed force update for edge cases when scrolling.
+const styleDelay = "25" // 15ms delay before running the functions
 const colors = {
     cTeamBluefor: "#e7a600",
     cTeamOpfor: "rgb(217,86,39)",
@@ -101,6 +101,7 @@ const sets = {
         "jordonrtelles",
         "ETXBONES",
         "Moses",
+        "N1nja",
         "white knife",
     ]),
 
@@ -174,7 +175,7 @@ function cornerButtons() {
     });
 }
 
-
+// Handles coloring of text in player list and activity log.
 function logColoring() {
     let namePlayers = document.querySelectorAll(".css-1ewh5td");
     let nameActivity = document.querySelectorAll(".css-fj458c");
@@ -229,12 +230,13 @@ function logColoring() {
         }
     });
 
-    // Changes Flag Color For Note On Player List
+    // Changes Flag Color For Note On Player List 
     bmNoteFlag.forEach((element) => {
         element.style.color = colors.cNoteColorIcon;
     });
 }
 
+// Handles both copy button on profiles and link generation to CBL.
 function copyButtoANDSteamIDs() {
     function createCopyButton() {
         const button = document.createElement("button");
@@ -283,7 +285,6 @@ function copyButtoANDSteamIDs() {
             "}";
         document.head.appendChild(style);
     }
-
 
     function getInnerTextByTitle(titlePart, defaultValue) {
         return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
@@ -341,6 +342,7 @@ function copyButtoANDSteamIDs() {
     }
 }
 
+// Handles dialog options for changing map amoung other things.
 function navButtons() {
     const navTools = {
         changeMapWarning: [
@@ -445,7 +447,7 @@ function navButtons() {
 
 }
 
-function otherFeatures() {
+function applyTimeStamps() {
     // Adds seconds when hovering over timestamps.
     let timeStampElements = document.querySelectorAll(".css-z1s6qn");
     timeStampElements.forEach((element) => {
@@ -482,20 +484,31 @@ const callback = throttle(function (mutationsList, observer) {
         // Only check for mutations involving the ReactVirtualized__Grid__innerScrollContainer class
         if (mutation.target.classList && mutation.target.classList.contains('ReactVirtualized__Grid__innerScrollContainer')) {
             significantChanges = true;
-            break; // Stop looping once a significant change is found
+            break; // Important to stop looping once detected. 
         }
     }
 
+    // Only runs the code when mutation is observed in the statement above.
     if (significantChanges) {
-        console.log('BM Tampermonkey Userscript: Detected ReactVirtualized, applying styles.');
+        //console.log('BM Userscript: Detected ReactVirtualized update, updating now.');
         cornerButtons();
         logColoring();
         copyButtoANDSteamIDs();
         navButtons();
-        otherFeatures();
+        applyTimeStamps();
+
+        // Runs code again, fixes edge cases when mutations are not detected in-time when scrolling fast.
+        setTimeout(() => {
+            //console.log('BM Userscript: Forcing delayed update');
+            cornerButtons();
+            logColoring();
+            copyButtoANDSteamIDs();
+            navButtons();
+            applyTimeStamps();
+        }, forceUpdateRate);
     }
 
-}, 75); // 75ms interval
+}, updateRate);
 
 // Create a new observer instance linked to the callback function
 const observer = new MutationObserver(callback);
