@@ -1,4 +1,4 @@
-const version = "10.1";
+const version = "11.0";
 const updateRate = "75" //  ms | Overall rate to run the code at.
 const forceUpdateRate = "500" // Delayed force update for edge cases when scrolling.
 const colors = {
