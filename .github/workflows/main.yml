@@ -25,7 +25,7 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js code.js -o code.min.js --beautify max_line_len=0
+      run: npx uglify-js code.js -o code.min.js
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
@@ -39,7 +39,6 @@ jobs:
         version=$(grep -oP 'const version = "\K[^"]+' code.js)
         sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
       
-
     - name: Commit and push changes
       run: |
         git config --global user.email "actions@github.com"
