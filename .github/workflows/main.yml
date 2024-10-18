@@ -3,7 +3,7 @@ name: Minify and Update
 on:
   push:
     branches:
-      - github_action # Replace with your default branch name
+      - github_actions # Replace with your default branch name
 
 jobs:
   minify-and-update:
@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js code.js -o code.min.js --compress --mangle --beautify max_line_len=0
+      run: npx uglify-js --compress --mangle code.js -o code.min.js --beautify max_line_len=0
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
