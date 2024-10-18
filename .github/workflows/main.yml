@@ -1,0 +1,48 @@
+name: Minify and Update
+
+on:
+  push:
+    branches:
+      - '*'  # Triggers on push to any branch
+  pull_request:
+    branches:
+      - '*'  # Triggers on pull requests for any branch
+
+jobs:
+  minify-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'  # Adjust the Node.js version as needed
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Minify JS
+      run: npx uglify-js code.js -o code.min.js
+
+    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
+      run: |
+        tmp_file=$(mktemp)
+        cp code.min.js "$tmp_file"
+        sed -i '15s~.*~'"$(sed 's/[\/&]/\\&/g' "$tmp_file")"'~' bm-toolkit-desktop.min.js
+        rm "$tmp_file"
+    
+    - name: Update @version in bm-toolkit-desktop.min.js to CONST version
+      run: |
+        version=$(grep -oP 'const version = "\K[^"]+' code.js)
+        sed -i "4s|// @version [0-9]*\(\.[0-9]*\)\?|// @version $version|" bm-toolkit-desktop.min.js
+      
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add code.min.js bm-toolkit-desktop.min.js
+        git commit -m "Minify JS and Update Versions"
+        git push
