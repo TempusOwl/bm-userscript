@@ -3,7 +3,10 @@ name: Minify and Update
 on:
   push:
     branches:
-      - github_actions # Replace with your default branch name
+      - '*'  # Triggers on push to any branch
+  pull_request:
+    branches:
+      - '*'  # Triggers on pull requests for any branch
 
 jobs:
   minify-and-update:
@@ -22,7 +25,7 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js code.js --compress --mangle code.min.js --beautify max_line_len=0
+      run: npx uglify-js code.js -o code.min.js --beautify max_line_len=0
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
