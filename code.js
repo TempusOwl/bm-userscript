@@ -332,8 +332,8 @@ async function runCode() {
 
                 function copyToClipboard(text) {
                     const textarea = document.createElement("textarea");
-                    textarea.style.position = 'fixed'; // Avoids scrolling to the bottom
-                    textarea.style.opacity = '0'; // Hides the element
+                    textarea.style.position = 'fixed'; // Avoids scrolling to the bottom.
+                    textarea.style.opacity = '0'; // Hides the element.
                     textarea.value = text;
                     document.body.appendChild(textarea);
                     textarea.select();
