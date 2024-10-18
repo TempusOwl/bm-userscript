@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js --compress --mangle code.js -o code.min.js --beautify max_line_len=0
+      run: npx uglify-js code.js --compress --mangle code.min.js --beautify max_line_len=0
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
