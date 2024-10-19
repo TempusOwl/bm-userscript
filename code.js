@@ -3,6 +3,7 @@ const updateRate = "150" //  ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
     cTeamOpfor: "#d0b1ff",
+    cTeamIndepend: "#fd6aff",
     cAdminName: "#00fff7",
     cbmAdmin: "#58ff47",
     cModAction: "#ff3333",
@@ -120,6 +121,10 @@ const sets = {
         "Russian Airborne Forces",
         "PLA Navy Marine Corps",
         "PLA Amphibious Ground Forces",
+        "Western Private Military Contractors"
+    ]),
+
+    teamIndepend: new Set([
         "Western Private Military Contractors"
     ]),
 
@@ -255,6 +260,7 @@ async function runCode() {
                 applyColor(messageLog, sets.actionList, colors.cModAction);
                 applyColor(messageLog, sets.teamBluefor, colors.cTeamBluefor);
                 applyColor(messageLog, sets.teamOpfor, colors.cTeamOpfor);
+                applyColor(messageLog, sets.teamIndepend, colors.cTeamIndepend);
                 applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
                 applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
 
