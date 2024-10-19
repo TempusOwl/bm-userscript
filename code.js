@@ -208,17 +208,19 @@ async function runCode() {
             // The codes main recurring logic below, handles coloring of text in player list and activity log and most of real-time events.
 
             function applyTimeStamps() {
-                // Adds seconds when hovering over timestamps.
                 let timeStampElements = document.querySelectorAll(".css-z1s6qn");
-                timeStampElements.forEach((element) => {
+                timeStampElements.forEach(element => {
                     let utcTime = element.getAttribute("datetime");
-                    let date = new Date(utcTime);
-                    let titleDate = new Date(element.getAttribute("title"));
-                    titleDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
-                    element.setAttribute("title", titleDate.toLocaleString());
+                    if (utcTime) {
+                        let date = new Date(utcTime);
+                        if (!isNaN(date.getTime())) {
+                            element.setAttribute("title", date.toLocaleString(undefined, {
+                                timeZoneName: 'short'
+                            }));
+                        }
+                    }
                 });
             } applyTimeStamps();
-
 
             function logColoring() {
                 let namePlayers = document.querySelectorAll(".css-1ewh5td");
