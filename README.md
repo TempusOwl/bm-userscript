@@ -7,7 +7,7 @@ Userscript that takes advantage of custom triggers you may have created in BM, a
 - Backup: There is a PDF file, if the above URL becomes broken. 
 
 ## Known Issues
-(Possibly fixed in v11.0) Cloudflare's security check may get stuck in a loop when opening a player's RCON profile. To resolve this, disable the script via the browser extension, reload the page to pass the check, and then re-enable the script.
+- (Possibly fixed in v11.0) Cloudflare's security check may get stuck in a loop when opening a player's RCON profile. To resolve this, disable the script via the browser extension, reload the page to pass the check, and then re-enable the script.
 - Occasionally, BM may omit new log entries while scrolling or during spam events. This issue occurs even without the script, so if you're missing logs, simply reload the page to resync with the server.
 - Userscripts are not perfect, but reloading the page typically resolves most issues. The script works correctly in 98% of cases.
 
