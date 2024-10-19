@@ -1,4 +1,4 @@
-const version = "11.02";
+const version = "11.03";
 const updateRate = "150" //  ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
@@ -343,19 +343,17 @@ async function runCode() {
 
                 function replaceSteamIDSpans() {
                     const spans = document.querySelectorAll(".css-q39y9k");
-
                     spans.forEach(span => {
-                        const steamID = span.title;
-                        const anchor = document.createElement("a");
-
-                        // Clone span's attributes to the new anchor element
-                        Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
-
-                        anchor.href = "https://communitybanlist.com/search/" + steamID;
-                        anchor.innerHTML = steamID;
-                        anchor.target = "_blank";
-
-                        span.replaceWith(anchor);
+                        if (!span.getAttribute('data-processed')) {
+                            const steamID = span.title;
+                            const anchor = document.createElement("a");
+                            Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
+                            anchor.href = "https://communitybanlist.com/search/" + steamID;
+                            anchor.innerHTML = steamID;
+                            anchor.target = "_blank";
+                            span.replaceWith(anchor);
+                            anchor.setAttribute('data-processed', 'true');
+                        }
                     });
                 }
 
@@ -490,7 +488,7 @@ async function runCode() {
         }
     }
 
-    // Continuously run updateLogic every 50ms using setInterval
+    // Continuously run updateLogic using setInterval
     setInterval(async () => {
         await updateLogic();
     }, updateRate);
