@@ -1,4 +1,4 @@
-const version = "11.05";
+const version = "11.50";
 const updateRate = "150" //  ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
@@ -114,6 +114,7 @@ const sets = {
     teamOpfor: new Set([
         "Russian Ground Forces",
         "Middle Eastern Alliance",
+        "Middle Eastern Insurgents",
         "Insurgent Forces",
         "Irregular Militia Forces",
         "People's Liberation Army",
@@ -196,6 +197,8 @@ async function runCode() {
             buttonContainer.appendChild(button);
         });
     } cornerButtons();
+
+    let isFetching = false;
 
     async function updateLogic() {
         // Avoid overlapping by waiting for the previous execution to finish
@@ -283,110 +286,269 @@ async function runCode() {
             }
             logColoring();
 
+
+            // ===========================================================================================================================
+
+
             // Handles both copy button on profiles and link generation to CBL.
-            function copyButtoANDSteamIDs() {
-                function createCopyButton() {
-                    const button = document.createElement("button");
-                    button.id = "copy-button";
-                    button.textContent = "Copy Player Info";
-                    button.classList.add("copy-button-style");
+function copyButtoANDSteamIDs() {
+    function createCopyButton() {
+        const copyButton = document.createElement("button");
+        copyButton.id = "copy-button";
+        copyButton.textContent = "Copy Player Info";
+        copyButton.classList.add("copy-button-style");
 
-                    document.body.appendChild(button);
+        const openURLButton = document.createElement("button");
+        openURLButton.id = "open-url-button";
+        openURLButton.textContent = "Open CBL";
+        openURLButton.classList.add("open-url-button-style");
+        openURLButton.style.top = "140px"; // Adjust position for the second button
 
-                    button.addEventListener("click", () => {
-                        const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
-                        const pEOSID = getInnerTextByTitle("0002", "");
-                        const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
+        document.body.appendChild(copyButton);
+        document.body.appendChild(openURLButton);
 
-                        const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
-                        copyToClipboard(textToCopy);
+        copyButton.addEventListener("click", () => {
+            const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
+            const pEOSID = getInnerTextByTitle("0002", "");
+            const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-                    });
-                    buttonStyles();
+            const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
+            copyToClipboard(textToCopy);
+        });
+
+        openURLButton.addEventListener("click", () => {
+            const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
+            if (pSteamID && pSteamID !== "SteamID MISSING?") {
+                const url = `https://communitybanlist.com/search/${pSteamID}`;
+                window.open(url, "_blank");
+            } else {
+                alert("SteamID is missing or invalid!");
+            }
+        });
+
+        buttonStyles();
+    }
+
+    function buttonStyles() {
+        const style = document.createElement("style");
+        style.innerHTML = `
+    .copy-button-style {
+        width: 140px;
+        height: 40px;
+                                left:10px;
+        border-radius: 1em 1em 0 0;
+        background-color: #2d65a5;
+        color: white;
+        border: none;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        position: absolute;
+        top: 100px;
+        z-index: 99999;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .copy-button-style:hover {
+        background-color: #0077ff;
+    }
+    .open-url-button-style {
+        width: 140px;
+        height: 25px;
+                                left:10px;
+        border-radius: 0 0 1em 1em;
+        background-color: #e5a411;
+        color: white;
+        border: none;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        position: absolute;
+        top: 120px;
+        z-index: 99999;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .open-url-button-style:hover {
+        background-color: #ffb500;
+    }
+`;
+
+        document.head.appendChild(style);
+    }
+
+    function copyToClipboard(text) {
+        const textarea = document.createElement("textarea");
+        textarea.style.position = 'fixed'; // Avoids scrolling to the bottom.
+        textarea.style.opacity = '0'; // Hides the element.
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
+
+
+    const playerPageExists = document.querySelector("#RCONPlayerPage");
+
+    if (playerPageExists) {
+        ensureElementExists("copy-button", createCopyButton);
+        ensureElementExists("CBL-info", runDataFetching);
+    } else {
+        removeElementById("copy-button");
+        removeElementById("open-url-button");
+        removeElementById("CBL-info");
+    }
+
+    function ensureElementExists(elementId, creationFunction) {
+        if (!document.getElementById(elementId)) {
+            creationFunction();
+        }
+    }
+
+    function removeElementById(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.remove();
+        }
+    }
+}
+copyButtoANDSteamIDs();
+
+
+
+function getInnerTextByTitle(titlePart, defaultValue) {
+ return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
                 }
 
-                function buttonStyles() {
-                    const style = document.createElement("style");
-                    style.innerHTML =
-                        ".copy-button-style {" +
-                        "width: 125px;" +
-                        "height: 35px;" +
-                        "background: #4c82ffab;" +
-                        "color: white;" +
-                        "border: none;" +
-                        "border-radius: 3px;" +
-                        "box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" +
-                        "font-size: 14px;" +
-                        "font-weight: bold;" +
-                        "cursor: pointer;" +
-                        "padding: 2px;" +
-                        "position: absolute;" +
-                        "top: 90px;" +
-                        "left: 0;" +
-                        "z-index: 99999;" +
-                        "transition: background 0.3s, box-shadow 0.3s;" +
-                        "}" +
-                        ".copy-button-style:hover {" +
-                        "background: #4c8aff;" +
-                        "box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);" +
-                        "}";
-                    document.head.appendChild(style);
+            const graphqlEndpoint = "https://communitybanlist.com/graphql";
+            async function runDataFetching() {
+                if (isFetching) {
+                    console.log("CBL script already in progress... Skipping...");
+                    return;
                 }
 
-                function getInnerTextByTitle(titlePart, defaultValue) {
-                    return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
-                }
-
-                function copyToClipboard(text) {
-                    const textarea = document.createElement("textarea");
-                    textarea.style.position = 'fixed'; // Avoids scrolling to the bottom.
-                    textarea.style.opacity = '0'; // Hides the element.
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textarea);
-                }
-
-                function replaceSteamIDSpans() {
-                    const spans = document.querySelectorAll(".css-q39y9k");
-                    spans.forEach(span => {
-                        if (!span.getAttribute('data-processed')) {
-                            const steamID = span.title;
-                            const anchor = document.createElement("a");
-                            Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
-                            anchor.href = "https://communitybanlist.com/search/" + steamID;
-                            anchor.innerHTML = steamID;
-                            anchor.target = "_blank";
-                            span.replaceWith(anchor);
-                            anchor.setAttribute('data-processed', 'true');
-                        }
-                    });
-                }
-
-                const playerPageExists = document.querySelector("#RCONPlayerPage");
-
-                if (playerPageExists) {
-                    ensureElementExists("copy-button", createCopyButton);
+                const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
+                if (pSteamID && pSteamID !== "SteamID MISSING?") {
+                    try {
+                        isFetching = true;
+                        await fetchSteamUserData(pSteamID);
+                    } catch (error) {
+                        console.error("Error fetching Steam user data:", error);
+                    } finally {
+                        isFetching = false;
+                    }
                 } else {
-                    removeElementById("copy-button");
+                    console.error("Invalid Steam ID");
                 }
-                replaceSteamIDSpans();
+            }
 
-                function ensureElementExists(elementId, creationFunction) {
-                    if (!document.getElementById(elementId)) {
-                        creationFunction();
+                        async function fetchSteamUserData(steamID) {
+                // Add slight delay before starting the function to give time for page to load more.
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                const maxRetries = 1; // Can be increased beyond one for debugging to try a query again.
+                const retryDelay = 3000;
+                let attempt = 0;
+                let success = false;
+
+                while (attempt < maxRetries && !success) {
+                    try {
+                        attempt++;
+                        console.log(`CBL API Query ${attempt}: Fetching user data for SteamID ${steamID}`);
+
+                        const response = await fetch(graphqlEndpoint, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                query: `
+                                    query Search($id: String!) {
+                                        steamUser(id: $id) {
+                                            riskRating
+                                            activeBans: bans(orderBy: "created", orderDirection: DESC, expired: false) {
+                                                edges { node { id } }
+                                            }
+                                            expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) {
+                                                edges { node { id } }
+                                            }
+                                        }
+                                    }
+                                `,
+                                variables: { id: steamID },
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status} (${response.statusText})`);
+                        }
+
+                        const data = await response.json();
+                        if (!data || !data.data || !data.data.steamUser) {
+                            throw new Error("Invalid response format or user not found.");
+                        }
+
+                        const user = data.data.steamUser;
+                        const riskRating = user.riskRating || "N/A";
+                        const activeBansCount = user.activeBans.edges.length || 0;
+                        const expiredBansCount = user.expiredBans.edges.length || 0;
+
+                        displayUserData(riskRating, activeBansCount, expiredBansCount);
+                        console.log("Fetch successful!");
+                        success = true;
+
+                    } catch (error) {
+                        console.error(`Attempt ${attempt} failed: ${error.message}`, error);
+                        if (attempt < maxRetries) {
+                            console.log(`Retrying in ${retryDelay / 1000} seconds...`);
+                            await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        } else {
+                            console.error("Max retries reached. Fetch operation failed.");
+                            displayUserData("N/A", "N/A", 0);
+                            success = true;
+                        }
                     }
                 }
+            }
 
-                function removeElementById(elementId) {
-                    const element = document.getElementById(elementId);
-                    if (element) {
-                        element.remove();
-                    }
+            function displayUserData(riskRating, activeBansCount, expiredBansCount) {
+                const CBL = document.createElement("div");
+                CBL.id = "CBL-info";
+                CBL.style = `
+                                width: 140px;
+                                height: 120px;
+                                left:10px;
+                                top: 170px;
+                                background: #000000bd;
+                                color: white;
+                                border: none;
+                                border-radius: 15% 15% 15% 15%;
+                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                padding: 2px;
+                                position: absolute;
+                                text-align: center;
+                                z-index: 99998;
+                            `;
+
+                // Determine text color for risk rating
+                let riskColor = "white"; // Default color
+                if (riskRating >= 1 && riskRating <= 5) {
+                    riskColor = "orange";
+                } else if (riskRating > 5) {
+                    riskColor = "red";
                 }
-            } copyButtoANDSteamIDs()
 
+                CBL.innerHTML = `
+                                <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">
+                                    Risk Rating  ${riskRating}/10
+                                </h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>
+                            `;
+                document.body.appendChild(CBL);
+            }
+
+
+
+
+            /// =============================================
             function colorDialogMenus() {
                 const navTools = {
                     changeMapWarning: [
