@@ -301,7 +301,7 @@ function copyButtoANDSteamIDs() {
         openURLButton.addEventListener("click", () => {
             const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
             if (pSteamID && pSteamID !== "SteamID MISSING?") {
-                const url = `https:/\/\communitybanlist.com/\search/${pSteamID}`;
+                const url = `https:/\/\communitybanlist.com/\search/\ ${pSteamID}`;
                 window.open(url, "_blank");
             } else {
                 alert("SteamID is missing or invalid!");
