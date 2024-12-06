@@ -1,5 +1,5 @@
 const version = "11.50";
-const updateRate = "150" //  ms | Overall rate to run the code at.
+const updateRate = "150"
 const colors = {
     cTeamBluefor: "#4eacff",
     cTeamOpfor: "#d0b1ff",
@@ -153,10 +153,8 @@ const sets = {
     ]),
 };
 
-// Function that checks for the presence of required elements and runs the logic.
 async function runCode() {
     console.log("Running initial one-time code...");
-    // One-time logic here that runs only once after element detection, prevents spam creation of div elements due to how GM_addStyles interacts.
 
     function GM_addStyleElements() {
         const styles = {
@@ -201,14 +199,9 @@ async function runCode() {
     let isFetching = false;
 
     async function updateLogic() {
-        // Avoid overlapping by waiting for the previous execution to finish
         await new Promise(resolve => setTimeout(resolve, updateRate));
 
-        // Ensure the element still exists before running
         if (document.querySelector('.ReactVirtualized__Grid__innerScrollContainerddd') || document.querySelector('.css-b7r34x')) {
-            // console.log("Updating logic now..");
-            // The codes main recurring logic below, handles coloring of text in player list and activity log and most of real-time events.
-
             function applyTimeStamps() {
                 let timeStampElements = document.querySelectorAll(".css-z1s6qn");
                 timeStampElements.forEach(element => {
@@ -256,7 +249,6 @@ async function runCode() {
                     });
                 }
 
-                // Apply colors based on phrases
                 applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
                 applyColor(messageLog, sets.grayedOut, colors.cGrayed);
                 applyColor(messageLog, sets.joinedServer, colors.cJoined);
@@ -267,19 +259,15 @@ async function runCode() {
                 applyColor(messageLog, sets.teamIndepend, colors.cTeamIndepend);
                 applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
                 applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
-
-                // Apply colors to player names
                 adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
                 adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
 
-                // Highlights the Player Is Admin to neon in the players bar.
                 bmAdmin.forEach((element) => {
                     if (element.textContent.includes("Admin")) {
                         element.style.color = colors.cbmAdmin;
                     }
                 });
 
-                // Changes Flag Color For Note On Player List
                 bmNoteFlag.forEach((element) => {
                     element.style.color = colors.cNoteColorIcon;
                 });
@@ -287,10 +275,6 @@ async function runCode() {
             logColoring();
 
 
-            // ===========================================================================================================================
-
-
-            // Handles both copy button on profiles and link generation to CBL.
 function copyButtoANDSteamIDs() {
     function createCopyButton() {
         const copyButton = document.createElement("button");
@@ -302,8 +286,7 @@ function copyButtoANDSteamIDs() {
         openURLButton.id = "open-url-button";
         openURLButton.textContent = "Open CBL";
         openURLButton.classList.add("open-url-button-style");
-        openURLButton.style.top = "140px"; // Adjust position for the second button
-
+        openURLButton.style.top = "140px"; 
         document.body.appendChild(copyButton);
         document.body.appendChild(openURLButton);
 
@@ -377,8 +360,8 @@ function copyButtoANDSteamIDs() {
 
     function copyToClipboard(text) {
         const textarea = document.createElement("textarea");
-        textarea.style.position = 'fixed'; // Avoids scrolling to the bottom.
-        textarea.style.opacity = '0'; // Hides the element.
+        textarea.style.position = 'fixed'; 
+        textarea.style.opacity = '0'; 
         textarea.value = text;
         document.body.appendChild(textarea);
         textarea.select();
@@ -441,11 +424,9 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                 }
             }
 
-                        async function fetchSteamUserData(steamID) {
-                // Add slight delay before starting the function to give time for page to load more.
+                async function fetchSteamUserData(steamID) {
                 await new Promise(resolve => setTimeout(resolve, 500));
-
-                const maxRetries = 1; // Can be increased beyond one for debugging to try a query again.
+                const maxRetries = 1; 
                 const retryDelay = 3000;
                 let attempt = 0;
                 let success = false;
@@ -527,8 +508,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                                 z-index: 99998;
                             `;
 
-                // Determine text color for risk rating
-                let riskColor = "white"; // Default color
+                let riskColor = "white";
                 if (riskRating >= 1 && riskRating <= 5) {
                     riskColor = "orange";
                 } else if (riskRating > 5) {
@@ -545,10 +525,6 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                 document.body.appendChild(CBL);
             }
 
-
-
-
-            /// =============================================
             function colorDialogMenus() {
                 const navTools = {
                     changeMapWarning: [
@@ -633,7 +609,6 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                 };
 
                 setTimeout(() => {
-                    // Apply styles to specific elements based on content
                     applyStyles(
                         document.querySelectorAll(".modal-title"),
                         navTools.changeMapWarning
@@ -657,13 +632,11 @@ function getInnerTextByTitle(titlePart, defaultValue) {
         }
     }
 
-    // Continuously run updateLogic using setInterval
     setInterval(async () => {
         await updateLogic();
     }, updateRate);
 }
 
-// Mutation observer setup to detect the presence of the target classes
 function observeDOMChanges() {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
@@ -671,24 +644,22 @@ function observeDOMChanges() {
                 const targetElement1 = document.querySelector('.ReactVirtualized__Grid__innerScrollContainer');
                 const targetElement2 = document.querySelector('.navbar-brand');
 
-                // If either class exists, start the code and disconnect the observer
+               
                 if (targetElement1 || targetElement2) {
                     console.log("Target element detected. Starting code...");
-                    observer.disconnect(); // Stop observing after the first detection
-                    runCode(); // Start the main logic
+                    observer.disconnect(); 
+                    runCode(); 
                     break;
                 }
             }
         }
     });
 
-    // Observe the entire document for changes in the DOM structure
     observer.observe(document.body, {
-        childList: true, // Detect when nodes are added or removed
-        subtree: true, // Look within the entire document
-        attributes: true, // Detect attribute changes
+        childList: true,
+        subtree: true,
+        attributes: true,
     });
 }
 
-// Start observing when the script loads
 observeDOMChanges();
