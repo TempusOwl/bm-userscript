@@ -295,14 +295,14 @@ function copyButtoANDSteamIDs() {
             const pEOSID = getInnerTextByTitle("0002", "");
             const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-            const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
+            const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} > ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
             copyToClipboard(textToCopy);
         });
 
         openURLButton.addEventListener("click", () => {
             const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
             if (pSteamID && pSteamID !== "SteamID MISSING?") {
-                const url = `https://communitybanlist.com/search/${pSteamID}`;
+                const url = `https:/\/\communitybanlist.com/\search/${pSteamID}`;
                 window.open(url, "_blank");
             } else {
                 alert("SteamID is missing or invalid!");
@@ -517,7 +517,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
 
                 CBL.innerHTML = `
                                 <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">
-                                    Risk Rating  ${riskRating}/10
+                                    Risk Rating  ${riskRating} of 10
                                 </h4>
                                 <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4>
                                 <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>
