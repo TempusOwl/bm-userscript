@@ -401,7 +401,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
  return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
                 }
 
-            const graphqlEndpoint = "https://communitybanlist.com/graphql";
+            const graphqlEndpoint = "https:/\/\communitybanlist.com/\graphql";
             async function runDataFetching() {
                 if (isFetching) {
                     console.log("CBL script already in progress... Skipping...");
@@ -517,9 +517,9 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                 CBL.innerHTML = `
                                 <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">
                                     Risk Rating  ${riskRating} of 10
-                                </h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>
+                                </\h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</\h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</\h4>
                             `;
                 document.body.appendChild(CBL);
             }
