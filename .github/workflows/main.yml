@@ -29,11 +29,16 @@ jobs:
 
     - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        tmp_file=$(mktemp)
-        cp code.min.js "$tmp_file"
-        awk -v new_content="$(<"$tmp_file")" 'NR==15 {$0=new_content} {print}' bm-toolkit-desktop.min.js > bm-toolkit-desktop.tmp
+        # Read the content of code.min.js into a variable
+        new_content=$(<code.min.js)
+        
+        # Escape special characters for safe replacement
+        escaped_content=$(printf '%s\n' "$new_content" | sed -e 's/[]\/$*.^[]/\\&/g')
+
+        # Replace line 15 in bm-toolkit-desktop.min.js
+        sed "15s|.*|$escaped_content|" bm-toolkit-desktop.min.js > bm-toolkit-desktop.tmp
         mv bm-toolkit-desktop.tmp bm-toolkit-desktop.min.js
-        rm "$tmp_file"
+
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
