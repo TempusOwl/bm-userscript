@@ -239,7 +239,7 @@ async function runCode() {
                     elements.forEach(function (el) {
                         phrases.forEach(function (phrase) {
                             const regex = new RegExp(
-                                "(\\b" + phrase + "\\b)|(\\b『LiQ』 ?" + phrase + "\\b)",
+                                "(\/\/b" + phrase + "\/\.b)|(\/\.b『LiQ』 ?" + phrase + "\/\/b)",
                                 "i"
                             );
                             if (regex.test(el.textContent)) {
