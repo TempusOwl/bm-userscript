@@ -467,7 +467,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                         }
 
                         const user = data.data.steamUser;
-                        const riskRating = user.riskRating || "N/A";
+                        const riskRating = user.riskRating || "NA";
                         const activeBansCount = user.activeBans.edges.length || 0;
                         const expiredBansCount = user.expiredBans.edges.length || 0;
 
@@ -482,7 +482,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                             await new Promise(resolve => setTimeout(resolve, retryDelay));
                         } else {
                             console.error("Max retries reached. Fetch operation failed.");
-                            displayUserData("N/A", "N/A", 0);
+                            displayUserData("NA", "NA", 0);
                             success = true;
                         }
                     }
