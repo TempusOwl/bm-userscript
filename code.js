@@ -1,3 +1,18 @@
+// ==UserScript==
+// @name         5313515315313
+// @namespace    https://www.battlemetrics.com/
+// @version      12.00
+// @updateURL    https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js
+// @downloadURL  https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js
+// @description  Enhances the Battlemetrics RCON panel with features like color coding, player information, and CBL integration.
+// @author       TempusOwl
+// @match        https://www.battlemetrics.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=battlemetrics.com
+// @grant        GM_addStyle
+// @grant        GM_xmlhttpRequest
+// @connect      communitybanlist.com
+// @run-at       document-end
+// ==/UserScript==
 const version = "11.50";
 const updateRate = "150"
 const colors = {
@@ -286,7 +301,7 @@ function copyButtoANDSteamIDs() {
         openURLButton.id = "open-url-button";
         openURLButton.textContent = "Open CBL";
         openURLButton.classList.add("open-url-button-style");
-        openURLButton.style.top = "140px"; 
+        openURLButton.style.top = "140px";
         document.body.appendChild(copyButton);
         document.body.appendChild(openURLButton);
 
@@ -295,14 +310,14 @@ function copyButtoANDSteamIDs() {
             const pEOSID = getInnerTextByTitle("0002", "");
             const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-            const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
+            const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} /\/\ ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
             copyToClipboard(textToCopy);
         });
 
         openURLButton.addEventListener("click", () => {
             const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
             if (pSteamID && pSteamID !== "SteamID MISSING?") {
-                const url = `https://communitybanlist.com/search/${pSteamID}`;
+                const url = `https:/\/\communitybanlist.com/\search/\${pSteamID}`;
                 window.open(url, "_blank");
             } else {
                 alert("SteamID is missing or invalid!");
@@ -360,8 +375,8 @@ function copyButtoANDSteamIDs() {
 
     function copyToClipboard(text) {
         const textarea = document.createElement("textarea");
-        textarea.style.position = 'fixed'; 
-        textarea.style.opacity = '0'; 
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
         textarea.value = text;
         document.body.appendChild(textarea);
         textarea.select();
@@ -402,7 +417,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
  return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
                 }
 
-            const graphqlEndpoint = "https://communitybanlist.com/graphql";
+            const graphqlEndpoint = "https:/\/\communitybanlist.com/\graphql";
             async function runDataFetching() {
                 if (isFetching) {
                     console.log("CBL script already in progress... Skipping...");
@@ -426,7 +441,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
 
                 async function fetchSteamUserData(steamID) {
                 await new Promise(resolve => setTimeout(resolve, 500));
-                const maxRetries = 1; 
+                const maxRetries = 1;
                 const retryDelay = 3000;
                 let attempt = 0;
                 let success = false;
@@ -438,7 +453,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
 
                         const response = await fetch(graphqlEndpoint, {
                             method: "POST",
-                            headers: { "Content-Type": "application/json" },
+                            headers: { "Content-Type": "application/\json" },
                             body: JSON.stringify({
                                 query: `
                                     query Search($id: String!) {
@@ -467,7 +482,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                         }
 
                         const user = data.data.steamUser;
-                        const riskRating = user.riskRating || "N/A";
+                        const riskRating = user.riskRating || "N/\A";
                         const activeBansCount = user.activeBans.edges.length || 0;
                         const expiredBansCount = user.expiredBans.edges.length || 0;
 
@@ -482,7 +497,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                             await new Promise(resolve => setTimeout(resolve, retryDelay));
                         } else {
                             console.error("Max retries reached. Fetch operation failed.");
-                            displayUserData("N/A", "N/A", 0);
+                            displayUserData("N/\A", "N/\A", 0);
                             success = true;
                         }
                     }
@@ -516,11 +531,9 @@ function getInnerTextByTitle(titlePart, defaultValue) {
                 }
 
                 CBL.innerHTML = `
-                                <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">
-                                    Risk Rating  ${riskRating}/10
-                                </h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>
+                                <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">Risk Rating ${riskRating}/10</\h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</\h4>
+                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</\h4>
                             `;
                 document.body.appendChild(CBL);
             }
@@ -644,11 +657,11 @@ function observeDOMChanges() {
                 const targetElement1 = document.querySelector('.ReactVirtualized__Grid__innerScrollContainer');
                 const targetElement2 = document.querySelector('.navbar-brand');
 
-               
+
                 if (targetElement1 || targetElement2) {
                     console.log("Target element detected. Starting code...");
-                    observer.disconnect(); 
-                    runCode(); 
+                    observer.disconnect();
+                    runCode();
                     break;
                 }
             }
