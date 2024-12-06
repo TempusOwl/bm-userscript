@@ -239,7 +239,6 @@ async function runCode() {
                     elements.forEach(function (el) {
                         phrases.forEach(function (phrase) {
                             const regex = new RegExp(
-                                //"(\/\/b" + phrase + "\/\.b)|(\/\.b『LiQ』 ?" + phrase + "\/\/b)",
                                 "i"
                             );
                             if (regex.test(el.textContent)) {
@@ -438,7 +437,7 @@ function getInnerTextByTitle(titlePart, defaultValue) {
 
                         const response = await fetch(graphqlEndpoint, {
                             method: "POST",
-                            headers: { "Content-Type": "application/json" },
+                            headers: { "Content-Type": "application/\json" },
                             body: JSON.stringify({
                                 query: `
                                     query Search($id: String!) {
