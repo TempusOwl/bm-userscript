@@ -1,4 +1,4 @@
-const version = "11.52";
+const version = "11.51";
 const updateRate = "150"
 const colors = {
     cTeamBluefor: "#4eacff",
@@ -294,7 +294,7 @@ async function runCode() {
                         const pEOSID = getInnerTextByTitle("0002", "");
                         const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-                        const textToCopy =  ``//`**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} > ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
+                        const textToCopy =  ``;
                         copyToClipboard(textToCopy);
                     });
 
