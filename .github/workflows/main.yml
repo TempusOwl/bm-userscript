@@ -27,9 +27,9 @@ jobs:
     - name: Minify JS
       run: npx uglify-js code.js --compress --mangle --output code.min.js --comments false -b max_line_len=Infinity,beautify=false
 
-    - name: Replace Line 15 in bm-toolkit-desktop.min.js with contents of code.min.js
+    - name: Replace Line 16 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        awk 'NR==15 {while ((getline line < "code.min.js") > 0) print line; next} 1' bm-toolkit-desktop.min.js > temp.js
+        awk 'NR==16 {while ((getline line < "code.min.js") > 0) print line; next} 1' bm-toolkit-desktop.min.js > temp.js
         mv temp.js bm-toolkit-desktop.min.js
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version

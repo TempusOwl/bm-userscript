@@ -1,4 +1,4 @@
-const version = "11.54";
+const version = "11.55";
 const updateRate = "150"
 const colors = {
     cTeamBluefor: "#4eacff",
