@@ -1,5 +1,5 @@
-const version = "11.05";
-const updateRate = "150" //  ms | Overall rate to run the code at.
+const version = "11.58";
+const updateRate = "150" //ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
     cTeamOpfor: "#d0b1ff",
@@ -54,52 +54,54 @@ const sets = {
         "Archangel",
         "Basa_Doc",
         "Blackout",
+        "bloodmoon529",
         "Brennan",
         "budge",
         "Chaot3ch",
+        "Chillz",
         "Cossack_440",
         "Digikind",
         "DontFaket",
         "E10",
         "El 24 throttle4u",
+        "ETXBONES",
         "Exploits",
         "Gilly",
         "got2bhockey",
+        "HellHound6396",
         "Hellsaber",
         "iCampHard",
         "JAMESTERRARIA",
         "Jonboy",
+        "jordonrtelles",
         "Kibz",
         "Kyle",
+        "MadDawgMorales",
+        "MODERNMEGA",
+        "Moses",
+        "N1nja",
         "Nightshade",
+        "omgitsjesse",
         "Outlast",
         "QTheEngineer",
         "Redneck",
         "Shaka",
-        "sleepyguy1",
         "Skipper",
+        "sleepyguy1",
+        "Temper",
         "TempusOwl",
+        "The ROMAN99",
         "Too Many Cooks",
         "Valkyrie",
         "WatdaHek",
+        "Whip me more, Grandma",
+        "white knife",
+        "Wjli13125",
         "Wobblebob29",
         "Wolf Fang",
-        "Θscar Mike",
         "xplay0321",
-        "Chillz",
-        "HellHound6396",
-        "omgitsjesse",
-        "MODERNMEGA",
-        "Whip me more, Grandma",
-        "Wjli13125",
-        "Temper",
-        "MadDawgMorales",
-        "The ROMAN99",
-        "jordonrtelles",
-        "ETXBONES",
-        "Moses",
-        "N1nja",
-        "white knife",
+        "Θscar Mike",
+        "POM_Hephoof"
     ]),
 
     teamBluefor: new Set([
@@ -114,6 +116,7 @@ const sets = {
     teamOpfor: new Set([
         "Russian Ground Forces",
         "Middle Eastern Alliance",
+        "Middle Eastern Insurgents",
         "Insurgent Forces",
         "Irregular Militia Forces",
         "People's Liberation Army",
@@ -196,6 +199,8 @@ async function runCode() {
             buttonContainer.appendChild(button);
         });
     } cornerButtons();
+
+    let isFetching = false;
 
     async function updateLogic() {
         // Avoid overlapping by waiting for the previous execution to finish
@@ -286,55 +291,47 @@ async function runCode() {
             // Handles both copy button on profiles and link generation to CBL.
             function copyButtoANDSteamIDs() {
                 function createCopyButton() {
-                    const button = document.createElement("button");
-                    button.id = "copy-button";
-                    button.textContent = "Copy Player Info";
-                    button.classList.add("copy-button-style");
+                    const copyButton = document.createElement("button");
+                    copyButton.id = "copy-button";
+                    copyButton.textContent = "Copy Player Info";
+                    copyButton.classList.add("copy-button-style");
 
-                    document.body.appendChild(button);
+                    const openURLButton = document.createElement("button");
+                    openURLButton.id = "open-url-button";
+                    openURLButton.textContent = "Open CBL";
+                    openURLButton.classList.add("open-url-button-style");
+                    openURLButton.style.top = "140px"; // Adjust position for the second button
 
-                    button.addEventListener("click", () => {
+                    document.body.appendChild(copyButton);
+                    document.body.appendChild(openURLButton);
+
+                    copyButton.addEventListener("click", () => {
                         const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
                         const pEOSID = getInnerTextByTitle("0002", "");
                         const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
                         const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
                         copyToClipboard(textToCopy);
-
                     });
+
+                    openURLButton.addEventListener("click", () => {
+                        const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
+                        if (pSteamID && pSteamID !== "SteamID MISSING?") {
+                            const url = `https://communitybanlist.com/search/${pSteamID}`;
+                            window.open(url, "_blank");
+                        } else {
+                            alert("SteamID is missing or invalid!");
+                        }
+                    });
+
                     buttonStyles();
                 }
 
                 function buttonStyles() {
                     const style = document.createElement("style");
-                    style.innerHTML =
-                        ".copy-button-style {" +
-                        "width: 125px;" +
-                        "height: 35px;" +
-                        "background: #4c82ffab;" +
-                        "color: white;" +
-                        "border: none;" +
-                        "border-radius: 3px;" +
-                        "box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" +
-                        "font-size: 14px;" +
-                        "font-weight: bold;" +
-                        "cursor: pointer;" +
-                        "padding: 2px;" +
-                        "position: absolute;" +
-                        "top: 90px;" +
-                        "left: 0;" +
-                        "z-index: 99999;" +
-                        "transition: background 0.3s, box-shadow 0.3s;" +
-                        "}" +
-                        ".copy-button-style:hover {" +
-                        "background: #4c8aff;" +
-                        "box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);" +
-                        "}";
-                    document.head.appendChild(style);
-                }
+                    style.innerHTML = `.copy-button-style {width: 140px;height: 40px;left:10px;border-radius: 1em 1em 0 0;background-color: #2d65a5;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 100px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.copy-button-style:hover {ackground-color: #0077ff;} .open-url-button-style {width: 140px;height: 25px;left:10px;border-radius: 0 0 1em 1em;background-color: #e5a411;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 120px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.open-url-button-style:hover {background-color: #ffb500;}`;
 
-                function getInnerTextByTitle(titlePart, defaultValue) {
-                    return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
+                    document.head.appendChild(style);
                 }
 
                 function copyToClipboard(text) {
@@ -348,30 +345,17 @@ async function runCode() {
                     document.body.removeChild(textarea);
                 }
 
-                function replaceSteamIDSpans() {
-                    const spans = document.querySelectorAll(".css-q39y9k");
-                    spans.forEach(span => {
-                        if (!span.getAttribute('data-processed')) {
-                            const steamID = span.title;
-                            const anchor = document.createElement("a");
-                            Array.from(span.attributes).forEach(attr => anchor.setAttribute(attr.name, attr.value));
-                            anchor.href = "https://communitybanlist.com/search/" + steamID;
-                            anchor.innerHTML = steamID;
-                            anchor.target = "_blank";
-                            span.replaceWith(anchor);
-                            anchor.setAttribute('data-processed', 'true');
-                        }
-                    });
-                }
 
                 const playerPageExists = document.querySelector("#RCONPlayerPage");
 
                 if (playerPageExists) {
                     ensureElementExists("copy-button", createCopyButton);
+                    ensureElementExists("CBL-info", runDataFetching);
                 } else {
                     removeElementById("copy-button");
+                    removeElementById("open-url-button");
+                    removeElementById("CBL-info");
                 }
-                replaceSteamIDSpans();
 
                 function ensureElementExists(elementId, creationFunction) {
                     if (!document.getElementById(elementId)) {
@@ -385,7 +369,101 @@ async function runCode() {
                         element.remove();
                     }
                 }
-            } copyButtoANDSteamIDs()
+            }
+            copyButtoANDSteamIDs();
+
+            function getInnerTextByTitle(titlePart, defaultValue) {
+                return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
+            }
+
+            const graphqlEndpoint = "https://communitybanlist.com/graphql";
+            async function runDataFetching() {
+                if (isFetching) {
+                    console.log("CBL script already in progress... Skipping...");
+                    return;
+                }
+
+                const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
+                if (pSteamID && pSteamID !== "SteamID MISSING?") {
+                    try {
+                        isFetching = true;
+                        await fetchSteamUserData(pSteamID);
+                    } catch (error) {
+                        console.error("Error fetching Steam user data:", error);
+                    } finally {
+                        isFetching = false;
+                    }
+                } else {
+                    console.error("Invalid Steam ID");
+                }
+            }
+
+            async function fetchSteamUserData(steamID) {
+                // Adds slight delay so the script does not run before the page is ready.
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                const maxRetries = 1; // Do not increase beyond 3.
+                const retryDelay = 3000;
+                let attempt = 0;
+                let success = false;
+
+                while (attempt < maxRetries && !success) {
+                    try {
+                        attempt++;
+                        console.log(`CBL API Query ${attempt}: Fetching user data for SteamID ${steamID}`);
+
+                        const response = await fetch(graphqlEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: `query Search($id: String!) { steamUser(id: $id) { riskRating activeBans: bans(orderBy: "created", orderDirection: DESC, expired: false) { edges { node { id } } } expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) { edges { node { id } } } } }`, variables: { id: steamID } }) });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status} (${response.statusText})`);
+                        }
+
+                        const data = await response.json();
+                        if (!data || !data.data || !data.data.steamUser) {
+                            throw new Error("Invalid response format or user not found.");
+                        }
+
+                        const user = data.data.steamUser;
+                        const riskRating = user.riskRating || "None?";
+                        const activeBansCount = user.activeBans.edges.length || 0;
+                        const expiredBansCount = user.expiredBans.edges.length || 0;
+
+                        displayUserData(riskRating, activeBansCount, expiredBansCount);
+                        console.log("Fetch successful!");
+                        success = true;
+
+                    } catch (error) {
+                        console.error(`Attempt ${attempt} failed: ${error.message}`, error);
+                        if (attempt < maxRetries) {
+                            console.log(`Retrying in ${retryDelay / 1000} seconds...`);
+                            await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        } else {
+                            console.error("Max retries reached. Fetch operation failed.");
+                            displayUserData("None?", "?", "?");
+                            success = true;
+                        }
+                    }
+                }
+            }
+
+            function displayUserData(riskRating, activeBansCount, expiredBansCount) {
+                const CBL = document.createElement("div");
+                CBL.id = "CBL-info";
+                CBL.style = `width: 140px;height: 120px;left:10px;top: 170px;background: #000000bd;color: white;border: none;border-radius: 15% 15% 15% 15%;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);padding: 2px;position: absolute;text-align: center;z-index: 99998;`;
+
+                // Determine text color for risk rating
+                let riskColor = "white"; // Default color
+                CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">CBL Rating</h4><h4 style="font-size: 1em; font-weight: bold; color: ${riskColor};">${riskRating}</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
+                if (riskRating >= 1 && riskRating <= 5) {
+                    riskColor = "orange";
+                    CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">CBL Rating</h4><h4 style="font-size: 1em; font-weight: bold; color: ${riskColor};">${riskRating}/10</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
+                } else if (riskRating > 5) {
+                    riskColor = "red";
+                    CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">CBL Rating</h4><h4 style="font-size: 1em; font-weight: bold; color: ${riskColor};">${riskRating}/10</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
+
+                }
+                document.body.appendChild(CBL);
+            }
 
             function colorDialogMenus() {
                 const navTools = {
