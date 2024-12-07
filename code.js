@@ -301,7 +301,7 @@ async function runCode() {
                     openURLButton.addEventListener("click", () => {
                         const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
                         if (pSteamID && pSteamID !== "SteamID MISSING?") {
-                            const url = `https://communitybanlist.com/search/${pSteamID}`;
+                            const url = ``;
                             window.open(url, "_blank");
                         } else {
                             alert("SteamID is missing or invalid!");
@@ -401,7 +401,7 @@ async function runCode() {
                 return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
             }
 
-            const graphqlEndpoint = "https://communitybanlist.com/graphql";
+            const graphqlEndpoint = "";
             async function runDataFetching() {
                 if (isFetching) {
                     console.log("CBL script already in progress... Skipping...");
