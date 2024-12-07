@@ -25,16 +25,12 @@ jobs:
       run: npm install
 
     - name: Minify JS
-      run: npx uglify-js code.js --compress --mangle --output code.min.js --comments false
+      run: npx uglify-js code.js --compress --mangle --output code.min.js --comments false -b max_line_len=Infinity,beautify=false
 
     - name: Replace Line 16 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        if [ -s code.min.js ]; then
-          awk 'NR==16 {while ((getline line < "code.min.js") > 0) print line; next} 1' bm-toolkit-desktop.min.js > temp.js
-          mv temp.js bm-toolkit-desktop.min.js
-        else
-          echo "code.min.js is empty. No replacement done."
-        fi
+        awk 'NR==16 {while ((getline line < "code.min.js") > 0) print line; next} 1' bm-toolkit-desktop.min.js > temp.js
+        mv temp.js bm-toolkit-desktop.min.js
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
       run: |
