@@ -1,4 +1,4 @@
-const version = "11.57";
+const version = "11.59";
 const updateRate = "150" //ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
@@ -286,7 +286,6 @@ async function runCode() {
             }
             logColoring();
 
-
             // Handles both copy button on profiles and link generation to CBL.
             function copyButtoANDSteamIDs() {
                 function createCopyButton() {
@@ -328,7 +327,7 @@ async function runCode() {
 
                 function buttonStyles() {
                     const style = document.createElement("style");
-                    style.innerHTML = `.copy-button-style {width: 140px;height: 40px;left:10px;border-radius: 1em 1em 0 0;background-color: #2d65a5;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 100px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.copy-button-style:hover {background-color: #0077ff;}.open-url-button-style {width: 140px;height: 25px;left:10px;border-radius: 0 0 1em 1em;background-color: #e5a411;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 120px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.open-url-button-style:hover {background-color: #ffb500;}`;
+                    style.innerHTML = `.copy-button-style {width: 140px;height: 40px;left:10px;border-radius: 1em 1em 0 0;background-color: #2d65a5;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 100px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.copy-button-style:hover {ackground-color: #0077ff;} .open-url-button-style {width: 140px;height: 25px;left:10px;border-radius: 0 0 1em 1em;background-color: #e5a411;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 120px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.open-url-button-style:hover {background-color: #ffb500;}`;
 
                     document.head.appendChild(style);
                 }
@@ -413,14 +412,7 @@ async function runCode() {
                         attempt++;
                         console.log(`CBL API Query ${attempt}: Fetching user data for SteamID ${steamID}`);
 
-                        const response = await fetch(graphqlEndpoint, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                query: `query Search($id: String!) {steamUser(id: $id) {riskRatingactiveBans: bans(orderBy: "created", orderDirection: DESC, expired: false) {edges { node { id } }}expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) {edges { node { id } }}}}`,
-                                variables: { id: steamID },
-                            }),
-                        });
+                        const response = await fetch(graphqlEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: `query Search($id: String!) { steamUser(id: $id) { riskRating activeBans: bans(orderBy: "created", orderDirection: DESC, expired: false) { edges { node { id } } } expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) { edges { node { id } } } } }`, variables: { id: steamID } }) });
 
                         if (!response.ok) {
                             throw new Error(`HTTP error! Status: ${response.status} (${response.statusText})`);
@@ -467,7 +459,7 @@ async function runCode() {
                     riskColor = "red";
                 }
 
-                CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">Risk Rating${riskRating}/10</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
+                CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">Risk Rating  ${riskRating}/10</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
                 document.body.appendChild(CBL);
             }
 
