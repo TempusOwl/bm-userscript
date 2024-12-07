@@ -1,5 +1,5 @@
-const version = "11.57";
-const updateRate = "150"
+const version = "11.50";
+const updateRate = "150" //ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
     cTeamOpfor: "#d0b1ff",
@@ -153,8 +153,10 @@ const sets = {
     ]),
 };
 
+// Function that checks for the presence of required elements and runs the logic.
 async function runCode() {
     console.log("Running initial one-time code...");
+    // One-time logic here that runs only once after element detection, prevents spam creation of div elements due to how GM_addStyles interacts.
 
     function GM_addStyleElements() {
         const styles = {
@@ -174,11 +176,11 @@ async function runCode() {
 
     function cornerButtons() {
         const buttons = [
-            { id: "NPFbutton", label: "N", url: "", backgroundColor: "#187E00" },
-            { id: "TRbutton", label: "T", url: "", backgroundColor: "orange" },
-            { id: "ban", label: "B", url: "", backgroundColor: "red" },
-            { id: "lanes", label: "M", url: "", backgroundColor: "#7E6900" },
-            { id: "version", label: version, url: "", backgroundColor: "black", fontSize: "6pt" }
+            { id: "NPFbutton", label: "N", url: "https://www.battlemetrics.com/rcon/servers/7871746", backgroundColor: "#187E00" },
+            { id: "TRbutton", label: "T", url: "https://www.battlemetrics.com/rcon/servers/7894269", backgroundColor: "orange" },
+            { id: "ban", label: "B", url: "https://www.battlemetrics.com/rcon/bans?filter%5Borganization%5D=17085&filter%5Bexpired%5D=true", backgroundColor: "red" },
+            { id: "lanes", label: "M", url: "https://squadmaps.com/", backgroundColor: "#7E6900" },
+            { id: "version", label: version, url: "https://raw.githubusercontent.com/TempusOwl/bm-userscript/main/bm-toolkit-desktop.min.js", backgroundColor: "black", fontSize: "6pt" }
         ];
 
         const buttonContainer = Object.assign(document.createElement("div"), {
@@ -199,9 +201,14 @@ async function runCode() {
     let isFetching = false;
 
     async function updateLogic() {
+        // Avoid overlapping by waiting for the previous execution to finish
         await new Promise(resolve => setTimeout(resolve, updateRate));
 
+        // Ensure the element still exists before running
         if (document.querySelector('.ReactVirtualized__Grid__innerScrollContainerddd') || document.querySelector('.css-b7r34x')) {
+            // console.log("Updating logic now..");
+            // The codes main recurring logic below, handles coloring of text in player list and activity log and most of real-time events.
+
             function applyTimeStamps() {
                 let timeStampElements = document.querySelectorAll(".css-z1s6qn");
                 timeStampElements.forEach(element => {
@@ -239,6 +246,7 @@ async function runCode() {
                     elements.forEach(function (el) {
                         phrases.forEach(function (phrase) {
                             const regex = new RegExp(
+                                "(\\b" + phrase + "\\b)|(\\b『LiQ』 ?" + phrase + "\\b)",
                                 "i"
                             );
                             if (regex.test(el.textContent)) {
@@ -248,6 +256,7 @@ async function runCode() {
                     });
                 }
 
+                // Apply colors based on phrases
                 applyColor(messageLog, sets.adminTerms, colors.cAdminAction);
                 applyColor(messageLog, sets.grayedOut, colors.cGrayed);
                 applyColor(messageLog, sets.joinedServer, colors.cJoined);
@@ -258,15 +267,19 @@ async function runCode() {
                 applyColor(messageLog, sets.teamIndepend, colors.cTeamIndepend);
                 applyColor(messageLog, sets.teamKilled, colors.cTeamKilled);
                 applyColor(messageLog, sets.trackedTriggers, colors.cTracked);
+
+                // Apply colors to player names
                 adminApplyColor(nameActivity, sets.adminList, colors.cAdminName);
                 adminApplyColor(namePlayers, sets.adminList, colors.cAdminName);
 
+                // Highlights the Player Is Admin to neon in the players bar.
                 bmAdmin.forEach((element) => {
                     if (element.textContent.includes("Admin")) {
                         element.style.color = colors.cbmAdmin;
                     }
                 });
 
+                // Changes Flag Color For Note On Player List
                 bmNoteFlag.forEach((element) => {
                     element.style.color = colors.cNoteColorIcon;
                 });
@@ -274,6 +287,7 @@ async function runCode() {
             logColoring();
 
 
+            // Handles both copy button on profiles and link generation to CBL.
             function copyButtoANDSteamIDs() {
                 function createCopyButton() {
                     const copyButton = document.createElement("button");
@@ -285,7 +299,8 @@ async function runCode() {
                     openURLButton.id = "open-url-button";
                     openURLButton.textContent = "Open CBL";
                     openURLButton.classList.add("open-url-button-style");
-                    openURLButton.style.top = "140px";
+                    openURLButton.style.top = "140px"; // Adjust position for the second button
+
                     document.body.appendChild(copyButton);
                     document.body.appendChild(openURLButton);
 
@@ -294,14 +309,14 @@ async function runCode() {
                         const pEOSID = getInnerTextByTitle("0002", "");
                         const pName = document.querySelector("#RCONPlayerPage > h1")?.innerText || 'NAME MISSING?';
 
-                        const textToCopy =  ``;
+                        const textToCopy = `**User**: ${pName} <${window.location.href}>\n**IDs**: ${pSteamID} // ${pEOSID}\n**Server**:\n**Infraction**:\n**Evidence Linked Below**:`;
                         copyToClipboard(textToCopy);
                     });
 
                     openURLButton.addEventListener("click", () => {
                         const pSteamID = getInnerTextByTitle("765", "SteamID MISSING?");
                         if (pSteamID && pSteamID !== "SteamID MISSING?") {
-                            const url = ``;
+                            const url = `https://communitybanlist.com/search/${pSteamID}`;
                             window.open(url, "_blank");
                         } else {
                             alert("SteamID is missing or invalid!");
@@ -313,54 +328,15 @@ async function runCode() {
 
                 function buttonStyles() {
                     const style = document.createElement("style");
-                    style.innerHTML = `
-    .copy-button-style {
-        width: 140px;
-        height: 40px;
-                                left:10px;
-        border-radius: 1em 1em 0 0;
-        background-color: #2d65a5;
-        color: white;
-        border: none;
-        font-size: 15px;
-        font-weight: bold;
-        cursor: pointer;
-        position: absolute;
-        top: 100px;
-        z-index: 99999;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    .copy-button-style:hover {
-        background-color: #0077ff;
-    }
-    .open-url-button-style {
-        width: 140px;
-        height: 25px;
-                                left:10px;
-        border-radius: 0 0 1em 1em;
-        background-color: #e5a411;
-        color: white;
-        border: none;
-        font-size: 15px;
-        font-weight: bold;
-        cursor: pointer;
-        position: absolute;
-        top: 120px;
-        z-index: 99999;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    .open-url-button-style:hover {
-        background-color: #ffb500;
-    }
-`;
+                    style.innerHTML = `.copy-button-style {width: 140px;height: 40px;left:10px;border-radius: 1em 1em 0 0;background-color: #2d65a5;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 100px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.copy-button-style:hover {background-color: #0077ff;}.open-url-button-style {width: 140px;height: 25px;left:10px;border-radius: 0 0 1em 1em;background-color: #e5a411;color: white;border: none;font-size: 15px;font-weight: bold;cursor: pointer;position: absolute;top: 120px;z-index: 99999;transition: background-color 0.3s, transform 0.2s;}.open-url-button-style:hover {background-color: #ffb500;}`;
 
                     document.head.appendChild(style);
                 }
 
                 function copyToClipboard(text) {
                     const textarea = document.createElement("textarea");
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
+                    textarea.style.position = 'fixed'; // Avoids scrolling to the bottom.
+                    textarea.style.opacity = '0'; // Hides the element.
                     textarea.value = text;
                     document.body.appendChild(textarea);
                     textarea.select();
@@ -401,7 +377,7 @@ async function runCode() {
                 return document.querySelector(`[title*="${titlePart}"]`)?.innerText || defaultValue;
             }
 
-            const graphqlEndpoint = "";
+            const graphqlEndpoint = "https://communitybanlist.com/graphql";
             async function runDataFetching() {
                 if (isFetching) {
                     console.log("CBL script already in progress... Skipping...");
@@ -424,8 +400,10 @@ async function runCode() {
             }
 
             async function fetchSteamUserData(steamID) {
+                // Add slight delay before starting the function to give time for page to load more.
                 await new Promise(resolve => setTimeout(resolve, 500));
-                const maxRetries = 1;
+
+                const maxRetries = 1; // Can be increased beyond one for debugging to try a query again.
                 const retryDelay = 3000;
                 let attempt = 0;
                 let success = false;
@@ -439,19 +417,7 @@ async function runCode() {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                query: `
-                                    query Search($id: String!) {
-                                        steamUser(id: $id) {
-                                            riskRating
-                                            activeBans: bans(orderBy: "created", orderDirection: DESC, expired: false) {
-                                                edges { node { id } }
-                                            }
-                                            expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) {
-                                                edges { node { id } }
-                                            }
-                                        }
-                                    }
-                                `,
+                                query: `query Search($id: String!) {steamUser(id: $id) {riskRatingactiveBans: bans(orderBy: "created", orderDirection: DESC, expired: false) {edges { node { id } }}expiredBans: bans(orderBy: "created", orderDirection: DESC, expired: true) {edges { node { id } }}}}`,
                                 variables: { id: steamID },
                             }),
                         });
@@ -466,7 +432,7 @@ async function runCode() {
                         }
 
                         const user = data.data.steamUser;
-                        const riskRating = user.riskRating || "NA";
+                        const riskRating = user.riskRating || "N/A";
                         const activeBansCount = user.activeBans.edges.length || 0;
                         const expiredBansCount = user.expiredBans.edges.length || 0;
 
@@ -481,7 +447,7 @@ async function runCode() {
                             await new Promise(resolve => setTimeout(resolve, retryDelay));
                         } else {
                             console.error("Max retries reached. Fetch operation failed.");
-                            displayUserData("NA", "NA", 0);
+                            displayUserData("N/A", "N/A", 0);
                             success = true;
                         }
                     }
@@ -491,36 +457,17 @@ async function runCode() {
             function displayUserData(riskRating, activeBansCount, expiredBansCount) {
                 const CBL = document.createElement("div");
                 CBL.id = "CBL-info";
-                CBL.style = `
-                                width: 140px;
-                                height: 120px;
-                                left:10px;
-                                top: 170px;
-                                background: #000000bd;
-                                color: white;
-                                border: none;
-                                border-radius: 15% 15% 15% 15%;
-                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                                padding: 2px;
-                                position: absolute;
-                                text-align: center;
-                                z-index: 99998;
-                            `;
+                CBL.style = `width: 140px;height: 120px;left:10px;top: 170px;background: #000000bd;color: white;border: none;border-radius: 15% 15% 15% 15%;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);padding: 2px;position: absolute;text-align: center;z-index: 99998;`;
 
-                let riskColor = "white";
+                // Determine text color for risk rating
+                let riskColor = "white"; // Default color
                 if (riskRating >= 1 && riskRating <= 5) {
                     riskColor = "orange";
                 } else if (riskRating > 5) {
                     riskColor = "red";
                 }
 
-                CBL.innerHTML = `
-                                <h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">
-                                    Risk Rating  ${riskRating} of 10
-                                </h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4>
-                                <h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>
-                            `;
+                CBL.innerHTML = `<h4 style="font-size: 1.2em; font-weight: bold; color: ${riskColor};">Risk Rating${riskRating}/10</h4><h4 style="font-size: 12px; font-weight: bold;">Active Bans: ${activeBansCount}</h4><h4 style="font-size: 12px; font-weight: bold;">Expired Bans: ${expiredBansCount}</h4>`;
                 document.body.appendChild(CBL);
             }
 
@@ -608,6 +555,7 @@ async function runCode() {
                 };
 
                 setTimeout(() => {
+                    // Apply styles to specific elements based on content
                     applyStyles(
                         document.querySelectorAll(".modal-title"),
                         navTools.changeMapWarning
@@ -631,11 +579,13 @@ async function runCode() {
         }
     }
 
+    // Continuously run updateLogic using setInterval
     setInterval(async () => {
         await updateLogic();
     }, updateRate);
 }
 
+// Mutation observer setup to detect the presence of the target classes
 function observeDOMChanges() {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
@@ -643,23 +593,24 @@ function observeDOMChanges() {
                 const targetElement1 = document.querySelector('.ReactVirtualized__Grid__innerScrollContainer');
                 const targetElement2 = document.querySelector('.navbar-brand');
 
-
+                // If either class exists, start the code and disconnect the observer
                 if (targetElement1 || targetElement2) {
                     console.log("Target element detected. Starting code...");
-                    observer.disconnect();
-                    runCode();
+                    observer.disconnect(); // Stop observing after the first detection
+                    runCode(); // Start the main logic
                     break;
                 }
             }
         }
     });
 
+    // Observe the entire document for changes in the DOM structure
     observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        test:true
+        childList: true, // Detect when nodes are added or removed
+        subtree: true, // Look within the entire document
+        attributes: true, // Detect attribute changes
     });
 }
 
+// Start observing when the script loads
 observeDOMChanges();
