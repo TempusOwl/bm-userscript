@@ -658,6 +658,7 @@ function observeDOMChanges() {
         childList: true,
         subtree: true,
         attributes: true,
+        test:true
     });
 }
 

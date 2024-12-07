@@ -29,7 +29,7 @@ jobs:
 
     - name: Replace Line 16 in bm-toolkit-desktop.min.js with contents of code.min.js
       run: |
-        awk 'NR==16 {while ((getline line < "code.min.js") > 0) print line; next} 1' bm-toolkit-desktop.min.js > temp.js
+        awk 'NR < 16 {print} NR == 16 {while ((getline line < "code.min.js") > 0) print line; exit}' bm-toolkit-desktop.min.js > temp.js
         mv temp.js bm-toolkit-desktop.min.js
     
     - name: Update @version in bm-toolkit-desktop.min.js to CONST version
