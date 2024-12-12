@@ -1,4 +1,4 @@
-const version = "12.00";
+const version = "12.01";
 const updateRate = "150" //ms | Overall rate to run the code at.
 const colors = {
     cTeamBluefor: "#4eacff",
@@ -57,6 +57,7 @@ const sets = {
         "bloodmoon529",
         "Brennan",
         "budge",
+        "Cephomet",
         "Chaot3ch",
         "Chillz",
         "Cossack_440",
@@ -89,7 +90,6 @@ const sets = {
         "Skipper",
         "sleepyguy1",
         "Temper",
-        "TempusOwl",
         "The ROMAN99",
         "Too Many Cooks",
         "Valkyrie",
